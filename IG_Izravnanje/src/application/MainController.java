@@ -86,7 +86,7 @@ public class MainController {
 	}
 	
 	public void izravnaj(ActionEvent e) {
-		MinimalniTrag mt = new MinimalniTrag(data_v, data_vr);
+		MinimalniTrag1D mt = new MinimalniTrag1D(data_v, data_vr);
 		mt.izracunajPriblizneVisine();
 	}
 

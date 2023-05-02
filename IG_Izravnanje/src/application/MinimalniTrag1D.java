@@ -3,12 +3,14 @@ package application;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 
-public class MinimalniTrag {
+public class MinimalniTrag1D {
 
 	private ObservableList<Visina> visine;
 	private ObservableList<VisinskaRazlika> visinske_razlike;
+	private Matrix matrica_A;
+	
 
-	public MinimalniTrag(ObservableList<Visina> visine, ObservableList<VisinskaRazlika> visinske_razlike) {
+	public MinimalniTrag1D(ObservableList<Visina> visine, ObservableList<VisinskaRazlika> visinske_razlike) {
 		this.visine = visine;
 		this.visinske_razlike = visinske_razlike;
 	}
@@ -53,12 +55,31 @@ public class MinimalniTrag {
 			}
 		}
 		
-		// Ispisi priblizne visine u konzolu
-		for(int i = 0; i < visine.size(); i++) {
-			Visina visina = visine.get(i);
-			System.out.println(visina.getOznaka() + " = " + visina.getVisina());
-		}
+		formirajMatricuA();
 
+	}
+	
+	private void formirajMatricuA() {
+		int n = visine.size();
+		int u = visinske_razlike.size();
+		double niz[][] = new double[u][n];
+		
+		for(int i = 0; i < u; i++) {
+			for(int j = 0; j < n; j++) {
+				String OD = visinske_razlike.get(i).getOd();
+				String DO = visinske_razlike.get(i).getDo();
+				if(visine.get(j).getOznaka().equals(OD)) {
+					niz[i][j] = -1;
+				}else if(visine.get(j).getOznaka().equals(DO)) {
+					niz[i][j] = 1;
+				}else {
+					niz[i][j] = 0;
+				}
+			}
+		}
+		
+		matrica_A = new Matrix(niz);
+		System.out.println(matrica_A);
 	}
 
 }
