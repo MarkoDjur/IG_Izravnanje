@@ -4,6 +4,8 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 
 public class MinimalniTrag1D {
+	
+	private static int DEFEKT = 1;
 
 	private ObservableList<Visina> visine;
 	private ObservableList<VisinskaRazlika> visinske_razlike;
@@ -14,6 +16,9 @@ public class MinimalniTrag1D {
 	private Matrix vektor_n;
 	private Matrix matrica_BT;
 	private Matrix matrica_Qx;
+	private Matrix vektor_x;
+	private Matrix vektor_v;
+	private double s_ocjenjeno;
 
 	public MinimalniTrag1D(ObservableList<Visina> visine, ObservableList<VisinskaRazlika> visinske_razlike) {
 		this.visine = visine;
@@ -69,6 +74,9 @@ public class MinimalniTrag1D {
 		izracunajVektorn();
 		formirajMatricuBT();
 		izracunajMatricuQx();
+		izracunajVektorx();
+		izracunajVektorv();
+		izracunajStandardnoOdstupanje();
 
 	}
 
@@ -143,11 +151,13 @@ public class MinimalniTrag1D {
 	}
 	
 	private void izracunajMatricuN() {
-		matrica_N = matrica_A.multiply(matrica_A.transpose()).multiply(matrica_P).multiply(matrica_A);
+		Matrix AT = matrica_A.transpose();
+		matrica_N = AT.multiply(matrica_P.multiply(matrica_A));
 	}
 	
 	private void izracunajVektorn() {
-		vektor_n = matrica_A.multiply(matrica_A.transpose()).multiply(matrica_P).multiply(vektor_f);
+		Matrix AT = matrica_A.transpose();
+		vektor_n = AT.multiply(matrica_P.multiply(vektor_f));
 	}
 	
 	private void formirajMatricuBT() {
@@ -162,16 +172,63 @@ public class MinimalniTrag1D {
 	}
 	
 	private void izracunajMatricuQx() {
-		Matrix BxBT = matrica_BT.transpose().multiply(matrica_BT);
-		matrica_Qx = (matrica_N.add(BxBT).inverse()).subtract(BxBT);
-		System.out.println(matrica_Qx);
+		double niz_N[][] = matrica_N.getMatrix();
+		int n = visine.size();
+		double niz_Nprosireno[][] = new double[n+1][n+1];
+		double niz_BT[][] = matrica_BT.getMatrix();
+		double niz_B[][] = matrica_BT.transpose().getMatrix();
+		
+		for(int i = 0; i < n; i++) {
+			for(int j = 0; j < n; j++) {
+				niz_Nprosireno[i][j] = niz_N[i][j];
+			}
+		}
+		for(int i = 0; i < n; i++) {
+			niz_Nprosireno[n][i] = niz_BT[0][i];
+		}
+		for(int i = 0; i < n; i++) {
+			niz_Nprosireno[i][n] = niz_B[i][0];
+		}
+		niz_Nprosireno[n][n] = 0;
+		
+		Matrix N_prosireno = new Matrix(niz_Nprosireno);
+		Matrix Qx_prosireno = N_prosireno.inverse();
+		double niz_Qxprosireno[][] = Qx_prosireno.getMatrix();
+		double niz_Qx[][] = new double[n][n];
+		for(int i = 0; i < n; i++) {
+			for(int j = 0; j < n; j++) {
+				niz_Qx[i][j] = niz_Qxprosireno[i][j];
+			}
+		}
+		
+		matrica_Qx = new Matrix(niz_Qx);
+	}
+	
+	private void izracunajVektorx() {
+		vektor_x = matrica_Qx.multConst(-1).multiply(vektor_n);
+		System.out.println(vektor_x);
+	}
+	
+	private void izracunajVektorv() {
+		vektor_v = (matrica_A.multiply(vektor_x)).add(vektor_f);
+		System.out.println(vektor_v);
+	}
+	
+	private void izracunajStandardnoOdstupanje() {
+		int n = visinske_razlike.size();
+		int u = visine.size();
+		Matrix vt = vektor_v.transpose();
+		Matrix vtp = vt.multiply(matrica_P);
+		Matrix vtpv = vtp.multiply(vektor_v);
+		s_ocjenjeno = Math.sqrt(vtpv.getMatrix()[0][0] / (n - u + DEFEKT));
+		System.out.println(s_ocjenjeno);
 	}
 	
 	private double nadjiVisinu(String oznaka) {
 		String v = "";
 		for(int i = 0; i < visine.size(); i++) {
 			if(visine.get(i).getOznaka().equals(oznaka)) {
-				v = visine.get(i).getOznaka();
+				v = visine.get(i).getVisina();
 				break;
 			}
 		}
