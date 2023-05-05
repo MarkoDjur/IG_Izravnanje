@@ -124,6 +124,23 @@ public class Matrix {
 		
 		return new Matrix(m);
 	}
+	
+	public Matrix getDiagonal() {
+		double m[][] = new double[this.getNumberOfRows()][1];
+		try {
+			for(int i = 0; i < this.getNumberOfRows(); i++) {
+				for(int j = 0; j < this.getNumberOfColumns(); j++) {
+					if(i == j) {
+						m[i][j] = matrix[i][j];
+					}
+				}
+			}
+		}catch(Exception e) {
+			e.printStackTrace();
+		}
+		
+		return new Matrix(m);
+	}
 
 	@Override
 	public String toString() {

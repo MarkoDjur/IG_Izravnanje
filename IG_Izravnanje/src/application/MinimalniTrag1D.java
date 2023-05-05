@@ -9,6 +9,8 @@ public class MinimalniTrag1D {
 
 	private ObservableList<Visina> visine;
 	private ObservableList<VisinskaRazlika> visinske_razlike;
+	private double s0;
+	
 	private Matrix matrica_A;
 	private Matrix matrica_P;
 	private Matrix vektor_f;
@@ -18,14 +20,62 @@ public class MinimalniTrag1D {
 	private Matrix matrica_Qx;
 	private Matrix vektor_x;
 	private Matrix vektor_v;
+	private Matrix matrica_Ql;
+	private Matrix matrica_Qv;
+	private Matrix matrica_r;
+	private Matrix popravljena_mjerenja;
+	private Matrix ocjenjene_visine;
+	private Matrix standardi_visina;
+	
+	// Ovo treba da sacuva u fajl
 	private double s_ocjenjeno;
+	private double niz_v[][]; // mm
+	private double niz_loc[][]; // m
+	private double niz_Qll[][]; // mm^2
+	private double niz_Qvv[][]; // mm^2
+	private double niz_rii[][]; // Prikazuje se bez jedinice mjere
+	private double niz_x[][]; // mm
+	private double niz_ocjenjeneVisine[][]; // m
+	private double niz_standardnoOdstupanjeVisina[][]; // mm
 
-	public MinimalniTrag1D(ObservableList<Visina> visine, ObservableList<VisinskaRazlika> visinske_razlike) {
+	public MinimalniTrag1D(ObservableList<Visina> visine, ObservableList<VisinskaRazlika> visinske_razlike, double s0) {
 		this.visine = visine;
 		this.visinske_razlike = visinske_razlike;
+		this.s0 = s0;
+	}
+	
+	public void napraviIzvjestaj() {
+		izracunajPriblizneVisine();
+		formirajMatricuA();
+		formirajMatricuP();
+		formirajVektorf();
+		izracunajMatricuN();
+		izracunajVektorn();
+		formirajMatricuBT();
+		izracunajMatricuQx();
+		izracunajVektorx();
+		izracunajVektorv();
+		izracunajStandardnoOdstupanje();
+		izracunajMatricuQl();
+		izracunajMatricuQv();
+		izracunajMatricur();
+		izracunajPopravljenaMjerenja();
+		izracunajOcjenjeneVisine();
+		izracunajStandardeVisina();
+		
+		niz_v = vektor_v.getMatrix();
+		niz_loc = popravljena_mjerenja.getMatrix();
+		niz_Qll = matrica_Ql.getDiagonal().getMatrix();
+		niz_Qvv = matrica_Qv.getDiagonal().getMatrix();
+		niz_rii = matrica_r.getDiagonal().getMatrix();
+		niz_ocjenjeneVisine = ocjenjene_visine.getMatrix();
+		niz_standardnoOdstupanjeVisina = standardi_visina.getMatrix();
+		
+		// Ovde napisi kod za formiranje izvjestaja
+		// https://genuinecoder.com/save-files-javafx-filechooser/
 	}
 
-	public void izracunajPriblizneVisine() {
+	private void izracunajPriblizneVisine() {
 		ObservableList<Visina> poznate_visine = FXCollections.observableArrayList();
 		for (int i = 0; i < visine.size(); i++) {
 			if (!visine.get(i).getVisina().equals("")) {
@@ -66,18 +116,6 @@ public class MinimalniTrag1D {
 				}
 			}
 		}
-
-		formirajMatricuA();
-		formirajMatricuP();
-		formirajVektorf();
-		izracunajMatricuN();
-		izracunajVektorn();
-		formirajMatricuBT();
-		izracunajMatricuQx();
-		izracunajVektorx();
-		izracunajVektorv();
-		izracunajStandardnoOdstupanje();
-
 	}
 
 	private void formirajMatricuA() {
@@ -211,7 +249,6 @@ public class MinimalniTrag1D {
 	
 	private void izracunajVektorv() {
 		vektor_v = (matrica_A.multiply(vektor_x)).add(vektor_f);
-		System.out.println(vektor_v);
 	}
 	
 	private void izracunajStandardnoOdstupanje() {
@@ -221,7 +258,57 @@ public class MinimalniTrag1D {
 		Matrix vtp = vt.multiply(matrica_P);
 		Matrix vtpv = vtp.multiply(vektor_v);
 		s_ocjenjeno = Math.sqrt(vtpv.getMatrix()[0][0] / (n - u + DEFEKT));
-		System.out.println(s_ocjenjeno);
+	}
+	
+	private void izracunajMatricuQl() {
+		Matrix AT = matrica_A.transpose();
+		Matrix AQx = matrica_A.multiply(matrica_Qx);
+		matrica_Ql = AQx.multiply(AT);
+	}
+	
+	private void izracunajMatricuQv() {
+		Matrix P_inverzno = matrica_P.inverse();
+		matrica_Qv = P_inverzno.subtract(matrica_Ql);
+	}
+	
+	private void izracunajMatricur() {
+		matrica_r = matrica_P.multiply(matrica_Qv);
+	}
+	
+	private void izracunajPopravljenaMjerenja() {
+		int u = visinske_razlike.size();
+		double niz_popravke[][] = (vektor_v.multConst(1/1000)).getMatrix();
+		double niz_popravljenaMjerenja[][] = new double[u][1];
+		
+		for(int i = 0; i < u; i++) {
+			niz_popravljenaMjerenja[i][0] = Double.parseDouble(visinske_razlike.get(i).getVisinskaRaz()) + niz_popravke[i][0];
+		}
+		
+		popravljena_mjerenja = new Matrix(niz_popravljenaMjerenja);
+	}
+	
+	private void izracunajOcjenjeneVisine() {
+		int n = visine.size();
+		double niz_popravke[][] = (vektor_x.multConst(1/1000)).getMatrix();
+		double niz_popravljeno[][] = new double[n][1];
+		
+		for(int i = 0; i < n; i++) {
+			niz_popravljeno[i][0] = Double.parseDouble(visine.get(i).getVisina()) + niz_popravke[i][0];
+		}
+		
+		ocjenjene_visine = new Matrix(niz_popravljeno);
+	}
+	
+	private void izracunajStandardeVisina() {
+		int n = visine.size();
+		double niz_standardi[][] = new double[n][1];
+		double niz_Qx[][] = matrica_Qx.getDiagonal().getMatrix();
+		
+		for(int i = 0; i < n; i++) {
+			niz_standardi[i][0] = s0*Math.sqrt(niz_Qx[i][0]);
+		}
+		
+		standardi_visina = new Matrix(niz_standardi);
 	}
 	
 	private double nadjiVisinu(String oznaka) {
@@ -237,5 +324,4 @@ public class MinimalniTrag1D {
 		
 		return visina;
 	}
-
 }

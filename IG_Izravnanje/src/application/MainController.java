@@ -40,6 +40,8 @@ public class MainController {
 	private TextField txt_oznaka;
 	@FXML
 	private TextField txt_visina;
+	@FXML
+	private TextField txt_s0;
 	
 	@FXML
 	private TableView<VisinskaRazlika> tabela_vr;
@@ -86,8 +88,8 @@ public class MainController {
 	}
 	
 	public void izravnaj(ActionEvent e) {
-		MinimalniTrag1D mt = new MinimalniTrag1D(data_v, data_vr);
-		mt.izracunajPriblizneVisine();
+		MinimalniTrag1D mt = new MinimalniTrag1D(data_v, data_vr, Double.parseDouble(txt_s0.getText()));
+		mt.napraviIzvjestaj();
 	}
 
 }

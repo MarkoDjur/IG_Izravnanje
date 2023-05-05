@@ -49,6 +49,8 @@
                         <TextField fx:id="txt_visina" layoutX="782.0" layoutY="168.0" />
                         <Label layoutX="717.0" layoutY="173.0" text="Visina[m]:" />
                         <Button layoutX="717.0" layoutY="216.0" mnemonicParsing="false" onAction="#popuniTabeluV" prefHeight="53.0" prefWidth="266.0" text="DODAJ VISINU" />
+                        <Label layoutX="450.0" layoutY="21.0" text="s0:" />
+                        <TextField fx:id="txt_s0" layoutX="468.0" layoutY="16.0" />
                      </children>
                   </AnchorPane>
             </content>
