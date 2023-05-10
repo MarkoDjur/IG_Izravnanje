@@ -3,7 +3,7 @@ package application;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 
-public class MinimalniTrag1D implements Runnable{
+public class MinimalniTrag1D {
 	
 	private static int DEFEKT = 1;
 
@@ -42,11 +42,6 @@ public class MinimalniTrag1D implements Runnable{
 		this.visine = visine;
 		this.visinske_razlike = visinske_razlike;
 		this.s0 = s0;
-	}
-	
-	@Override
-	public void run() {
-		napraviIzvjestaj();
 	}
 	
 	public void napraviIzvjestaj() {

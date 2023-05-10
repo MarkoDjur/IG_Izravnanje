@@ -107,8 +107,7 @@ public class MainController {
 			kn.napraviIzvjestaj();
 		}
 		if(radio_minimalanTrag.isSelected()) {
-			Thread thread = new Thread(mt);
-			thread.start();
+			mt.napraviIzvjestaj();
 		}
 	}
 
