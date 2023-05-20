@@ -46,22 +46,39 @@ public class MinimalniTrag1D {
 	
 	public void napraviIzvjestaj() {
 		izracunajPriblizneVisine();
+		System.out.println("Priblizne visine");
 		formirajMatricuA();
+		System.out.println("Matrica A");
 		formirajMatricuP();
+		System.out.println("Matrica P");
 		formirajVektorf();
+		System.out.println("Vektor f");
 		izracunajMatricuN();
+		System.out.println("Matrica N");
 		izracunajVektorn();
+		System.out.println("Vektor n");
 		formirajMatricuBT();
+		System.out.println("Matrica BT");
 		izracunajMatricuQx();
+		System.out.println("Matrica Qx");
 		izracunajVektorx();
+		System.out.println("Vektor x");
 		izracunajVektorv();
+		System.out.println("Vektor v");
 		izracunajStandardnoOdstupanje();
+		System.out.println("s0");
 		izracunajMatricuQl();
+		System.out.println("Matrica Ql");
 		izracunajMatricuQv();
+		System.out.println("Matrica Qv");
 		izracunajMatricur();
+		System.out.println("Matrica r");
 		izracunajPopravljenaMjerenja();
+		System.out.println("Popravljena mjerenja");
 		izracunajOcjenjeneVisine();
+		System.out.println("X");
 		izracunajStandardeVisina();
+		System.out.println("Standardi visina");
 		
 		niz_v = vektor_v.getMatrix();
 		niz_loc = popravljena_mjerenja.getMatrix();
@@ -243,7 +260,7 @@ public class MinimalniTrag1D {
 	}
 	
 	private void izracunajVektorx() {
-		vektor_x = matrica_Qx.multConst(-1).multiply(vektor_n);
+		vektor_x = (matrica_Qx.multConst(-1)).multiply(vektor_n);
 	}
 	
 	private void izracunajVektorv() {

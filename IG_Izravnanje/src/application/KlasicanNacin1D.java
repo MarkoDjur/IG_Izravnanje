@@ -46,21 +46,37 @@ public class KlasicanNacin1D {
 
 	public void napraviIzvjestaj() {
 		formirajMatricuA();
+		System.out.println("Matrica A");
 		izracunajPriblizneVisine();
+		System.out.println("Priblizne visine");
 		formirajMatricuP();
+		System.out.println("Matrica P");
 		formirajVektorf();
+		System.out.println("Vektor f");
 		izracunajMatricuN();
+		System.out.println("Matrica N");
 		izracunajVektorn();
+		System.out.println("Vektor n");
 		izracunajMatricuQx();
+		System.out.println("Matrica Qx");
 		izracunajVektorx();
+		System.out.println("Vektor x");
 		izracunajVektorv();
+		System.out.println("Vektor v");
 		izracunajStandardnoOdstupanje();
+		System.out.println("s0");
 		izracunajMatricuQl();
+		System.out.println("Matrica Ql");
 		izracunajMatricuQv();
+		System.out.println("Matrica Qv");
 		izracunajMatricur();
+		System.out.println("Matrica r");
 		izracunajPopravljenaMjerenja();
+		System.out.println("Popravljena mjerenja");
 		izracunajOcjenjeneVisine();
+		System.out.println("Ocjenjene visine");
 		izracunajStandardeVisina();
+		System.out.println("Standardi visina");
 
 		niz_v = vektor_v.getMatrix();
 		niz_loc = popravljena_mjerenja.getMatrix();

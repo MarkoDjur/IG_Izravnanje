@@ -1,5 +1,7 @@
 package application;
 
+import org.ejml.simple.SimpleMatrix;
+
 public class Matrix {
 
 	private double matrix[][];
@@ -68,6 +70,7 @@ public class Matrix {
 		return new Matrix(m);
 	}
 	
+	/*
 	public Matrix inverse() {
 		double inverse[][] = new double[this.getNumberOfRows()][this.getNumberOfColumns()];
 		// minors and cofactors
@@ -88,6 +91,20 @@ public class Matrix {
 
 				return new Matrix(inverse);
 			}
+			
+			*/
+	
+	public Matrix inverse() {
+		SimpleMatrix m = new SimpleMatrix(matrix);
+		SimpleMatrix inverted = m.invert();
+		double[][] arr = new double[inverted.numRows()][inverted.numCols()];
+		for (int r = 0; r < inverted.numRows(); r++) {
+	        for (int c = 0; c < inverted.numCols(); c++) {
+	            arr[r][c] = inverted.get(r, c);
+	        }
+	    }
+		return new Matrix(arr);
+	}
 	
 	private double[][] minor(double[][] matrix, int row, int column) {
 		double[][] minor = new double[matrix.length - 1][matrix.length - 1];
