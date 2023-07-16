@@ -61,6 +61,8 @@
                         <Label layoutX="1024.0" layoutY="9.0" prefHeight="21.0" prefWidth="128.0" text="Vrsta izravnanja:" />
                         <TextField fx:id="txt_s0" layoutX="36.0" layoutY="227.0" />
                         <RadioButton fx:id="datum1d" layoutX="969.0" layoutY="184.0" mnemonicParsing="false" text="Definise datum" />
+                        <Label layoutX="236.0" layoutY="232.0" prefHeight="21.0" prefWidth="121.0" text="Nivo značajnosti:" />
+                        <TextField fx:id="txt_nivoZnacajnosti" layoutX="352.0" layoutY="227.0" />
                      </children>
                   </AnchorPane>
             </content>

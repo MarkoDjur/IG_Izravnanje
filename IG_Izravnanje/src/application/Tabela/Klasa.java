@@ -1,4 +1,4 @@
-package wagu;
+package application.Tabela;
 
 import java.util.Arrays;
 import java.util.List;
