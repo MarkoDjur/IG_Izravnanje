@@ -5,7 +5,13 @@ import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.text.DecimalFormat;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 
+import application.Tabela.Block;
+import application.Tabela.Board;
+import application.Tabela.Table;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.stage.FileChooser;
@@ -93,7 +99,133 @@ public class MinimalniTrag1D {
 		niz_standardnoOdstupanjeVisina = standardi_visina.getMatrix();
 		izracunajSumurii();
 
-		izvjestaj();
+
+		try {
+			proba();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+
+		// izvjestaj();
+
+	}
+
+	// ispisivanje u txt u obliku tabele
+	public void proba() throws IOException {
+		FileChooser fileChooser = new FileChooser();
+
+		FileChooser.ExtensionFilter extensionFilter = new FileChooser.ExtensionFilter("Text Files (*.txt)", "*.txt");
+		fileChooser.getExtensionFilters().add(extensionFilter);
+
+		// za provjere 
+		// File proba = new File("/Users/kantarion/Desktop/proba.txt");
+
+
+		// krajnji kod sa prozorom za cuvanje
+		File izvjestaj = fileChooser.showSaveDialog(null);
+
+
+		List<List<String>> lista1 = new ArrayList<>();
+		List<String> red1 = new ArrayList<>();
+		for (int i = 0; i < niz_v.length; i++) {
+			red1.add(visinske_razlike.get(i).getOd());
+			red1.add(visinske_razlike.get(i).getDo());
+			red1.add(df.format(niz_v[i][0]));
+			red1.add(df.format(niz_Qvv[i][0]));
+			red1.add(df.format(niz_loc[i][0]));
+			red1.add(df.format(niz_Qll[i][0]));
+			red1.add(df.format(niz_rii[i][0]));
+			if (i % 1 == 0) { // Ako je svaki treći element, dodaj red u listu i stvori novi red
+				lista1.add(red1);
+				red1 = new ArrayList<>();
+			}
+		}
+
+		// Dodavanje posljednjeg reda ako je potrebno
+		if (!red1.isEmpty()) {
+			lista1.add(red1);
+		}
+
+		FileWriter fw = new FileWriter(izvjestaj);
+		String jed = new String(
+				"==================================================================================");
+
+		List<String> header1 = Arrays.asList("OD", "DO", "V[mm]", "Qvii[mm2]", "loc[m]", "Qlii[mm2]", "rii");
+		Board board1 = new Board(100);
+		Table table1 = new Table(board1, 20, header1, lista1);
+		List<Integer> colWidthsList1 = Arrays.asList(10, 10, 10, 10, 10, 10, 10);
+		table1.setColWidthsList(colWidthsList1);
+		Block tableBlock1 = table1.tableToBlocks();
+		board1.setInitialBlock(tableBlock1);
+		board1.build();
+		String tabela1 = board1.getPreview();
+
+		fw.write("Datum definisu sljedece tacke\n" + "BR. TAC.  H[m]\n" + "Ukupan broj tacaka koje odredjuju datum\n"
+				+ "Broj mjerenih velicina je n= " + visinske_razlike.size() + "Broj nepoznatih parametara !"
+				+ "sigma apriori =!" + "sigma = " + s0 + "\n" + jed
+				+ "\nOcjene dobijene iz izravnanja i kreterijumi kvaliteta i tacnosti\n");
+		fw.write(tabela1);
+		fw.write("\n" + jed + "\nUsvojeni nivo znacajnosti je: \n" + "Globalni test adekvatnosti modela\n"
+				+ "Vrijednosti testa nulta hipoteze\n" + "Dozvoljena vrijednosti jednacine\n"
+				+ "Suma rii=\n" + jed + "\nOCJENE NEPOZNATIH PARAMETARA SA OCJENOM TACNOSTI\n");
+
+		List<List<String>> lista2 = new ArrayList<>();
+		List<String> red2 = new ArrayList<>();
+		for (int i = 0; i < niz_x.length; i++) {
+			red2.add(visine.get(i).getOznaka());
+			red2.add(df.format(niz_x[i][0]));
+			red2.add(df.format(niz_ocjenjeneVisine[i][0]));
+			red2.add(df.format(niz_standardnoOdstupanjeVisina[i][0]));
+			if (i % 1 == 0) { // Ako je svaki treći element, dodaj red u listu i stvori novi red
+				lista2.add(red2);
+				red2 = new ArrayList<>();
+			}
+		}
+
+		// Dodavanje posljednjeg reda ako je potrebno
+		if (!red2.isEmpty()) {
+			lista2.add(red2);
+		}
+
+		List<String> header2 = Arrays.asList("BR.TACKE", "x[mm]", "X[m]", "mx[mm]");
+		Board board2 = new Board(100);
+		Table table2 = new Table(board2, 20, header2, lista2);
+		List<Integer> colWidthsList2 = Arrays.asList(10, 10, 10, 10);
+		table2.setColWidthsList(colWidthsList2);
+		Block tableBlock2 = table2.tableToBlocks();
+		board2.setInitialBlock(tableBlock2);
+		board2.build();
+		String tabela2 = board2.getPreview();
+
+		fw.write(tabela2);
+		fw.close();
+
+		// OTVARANJE DATOTEKE
+
+		// first check if Desktop is supported by Platform or not
+		if (!Desktop.isDesktopSupported()) {
+			System.out.println("Desktop is not supported");
+			return;
+		}
+
+		Desktop desktop = Desktop.getDesktop();
+		if (izvjestaj.exists())
+			try {
+				desktop.open(izvjestaj);
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+
+		// let's try to open PDF file
+		if (izvjestaj.exists())
+			try {
+				desktop.open(izvjestaj);
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 
 	}
 
