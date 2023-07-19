@@ -1,5 +1,8 @@
 package application;
 
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
+
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.scene.Scene;
@@ -14,6 +17,8 @@ import javafx.scene.text.TextAlignment;
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
+import java.util.ArrayList;
+import java.util.List;
 
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -75,10 +80,19 @@ public class MainController {
 	@FXML
 	public TableColumn VISINA;
 
+	private List<TextField> textFields = new ArrayList<>();
+
 	int redVR;
 	int redV;
 
 	public void initialize() {
+		textFields.add(txt_od);
+		textFields.add(txt_do);
+		textFields.add(txt_visinskaRazlika);
+		addTextFieldChangeListener(txt_od);
+		addTextFieldChangeListener(txt_do);
+		addTextFieldChangeListener(txt_visinskaRazlika);
+
 		toolTip();
 		// Dodavanje dvoklika na tablicu
 		klikTabelaVR();
@@ -86,6 +100,16 @@ public class MainController {
 
 	}
 
+	private void addTextFieldChangeListener(TextField textField) {
+		textField.textProperty().addListener((observable, oldValue, newValue) -> {
+			// Provjera popunjenosti TextField-ova i primjena crvenog obruba
+			if (newValue.isEmpty()) {
+				textField.getStyleClass().add("red-outline");
+			} else {
+				textField.getStyleClass().remove("red-outline");
+			}
+		});
+	}
 
 	// Postavljanje tooltip-a za dugme
 	public void toolTip() {
@@ -94,7 +118,6 @@ public class MainController {
 
 		Tooltip tipVR = new Tooltip("Format je tipa #.###");
 		txt_visinskaRazlika.setTooltip(tipVR);
-
 
 	}
 
@@ -179,18 +202,47 @@ public class MainController {
 	}
 
 	public void popuniTabeluVr(ActionEvent event) {
-		System.out.println(data_vr);
 
-		OD.setCellValueFactory(new PropertyValueFactory<>("Od"));
-		DO.setCellValueFactory(new PropertyValueFactory<>("Do"));
-		VISINSKA_RAZLIKA.setCellValueFactory(new PropertyValueFactory<>("visinskaRaz"));
-		DUZINA_NIVELMANSKE_STRANE.setCellValueFactory(new PropertyValueFactory<>("duzinaStrane"));
-		BROJ_STANICA.setCellValueFactory(new PropertyValueFactory<>("brojStanica"));
-		visinskaRazlika = new VisinskaRazlika(txt_od.getText(), txt_do.getText(), txt_visinskaRazlika.getText(),
-				txt_duzinaStrane.getText(), txt_brojStanica.getText());
-		data_vr.add(visinskaRazlika);
-		tabela_vr.setItems(data_vr);
-		tabela_vr.refresh();
+		// Provjeravamo jesu li svi TextField-ovi popunjeni prije dodavanja u tabelu
+		boolean allFieldsFilled = textFields.stream().allMatch(textField -> !textField.getText().isEmpty());
+
+		List<TextField> neispunjeniTextFields = new ArrayList<>();
+
+		// Provjerite svaki TextField pojedinačno i obojite ga crveno ako nije popunjen
+		for (TextField textField : textFields) {
+			if (textField.getText().isEmpty()) {
+				textField.getStyleClass().add("red-outline");
+				neispunjeniTextFields.add(textField);
+			} else {
+				textField.getStyleClass().remove("red-outline");
+			}
+		}
+
+		if (!neispunjeniTextFields.isEmpty()) {
+			System.out.println("Popunite sljedeća polja: ");
+			for (TextField neispunjeniTextField : neispunjeniTextFields) {
+				System.out.println(neispunjeniTextField.getId());
+			}
+		} else {
+			// Ako su popunjeni svi TextField-ovi, dodajemo podatke u tabelu
+			OD.setCellValueFactory(new PropertyValueFactory<>("Od"));
+			DO.setCellValueFactory(new PropertyValueFactory<>("Do"));
+			VISINSKA_RAZLIKA.setCellValueFactory(new PropertyValueFactory<>("visinskaRaz"));
+			DUZINA_NIVELMANSKE_STRANE.setCellValueFactory(new PropertyValueFactory<>("duzinaStrane"));
+			BROJ_STANICA.setCellValueFactory(new PropertyValueFactory<>("brojStanica"));
+			visinskaRazlika = new VisinskaRazlika(txt_od.getText(), txt_do.getText(),
+					txt_visinskaRazlika.getText(),
+					txt_duzinaStrane.getText(), txt_brojStanica.getText());
+			data_vr.add(visinskaRazlika);
+			tabela_vr.setItems(data_vr);
+			tabela_vr.refresh();
+			// Očistimo TextField-ove nakon dodavanja u tabelu
+			textFields.forEach(TextField::clear);
+			textFields.forEach(textField -> textField.getStyleClass().remove("red-outline"));
+			System.out.println("Dodano u tabelu!");
+
+		}
+
 	}
 
 	public void popuniTabeluV(ActionEvent event) {

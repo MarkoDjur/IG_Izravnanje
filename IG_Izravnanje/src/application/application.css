@@ -3,6 +3,15 @@
     -fx-background-color: lightgreen;
 }
 .tooltip {
-   
+    -fx-background-color: white; /* Bijela pozadina tooltip-a */
+    -fx-text-fill: black; /* Crna boja teksta tooltip-a */
+    -fx-border-color: blue; /* Plava boja obruba tooltip-a */
+    -fx-border-width: 2px; /* Debljina obruba tooltip-a */
+    -fx-border-radius: 5px; /* Zaobljenje obruba tooltip-a */
     -fx-font-size: 12px; /* Veličina fonta tooltip-a (ovdje povećana na 14px) */
+}
+.red-outline {
+    -fx-border-color: red; /* Crvena boja obruba */
+    -fx-border-width: 2px; /* Debljina obruba */
+    -fx-border-radius: 5px; /* Zaobljenje obruba */
 }
