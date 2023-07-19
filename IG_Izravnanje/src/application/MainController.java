@@ -2,11 +2,14 @@ package application;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseButton;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.VBox;
+import javafx.scene.text.TextAlignment;
 
 import java.io.BufferedReader;
 import java.io.File;
@@ -14,12 +17,6 @@ import java.io.FileReader;
 
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.scene.control.Label;
-import javafx.scene.control.RadioButton;
-import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableView;
-
-import javafx.scene.control.TextField;
 
 public class MainController {
 
@@ -34,6 +31,8 @@ public class MainController {
 	private RadioButton radio_minimalanTrag;
 	@FXML
 	private RadioButton datum1d;
+	@FXML
+	public Button ucitajButton;
 
 	@FXML
 	private Label myLabel;
@@ -80,12 +79,26 @@ public class MainController {
 	int redV;
 
 	public void initialize() {
+		toolTip();
 		// Dodavanje dvoklika na tablicu
 		klikTabelaVR();
 		klikTabelaVisina();
+
 	}
 
-	public void klikTabelaVR(){
+
+	// Postavljanje tooltip-a za dugme
+	public void toolTip() {
+		Tooltip tipUcitaj = new Tooltip("Učitana txt datoteka\n" + "mora biti formata:\n" + "OD,DO,VR,D,BS");
+		ucitajButton.setTooltip(tipUcitaj);
+
+		Tooltip tipVR = new Tooltip("Format je tipa #.###");
+		txt_visinskaRazlika.setTooltip(tipVR);
+
+
+	}
+
+	public void klikTabelaVR() {
 		tabela_vr.setRowFactory(tv -> {
 			TableRow<VisinskaRazlika> row = new TableRow<>();
 			row.setOnMouseClicked(event -> {
@@ -98,7 +111,6 @@ public class MainController {
 			return row;
 		});
 	}
-
 
 	public void klikTabelaVisina() {
 		tabela_v.setRowFactory(tv -> {
@@ -130,7 +142,7 @@ public class MainController {
 		VISINSKA_RAZLIKA.setCellValueFactory(new PropertyValueFactory<>("visinskaRaz"));
 		DUZINA_NIVELMANSKE_STRANE.setCellValueFactory(new PropertyValueFactory<>("duzinaStrane"));
 		BROJ_STANICA.setCellValueFactory(new PropertyValueFactory<>("brojStanica"));
-		File proba = new File("/Users/kantarion/Desktop/matA.txt");
+		File proba = new File("/Users/kantarion/Documents/GitHub/IG_Izravnanje/IG_Izravnanje/src/application/matA.txt");
 		try {
 			FileReader fr = new FileReader(proba);
 			BufferedReader br = new BufferedReader(fr);
@@ -196,8 +208,10 @@ public class MainController {
 	}
 
 	public void izravnaj(ActionEvent e) {
-		MinimalniTrag1D mt = new MinimalniTrag1D(data_v, data_vr, Double.parseDouble(txt_s0.getText()), Double.parseDouble(txt_nivoZnacajnosti.getText()));
-		KlasicanNacin1D kn = new KlasicanNacin1D(data_v, data_vr, Double.parseDouble(txt_s0.getText()), Double.parseDouble(txt_nivoZnacajnosti.getText()));
+		MinimalniTrag1D mt = new MinimalniTrag1D(data_v, data_vr, Double.parseDouble(txt_s0.getText()),
+				Double.parseDouble(txt_nivoZnacajnosti.getText()));
+		KlasicanNacin1D kn = new KlasicanNacin1D(data_v, data_vr, Double.parseDouble(txt_s0.getText()),
+				Double.parseDouble(txt_nivoZnacajnosti.getText()));
 		if (radio_klasicno.isSelected()) {
 			kn.napraviIzvjestaj();
 		}

@@ -6,6 +6,13 @@
     "configurations": [
         {
             "type": "java",
+            "name": "proba",
+            "request": "launch",
+            "mainClass": "application.proba",
+            "projectName": "IG_Izravnanje"
+        },
+        {
+            "type": "java",
             "name": "Current File",
             "request": "launch",
             "mainClass": "${file}"

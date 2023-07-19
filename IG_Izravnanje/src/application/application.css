@@ -2,3 +2,7 @@
 .table-row-true {
     -fx-background-color: lightgreen;
 }
+.tooltip {
+   
+    -fx-font-size: 12px; /* Veličina fonta tooltip-a (ovdje povećana na 14px) */
+}
