@@ -1,16 +1,24 @@
 package application;
 
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
+
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseButton;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.VBox;
+import javafx.scene.text.TextAlignment;
 
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
+import java.util.ArrayList;
+import java.util.List;
 
 import izravnanje1D.KlasicanNacin1D;
 import izravnanje1D.MinimalniTrag1D;
@@ -19,12 +27,6 @@ import izravnanje1D.VisinskaRazlika;
 import izravnanje2D.Pravac;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.scene.control.Label;
-import javafx.scene.control.RadioButton;
-import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableView;
-
-import javafx.scene.control.TextField;
 
 public class MainController {
 	
@@ -41,6 +43,8 @@ public class MainController {
 	private RadioButton radio_minimalanTrag;
 	@FXML
 	private RadioButton datum1d;
+	@FXML
+	public Button ucitajButton;
 
 	@FXML
 	private Label myLabel;
@@ -83,6 +87,10 @@ public class MainController {
 	@FXML
 	public TableColumn VISINA;
 
+	private List<TextField> listaTxtVr = new ArrayList<>();
+	// private List<TextField> listaTxtV = new ArrayList<>();
+
+
 	int redVR;
 	int redV;
 	
@@ -118,12 +126,55 @@ public class MainController {
 
 	
 	public void initialize() {
+		listaTxtVr.add(txt_od);
+		listaTxtVr.add(txt_do);
+		listaTxtVr.add(txt_visinskaRazlika);
+		listaTxtVr.add(txt_duzinaStrane);
+
+		// Dodavanje listener-a
+		addTextFieldChangeListener(txt_od);
+		addTextFieldChangeListener(txt_do);
+		addTextFieldChangeListener(txt_visinskaRazlika);
+		addTextFieldChangeListener(txt_duzinaStrane);
+
+
+		// Dodavanje tooltip-a
+		toolTip();
 		// Dodavanje dvoklika na tablicu
 		klikTabelaVR();
 		klikTabelaVisina();
+
 	}
 
-	public void klikTabelaVR(){
+	private void addTextFieldChangeListener(TextField textField) {
+		textField.textProperty().addListener((observable, oldValue, newValue) -> {
+			// Provjera popunjenosti TextField-ova i primjena crvenog obruba
+			if (newValue.isEmpty()) {
+				textField.getStyleClass().add("red-outline");
+			} else {
+				textField.getStyleClass().remove("red-outline");
+
+				// Provjerite je li unesen samo brojčani niz
+                if (!newValue.matches("\\d+")) {
+                    textField.getStyleClass().add("red-outline");
+                } else {
+                    textField.getStyleClass().remove("red-outline");
+                }
+			}
+		});
+	}
+
+	// Postavljanje tooltip-a za dugme
+	public void toolTip() {
+		Tooltip tipUcitaj = new Tooltip("Učitana txt datoteka\n" + "mora biti formata:\n" + "OD,DO,VR,D,BS");
+		ucitajButton.setTooltip(tipUcitaj);
+
+		Tooltip tipVR = new Tooltip("Format je tipa #.###");
+		txt_visinskaRazlika.setTooltip(tipVR);
+
+	}
+
+	public void klikTabelaVR() {
 		tabela_vr.setRowFactory(tv -> {
 			TableRow<VisinskaRazlika> row = new TableRow<>();
 			row.setOnMouseClicked(event -> {
@@ -136,7 +187,6 @@ public class MainController {
 			return row;
 		});
 	}
-
 
 	public void klikTabelaVisina() {
 		tabela_v.setRowFactory(tv -> {
@@ -168,7 +218,7 @@ public class MainController {
 		VISINSKA_RAZLIKA.setCellValueFactory(new PropertyValueFactory<>("visinskaRaz"));
 		DUZINA_NIVELMANSKE_STRANE.setCellValueFactory(new PropertyValueFactory<>("duzinaStrane"));
 		BROJ_STANICA.setCellValueFactory(new PropertyValueFactory<>("brojStanica"));
-		File proba = new File("/Users/kantarion/Desktop/matA.txt");
+		File proba = new File("/Users/kantarion/Documents/GitHub/IG_Izravnanje/IG_Izravnanje/src/application/matA.txt");
 		try {
 			FileReader fr = new FileReader(proba);
 			BufferedReader br = new BufferedReader(fr);
@@ -205,18 +255,50 @@ public class MainController {
 	}
 
 	public void popuniTabeluVr(ActionEvent event) {
-		System.out.println(data_vr);
 
-		OD.setCellValueFactory(new PropertyValueFactory<>("Od"));
-		DO.setCellValueFactory(new PropertyValueFactory<>("Do"));
-		VISINSKA_RAZLIKA.setCellValueFactory(new PropertyValueFactory<>("visinskaRaz"));
-		DUZINA_NIVELMANSKE_STRANE.setCellValueFactory(new PropertyValueFactory<>("duzinaStrane"));
-		BROJ_STANICA.setCellValueFactory(new PropertyValueFactory<>("brojStanica"));
-		visinskaRazlika = new VisinskaRazlika(txt_od.getText(), txt_do.getText(), txt_visinskaRazlika.getText(),
-				txt_duzinaStrane.getText(), txt_brojStanica.getText());
-		data_vr.add(visinskaRazlika);
-		tabela_vr.setItems(data_vr);
-		tabela_vr.refresh();
+		// Provjeravamo jesu li svi TextField-ovi popunjeni prije dodavanja u tabelu
+		boolean allFieldsFilled = listaTxtVr.stream().allMatch(textField -> !textField.getText().isEmpty());
+
+		// Provjerite je li unesen samo brojčani niz u textFieldVisinskaRazlika
+        boolean isNumber = txt_od.getText().matches("\\d+");
+
+		List<TextField> neispunjeniTextFields = new ArrayList<>();
+
+		// Provjerite svaki TextField pojedinačno i obojite ga crveno ako nije popunjen
+		for (TextField textField : listaTxtVr) {
+			if (textField.getText().isEmpty()) {
+				textField.getStyleClass().add("red-outline");
+				neispunjeniTextFields.add(textField);
+			} else {
+				textField.getStyleClass().remove("red-outline");
+			}
+		}
+
+		if (!neispunjeniTextFields.isEmpty()) {
+			System.out.println("Popunite sljedeća polja: ");
+			for (TextField neispunjeniTextField : neispunjeniTextFields) {
+				System.out.println(neispunjeniTextField.getId());
+			}
+		} else {
+			// Ako su popunjeni svi TextField-ovi, dodajemo podatke u tabelu
+			OD.setCellValueFactory(new PropertyValueFactory<>("Od"));
+			DO.setCellValueFactory(new PropertyValueFactory<>("Do"));
+			VISINSKA_RAZLIKA.setCellValueFactory(new PropertyValueFactory<>("visinskaRaz"));
+			DUZINA_NIVELMANSKE_STRANE.setCellValueFactory(new PropertyValueFactory<>("duzinaStrane"));
+			BROJ_STANICA.setCellValueFactory(new PropertyValueFactory<>("brojStanica"));
+			visinskaRazlika = new VisinskaRazlika(txt_od.getText(), txt_do.getText(),
+					txt_visinskaRazlika.getText(),
+					txt_duzinaStrane.getText(), txt_brojStanica.getText());
+			data_vr.add(visinskaRazlika);
+			tabela_vr.setItems(data_vr);
+			tabela_vr.refresh();
+			// Očistimo TextField-ove nakon dodavanja u tabelu
+			listaTxtVr.forEach(TextField::clear);
+			listaTxtVr.forEach(textField -> textField.getStyleClass().remove("red-outline"));
+			System.out.println("Dodano u tabelu!");
+
+		}
+
 	}
 
 	public void popuniTabeluV(ActionEvent event) {
@@ -234,8 +316,10 @@ public class MainController {
 	}
 
 	public void izravnaj(ActionEvent e) {
-		MinimalniTrag1D mt = new MinimalniTrag1D(data_v, data_vr, Double.parseDouble(txt_s0.getText()), Double.parseDouble(txt_nivoZnacajnosti.getText()));
-		KlasicanNacin1D kn = new KlasicanNacin1D(data_v, data_vr, Double.parseDouble(txt_s0.getText()), Double.parseDouble(txt_nivoZnacajnosti.getText()));
+		MinimalniTrag1D mt = new MinimalniTrag1D(data_v, data_vr, Double.parseDouble(txt_s0.getText()),
+				Double.parseDouble(txt_nivoZnacajnosti.getText()));
+		KlasicanNacin1D kn = new KlasicanNacin1D(data_v, data_vr, Double.parseDouble(txt_s0.getText()),
+				Double.parseDouble(txt_nivoZnacajnosti.getText()));
 		if (radio_klasicno.isSelected()) {
 			kn.napraviIzvjestaj();
 		}

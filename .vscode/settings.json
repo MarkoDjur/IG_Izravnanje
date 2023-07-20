@@ -1,0 +1,13 @@
+{
+    "java.project.referencedLibraries": {
+        "include": [
+            "lib/**/*.jar",
+            "IG_Izravnanje/Dependencies/commons-math3-3.6.1.jar",
+            "IG_Izravnanje/Dependencies/ejml-0.24.jar"
+        ],
+        "exclude": [
+            "/IG_Izravnanje/Dependencies/commons-math3-3.6.1.jar",
+            "/IG_Izravnanje/Dependencies/ejml-0.24.jar",
+        ]
+    }
+}
