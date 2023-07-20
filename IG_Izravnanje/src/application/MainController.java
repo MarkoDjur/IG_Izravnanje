@@ -80,19 +80,27 @@ public class MainController {
 	@FXML
 	public TableColumn VISINA;
 
-	private List<TextField> textFields = new ArrayList<>();
+	private List<TextField> listaTxtVr = new ArrayList<>();
+	// private List<TextField> listaTxtV = new ArrayList<>();
+
 
 	int redVR;
 	int redV;
 
 	public void initialize() {
-		textFields.add(txt_od);
-		textFields.add(txt_do);
-		textFields.add(txt_visinskaRazlika);
+		listaTxtVr.add(txt_od);
+		listaTxtVr.add(txt_do);
+		listaTxtVr.add(txt_visinskaRazlika);
+		listaTxtVr.add(txt_duzinaStrane);
+
+		// Dodavanje listener-a
 		addTextFieldChangeListener(txt_od);
 		addTextFieldChangeListener(txt_do);
 		addTextFieldChangeListener(txt_visinskaRazlika);
+		addTextFieldChangeListener(txt_duzinaStrane);
 
+
+		// Dodavanje tooltip-a
 		toolTip();
 		// Dodavanje dvoklika na tablicu
 		klikTabelaVR();
@@ -107,6 +115,13 @@ public class MainController {
 				textField.getStyleClass().add("red-outline");
 			} else {
 				textField.getStyleClass().remove("red-outline");
+
+				// Provjerite je li unesen samo brojčani niz
+                if (!newValue.matches("\\d+")) {
+                    textField.getStyleClass().add("red-outline");
+                } else {
+                    textField.getStyleClass().remove("red-outline");
+                }
 			}
 		});
 	}
@@ -204,12 +219,15 @@ public class MainController {
 	public void popuniTabeluVr(ActionEvent event) {
 
 		// Provjeravamo jesu li svi TextField-ovi popunjeni prije dodavanja u tabelu
-		boolean allFieldsFilled = textFields.stream().allMatch(textField -> !textField.getText().isEmpty());
+		boolean allFieldsFilled = listaTxtVr.stream().allMatch(textField -> !textField.getText().isEmpty());
+
+		// Provjerite je li unesen samo brojčani niz u textFieldVisinskaRazlika
+        boolean isNumber = txt_od.getText().matches("\\d+");
 
 		List<TextField> neispunjeniTextFields = new ArrayList<>();
 
 		// Provjerite svaki TextField pojedinačno i obojite ga crveno ako nije popunjen
-		for (TextField textField : textFields) {
+		for (TextField textField : listaTxtVr) {
 			if (textField.getText().isEmpty()) {
 				textField.getStyleClass().add("red-outline");
 				neispunjeniTextFields.add(textField);
@@ -237,8 +255,8 @@ public class MainController {
 			tabela_vr.setItems(data_vr);
 			tabela_vr.refresh();
 			// Očistimo TextField-ove nakon dodavanja u tabelu
-			textFields.forEach(TextField::clear);
-			textFields.forEach(textField -> textField.getStyleClass().remove("red-outline"));
+			listaTxtVr.forEach(TextField::clear);
+			listaTxtVr.forEach(textField -> textField.getStyleClass().remove("red-outline"));
 			System.out.println("Dodano u tabelu!");
 
 		}
