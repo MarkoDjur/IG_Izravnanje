@@ -159,26 +159,26 @@
                            <content>
                               <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="646.0" prefWidth="403.0">
                                  <children>
-                                    <TableView fx:id="tabela_u1" layoutX="1.0" layoutY="264.0" prefHeight="381.0" prefWidth="384.0">
+                                    <TableView fx:id="tabela_d" layoutX="1.0" layoutY="264.0" prefHeight="381.0" prefWidth="384.0">
                                        <columns>
-                                          <TableColumn fx:id="UGAO_OZNAKA1" prefWidth="83.0" text="OD" />
-                                          <TableColumn fx:id="UGAO_STEPEN1" prefWidth="63.0" text="DO" />
-                                          <TableColumn fx:id="UGAO_MINUT1" prefWidth="121.0" text="Vrijednost [m]" />
-                                          <TableColumn fx:id="UGAO_TACNOST1" prefWidth="108.0" text="Tačnost [mm]" />
+                                          <TableColumn fx:id="DUZINA_OD" prefWidth="77.0" text="OD" />
+                                          <TableColumn fx:id="DUZINA_DO" prefWidth="69.0" text="DO" />
+                                          <TableColumn fx:id="DUZINA_VRIJEDNOST" prefWidth="121.0" text="Vrijednost [m]" />
+                                          <TableColumn fx:id="DUZINA_TACNOST" prefWidth="108.0" text="Tačnost [mm]" />
                                        </columns>
                                     </TableView>
                                     <Label layoutX="1.0" layoutY="95.0" />
-                                    <Button fx:id="dgm_dodaj_ugao1" layoutX="-1.0" layoutY="199.0" mnemonicParsing="false" onAction="#popuniTabeluU" prefHeight="48.0" prefWidth="197.0" text="DODAJ" />
-                                    <TextField fx:id="txt_od_p1" layoutX="34.0" layoutY="14.0" />
+                                    <Button fx:id="dgm_dodaj_ugao1" layoutX="-1.0" layoutY="199.0" mnemonicParsing="false" onAction="#pupuniTabeluD" prefHeight="48.0" prefWidth="197.0" text="DODAJ" />
+                                    <TextField fx:id="txt_od_d" layoutX="34.0" layoutY="14.0" />
                                     <Label layoutX="2.0" layoutY="19.0" text="OD:" />
-                                    <TextField fx:id="txt_do_p1" layoutX="33.0" layoutY="59.0" />
+                                    <TextField fx:id="txt_do_d" layoutX="33.0" layoutY="59.0" />
                                     <Label layoutX="1.0" layoutY="64.0" text="DO:" />
-                                    <TextField fx:id="txt_tacnost_p1" layoutX="103.0" layoutY="101.0" />
+                                    <TextField fx:id="txt_vrijednost_d" layoutX="103.0" layoutY="101.0" />
                                     <Label layoutX="1.0" layoutY="106.0" prefHeight="21.0" prefWidth="105.0" text="Vrijednost [m]:" />
-                                    <TextField fx:id="txt_tacnost_u1" layoutX="103.0" layoutY="144.0" prefHeight="31.0" prefWidth="58.0" />
+                                    <TextField fx:id="txt_mm_d" layoutX="103.0" layoutY="144.0" prefHeight="31.0" prefWidth="58.0" />
                                     <Label layoutX="2.0" layoutY="149.0" prefHeight="21.0" prefWidth="98.0" text="Tačnost [mm]:" />
                                     <Label layoutX="168.0" layoutY="149.0" text="mm +" />
-                                    <TextField fx:id="txt_tacnost_u11" layoutX="213.0" layoutY="144.0" prefHeight="31.0" prefWidth="58.0" />
+                                    <TextField fx:id="txt_ppm_d" layoutX="213.0" layoutY="144.0" prefHeight="31.0" prefWidth="58.0" />
                                     <Label layoutX="279.0" layoutY="149.0" text="ppm" />
                                  </children>
                               </AnchorPane>

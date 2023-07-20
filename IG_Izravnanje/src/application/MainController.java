@@ -24,6 +24,7 @@ import izravnanje1D.KlasicanNacin1D;
 import izravnanje1D.MinimalniTrag1D;
 import izravnanje1D.Visina;
 import izravnanje1D.VisinskaRazlika;
+import izravnanje2D.Duzina;
 import izravnanje2D.Pravac;
 import izravnanje2D.Ugao;
 import javafx.event.ActionEvent;
@@ -96,8 +97,10 @@ public class MainController {
 	// 2D mreza
 	ObservableList<Pravac> data_pravci = FXCollections.observableArrayList();
 	ObservableList<Ugao> data_uglovi = FXCollections.observableArrayList();
+	ObservableList<Duzina> data_duzine = FXCollections.observableArrayList();
 	private Pravac pravac;
 	private Ugao ugao;
+	private Duzina duzina;
 	@FXML
 	private TextField txt_od_p;
 	@FXML
@@ -124,6 +127,7 @@ public class MainController {
 	public TableColumn PRAVAC_TACNOST;
 	@FXML
 	private TableView<Pravac> tabela_p;
+	
 	@FXML
 	private TextField txt_lijevo_u;
 	@FXML
@@ -150,6 +154,27 @@ public class MainController {
 	public TableColumn UGAO_TACNOST;
 	@FXML
 	private TableView<Ugao> tabela_u;
+	
+	@FXML
+	private TextField txt_od_d;
+	@FXML
+	private TextField txt_do_d;
+	@FXML
+	private TextField txt_vrijednost_d;
+	@FXML
+	private TextField txt_mm_d;
+	@FXML
+	private TextField txt_ppm_d;
+	@FXML
+	public TableColumn DUZINA_OD;
+	@FXML
+	public TableColumn DUZINA_DO;
+	@FXML
+	public TableColumn DUZINA_VRIJEDNOST;
+	@FXML
+	public TableColumn DUZINA_TACNOST;
+	@FXML
+	private TableView<Duzina> tabela_d;
 
 	public void initialize() {
 		// Dodavanje fields u listu VR
@@ -527,6 +552,22 @@ public class MainController {
 		data_uglovi.add(ugao);
 		tabela_u.setItems(data_uglovi);
 		tabela_u.refresh();
+	}
+	
+	public void pupuniTabeluD(ActionEvent event) {
+		DUZINA_OD.setCellValueFactory(new PropertyValueFactory<>("Od"));
+		DUZINA_DO.setCellValueFactory(new PropertyValueFactory<>("Do"));
+		DUZINA_VRIJEDNOST.setCellValueFactory(new PropertyValueFactory<>("vrijednost"));
+		DUZINA_TACNOST.setCellValueFactory(new PropertyValueFactory<>("tacnost"));
+		double mm = Double.parseDouble(txt_mm_d.getText());
+		double ppm = Double.parseDouble(txt_ppm_d.getText());
+		double duz = Double.parseDouble(txt_vrijednost_d.getText());
+		double tac = mm + (ppm * (duz / 1000));
+		String tacnost = "" + tac;
+		duzina = new Duzina(txt_od_d.getText(), txt_do_d.getText(), txt_vrijednost_d.getText(), tacnost);
+		data_duzine.add(duzina);
+		tabela_d.setItems(data_duzine);
+		tabela_d.refresh();
 	}
 
 }
