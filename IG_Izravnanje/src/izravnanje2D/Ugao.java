@@ -2,32 +2,25 @@ package izravnanje2D;
 
 import javafx.beans.property.SimpleStringProperty;
 
-public class Pravac {
+public class Ugao {
 	
-	private SimpleStringProperty Od;
-	private SimpleStringProperty Do;
+	private SimpleStringProperty oznaka;
 	private SimpleStringProperty stepen;
 	private SimpleStringProperty minut;
 	private SimpleStringProperty sekund;
 	private SimpleStringProperty tacnost;
 	
-	public Pravac(String Od, String Do, String stepen, String minut, String sekund, String tacnost) {
-		this.Od = new SimpleStringProperty(Od);
-		this.Do = new SimpleStringProperty(Do);
+	public Ugao(String oznaka, String stepen, String minut, String sekund, String tacnost) {
+		this.oznaka = new SimpleStringProperty(oznaka);
 		this.stepen = new SimpleStringProperty(stepen);
 		this.minut = new SimpleStringProperty(minut);
 		this.sekund = new SimpleStringProperty(sekund);
 		this.tacnost = new SimpleStringProperty(tacnost);
 	}
 	
-	public String getOd() {
-		return Od.get();
+	public String getOznaka() {
+		return oznaka.get();
 	}
-	
-	public String getDo() {
-		return Do.get();
-	}
-	
 	
 	public String getStepen() {
 		return stepen.get();

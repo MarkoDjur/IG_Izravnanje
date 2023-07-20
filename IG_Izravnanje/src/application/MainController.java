@@ -25,6 +25,7 @@ import izravnanje1D.MinimalniTrag1D;
 import izravnanje1D.Visina;
 import izravnanje1D.VisinskaRazlika;
 import izravnanje2D.Pravac;
+import izravnanje2D.Ugao;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 
@@ -96,7 +97,9 @@ public class MainController {
 	
 	// 2D mreza
 	ObservableList<Pravac> data_pravci = FXCollections.observableArrayList();
+	ObservableList<Ugao> data_uglovi = FXCollections.observableArrayList();
 	private Pravac pravac;
+	private Ugao ugao;
 	@FXML
 	private TextField txt_od_p;
 	@FXML
@@ -123,6 +126,32 @@ public class MainController {
 	public TableColumn PRAVAC_TACNOST;
 	@FXML
 	private TableView<Pravac> tabela_p;
+	@FXML
+	private TextField txt_lijevo_u;
+	@FXML
+	private TextField txt_sredina_u;
+	@FXML
+	private TextField txt_desno_u;
+	@FXML
+	private TextField txt_tacnost_u;
+	@FXML
+	private TextField txt_stepen_u;
+	@FXML
+	private TextField txt_minut_u;
+	@FXML
+	private TextField txt_sekund_u;
+	@FXML
+	public TableColumn UGAO_OZNAKA;
+	@FXML
+	public TableColumn UGAO_STEPEN;
+	@FXML
+	public TableColumn UGAO_MINUT;
+	@FXML
+	public TableColumn UGAO_SEKUND;
+	@FXML
+	public TableColumn UGAO_TACNOST;
+	@FXML
+	private TableView<Ugao> tabela_u;
 
 	
 	public void initialize() {
@@ -218,7 +247,7 @@ public class MainController {
 		VISINSKA_RAZLIKA.setCellValueFactory(new PropertyValueFactory<>("visinskaRaz"));
 		DUZINA_NIVELMANSKE_STRANE.setCellValueFactory(new PropertyValueFactory<>("duzinaStrane"));
 		BROJ_STANICA.setCellValueFactory(new PropertyValueFactory<>("brojStanica"));
-		File proba = new File("/Users/kantarion/Documents/GitHub/IG_Izravnanje/IG_Izravnanje/src/application/matA.txt");
+		File proba = new File("matA.txt");
 		try {
 			FileReader fr = new FileReader(proba);
 			BufferedReader br = new BufferedReader(fr);
@@ -465,6 +494,19 @@ public class MainController {
 		data_pravci.add(pravac);
 		tabela_p.setItems(data_pravci);
 		tabela_p.refresh();
+	}
+	
+	public void popuniTabeluU(ActionEvent event) {
+		UGAO_OZNAKA.setCellValueFactory(new PropertyValueFactory<>("oznaka"));
+		UGAO_STEPEN.setCellValueFactory(new PropertyValueFactory<>("stepen"));
+		UGAO_MINUT.setCellValueFactory(new PropertyValueFactory<>("minut"));
+		UGAO_SEKUND.setCellValueFactory(new PropertyValueFactory<>("sekund"));
+		UGAO_TACNOST.setCellValueFactory(new PropertyValueFactory<>("tacnost"));
+		String oznaka = txt_lijevo_u.getText() + "-" + txt_sredina_u.getText() + "-" + txt_desno_u.getText();
+		ugao = new Ugao(oznaka, txt_stepen_u.getText(), txt_minut_u.getText(), txt_sekund_u.getText(), txt_tacnost_u.getText());
+		data_uglovi.add(ugao);
+		tabela_u.setItems(data_uglovi);
+		tabela_u.refresh();
 	}
 
 }

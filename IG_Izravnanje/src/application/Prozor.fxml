@@ -78,10 +78,10 @@
                           <content>
                             <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="613.0" prefWidth="361.0">
                                  <children>
-                                    <TextField fx:id="txt_od_p" layoutX="33.0" layoutY="-1.0" />
-                                    <Label layoutX="1.0" layoutY="4.0" text="OD:" />
-                                    <TextField fx:id="txt_do_p" layoutX="32.0" layoutY="44.0" />
-                                    <Label layoutY="49.0" text="DO:" />
+                                    <TextField fx:id="txt_od_p" layoutX="32.0" layoutY="6.0" />
+                                    <Label layoutY="11.0" text="OD:" />
+                                    <TextField fx:id="txt_do_p" layoutX="31.0" layoutY="51.0" />
+                                    <Label layoutX="-1.0" layoutY="56.0" text="DO:" />
                                     <Label layoutX="36.0" layoutY="130.0" text="o" />
                                     <Label layoutX="146.0" layoutY="130.0" text="'">
                                        <font>
@@ -129,27 +129,57 @@
                                           <Font size="28.0" />
                                        </font>
                                     </Label>
-                                    <TextField alignment="CENTER" layoutY="152.0" prefHeight="31.0" prefWidth="80.0" />
-                                    <TextField alignment="CENTER" layoutX="109.0" layoutY="152.0" prefHeight="31.0" prefWidth="80.0" />
-                                    <TextField alignment="CENTER" layoutX="213.0" layoutY="152.0" prefHeight="31.0" prefWidth="80.0" />
-                                    <TableView layoutX="1.0" layoutY="195.0" prefHeight="450.0" prefWidth="384.0">
+                                    <TextField fx:id="txt_stepen_u" alignment="CENTER" layoutY="152.0" prefHeight="31.0" prefWidth="80.0" />
+                                    <TextField fx:id="txt_minut_u" alignment="CENTER" layoutX="109.0" layoutY="152.0" prefHeight="31.0" prefWidth="80.0" />
+                                    <TextField fx:id="txt_sekund_u" alignment="CENTER" layoutX="213.0" layoutY="152.0" prefHeight="31.0" prefWidth="80.0" />
+                                    <TableView fx:id="tabela_u" layoutX="1.0" layoutY="264.0" prefHeight="381.0" prefWidth="384.0">
                                        <columns>
-                                          <TableColumn prefWidth="83.0" text="Oznaka" />
-                                          <TableColumn prefWidth="63.0" text="o" />
-                                          <TableColumn prefWidth="64.0" text="'" />
-                                          <TableColumn prefWidth="78.0" text="''" />
-                                          <TableColumn prefWidth="92.0" text="Tačnost ['']" />
+                                          <TableColumn fx:id="UGAO_OZNAKA" prefWidth="83.0" text="Oznaka" />
+                                          <TableColumn fx:id="UGAO_STEPEN" prefWidth="63.0" text="o" />
+                                          <TableColumn fx:id="UGAO_MINUT" prefWidth="64.0" text="'" />
+                                          <TableColumn fx:id="UGAO_SEKUND" prefWidth="78.0" text="''" />
+                                          <TableColumn fx:id="UGAO_TACNOST" prefWidth="92.0" text="Tačnost ['']" />
                                        </columns>
                                     </TableView>
-                                    <TextField fx:id="txt_od1111" layoutX="79.0" layoutY="90.0" />
+                                    <TextField fx:id="txt_tacnost_u" layoutX="79.0" layoutY="90.0" />
                                     <Label layoutX="1.0" layoutY="95.0" />
                                     <Label layoutY="95.0" prefHeight="21.0" prefWidth="85.0" text="Tačnost ['']:" />
                                     <Label layoutX="1.0" layoutY="21.0" prefHeight="21.0" prefWidth="56.0" text="Oznaka:" />
-                                    <TextField alignment="CENTER" layoutX="57.0" layoutY="16.0" prefHeight="31.0" prefWidth="80.0" />
-                                    <TextField alignment="CENTER" layoutX="166.0" layoutY="16.0" prefHeight="31.0" prefWidth="80.0" />
-                                    <TextField alignment="CENTER" layoutX="273.0" layoutY="16.0" prefHeight="31.0" prefWidth="80.0" />
+                                    <TextField fx:id="txt_lijevo_u" alignment="CENTER" layoutX="57.0" layoutY="16.0" prefHeight="31.0" prefWidth="80.0" />
+                                    <TextField fx:id="txt_sredina_u" alignment="CENTER" layoutX="166.0" layoutY="16.0" prefHeight="31.0" prefWidth="80.0" />
+                                    <TextField fx:id="txt_desno_u" alignment="CENTER" layoutX="273.0" layoutY="16.0" prefHeight="31.0" prefWidth="80.0" />
                                     <Label layoutX="149.0" layoutY="21.0" text="-" />
                                     <Label layoutX="256.0" layoutY="21.0" text="-" />
+                                    <Button fx:id="dgm_dodaj_ugao" layoutX="-1.0" layoutY="199.0" mnemonicParsing="false" onAction="#popuniTabeluU" prefHeight="48.0" prefWidth="197.0" text="DODAJ" />
+                                 </children>
+                              </AnchorPane>
+                           </content>
+                        </TitledPane>
+                        <TitledPane animated="false" layoutX="852.0" prefHeight="678.0" prefWidth="381.0" text="Dužina">
+                           <content>
+                              <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="646.0" prefWidth="403.0">
+                                 <children>
+                                    <TableView fx:id="tabela_u1" layoutX="1.0" layoutY="264.0" prefHeight="381.0" prefWidth="384.0">
+                                       <columns>
+                                          <TableColumn fx:id="UGAO_OZNAKA1" prefWidth="83.0" text="OD" />
+                                          <TableColumn fx:id="UGAO_STEPEN1" prefWidth="63.0" text="DO" />
+                                          <TableColumn fx:id="UGAO_MINUT1" prefWidth="121.0" text="Vrijednost [m]" />
+                                          <TableColumn fx:id="UGAO_TACNOST1" prefWidth="108.0" text="Tačnost [mm]" />
+                                       </columns>
+                                    </TableView>
+                                    <Label layoutX="1.0" layoutY="95.0" />
+                                    <Button fx:id="dgm_dodaj_ugao1" layoutX="-1.0" layoutY="199.0" mnemonicParsing="false" onAction="#popuniTabeluU" prefHeight="48.0" prefWidth="197.0" text="DODAJ" />
+                                    <TextField fx:id="txt_od_p1" layoutX="34.0" layoutY="14.0" />
+                                    <Label layoutX="2.0" layoutY="19.0" text="OD:" />
+                                    <TextField fx:id="txt_do_p1" layoutX="33.0" layoutY="59.0" />
+                                    <Label layoutX="1.0" layoutY="64.0" text="DO:" />
+                                    <TextField fx:id="txt_tacnost_p1" layoutX="103.0" layoutY="101.0" />
+                                    <Label layoutX="1.0" layoutY="106.0" prefHeight="21.0" prefWidth="105.0" text="Vrijednost [m]:" />
+                                    <TextField fx:id="txt_tacnost_u1" layoutX="103.0" layoutY="144.0" prefHeight="31.0" prefWidth="58.0" />
+                                    <Label layoutX="2.0" layoutY="149.0" prefHeight="21.0" prefWidth="98.0" text="Tačnost [mm]:" />
+                                    <Label layoutX="168.0" layoutY="149.0" text="mm +" />
+                                    <TextField fx:id="txt_tacnost_u11" layoutX="213.0" layoutY="144.0" prefHeight="31.0" prefWidth="58.0" />
+                                    <Label layoutX="279.0" layoutY="149.0" text="ppm" />
                                  </children>
                               </AnchorPane>
                            </content>
