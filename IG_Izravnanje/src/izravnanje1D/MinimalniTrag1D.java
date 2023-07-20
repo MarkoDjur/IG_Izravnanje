@@ -109,6 +109,8 @@ public class MinimalniTrag1D {
 			e.printStackTrace();
 		}
 
+		// izvjestaj();
+
 	}
 
 	// ispisivanje u txt u obliku tabele
@@ -134,6 +136,7 @@ public class MinimalniTrag1D {
 			red1.add(df.format(niz_loc[i][0]));
 			red1.add(df.format(niz_Qll[i][0]));
 			red1.add(df.format(niz_rii[i][0]));
+			red1.add(df.format(niz_u[i][0]));
 			if (i % 1 == 0) { // Ako je svaki treći element, dodaj red u listu i stvori novi red
 				lista1.add(red1);
 				red1 = new ArrayList<>();
@@ -147,26 +150,27 @@ public class MinimalniTrag1D {
 
 		FileWriter fw = new FileWriter(izvjestaj);
 		String jed = new String(
-				"==================================================================================");
+				"=========================================================================================");
 
-		List<String> header1 = Arrays.asList("OD", "DO", "V[mm]", "Qvii[mm2]", "loc[m]", "Qlii[mm2]", "rii");
+		List<String> header1 = Arrays.asList("OD", "DO", "V[mm]", "Qvii[mm2]", "loc[m]", "Qlii[mm2]", "rii", "u-v");
 		Board board1 = new Board(100);
 		Table table1 = new Table(board1, 20, header1, lista1);
-		List<Integer> colWidthsList1 = Arrays.asList(10, 10, 10, 10, 10, 10, 10);
+		List<Integer> colWidthsList1 = Arrays.asList(10, 10, 10, 10, 10, 10, 10, 10);
 		table1.setColWidthsList(colWidthsList1);
 		Block tableBlock1 = table1.tableToBlocks();
 		board1.setInitialBlock(tableBlock1);
 		board1.build();
 		String tabela1 = board1.getPreview();
 
-		fw.write("Datum definisu sljedece tacke\n" + "BR. TAC.  H[m]\n" + "Ukupan broj tacaka koje odredjuju datum\n"
-				+ "Broj mjerenih velicina je n= " + visinske_razlike.size() + "Broj nepoznatih parametara !"
-				+ "sigma apriori =!" + "sigma = " + s0 + "\n" + jed
-				+ "\nOcjene dobijene iz izravnanja i kreterijumi kvaliteta i tacnosti\n");
+		fw.write("Broj mjerenih velicina je n= " + visinske_razlike.size() + "\nBroj nepoznatih parametara je u= "
+				+ matrica_A.getMatrix()[0].length
+				+ "\nsigma apriori = " + s0 + "\nsigma ocjenjeno= " + s_ocjenjeno + "\n" + jed
+				+ "\nOCJENE DOBIJENE IZ IZRAVNANJA I KRITERIJUMI KVALITETA I TACNOSTI\n");
 		fw.write(tabela1);
-		fw.write("\n" + jed + "\nUsvojeni nivo znacajnosti je: \n" + "Globalni test adekvatnosti modela\n"
-				+ "Vrijednosti testa nulta hipoteze\n" + "Dozvoljena vrijednosti jednacine\n"
-				+ "Suma rii=\n" + jed + "\nOCJENE NEPOZNATIH PARAMETARA SA OCJENOM TACNOSTI\n");
+		fw.write(jed + "\nUsvojeni nivo znacajnosti je: " + nivo_znacajnosti
+				+ "\nGlobalni test adekvatnosti modela"
+				+ "\nVrijednosti testa nulta hipoteze: " + t + "\nDozvoljena vrijednosti jednacine: " + f
+				+ "\nSuma rii= " + suma_rii + "\n" + jed + "\nOCJENE NEPOZNATIH PARAMETARA SA OCJENOM TACNOSTI\n");
 
 		List<List<String>> lista2 = new ArrayList<>();
 		List<String> red2 = new ArrayList<>();

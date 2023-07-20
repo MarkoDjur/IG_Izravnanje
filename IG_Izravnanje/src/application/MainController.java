@@ -127,7 +127,7 @@ public class MainController {
 	public TableColumn PRAVAC_TACNOST;
 	@FXML
 	private TableView<Pravac> tabela_p;
-	
+
 	@FXML
 	private TextField txt_lijevo_u;
 	@FXML
@@ -154,7 +154,7 @@ public class MainController {
 	public TableColumn UGAO_TACNOST;
 	@FXML
 	private TableView<Ugao> tabela_u;
-	
+
 	@FXML
 	private TextField txt_od_d;
 	@FXML
@@ -275,7 +275,7 @@ public class MainController {
 		VISINSKA_RAZLIKA.setCellValueFactory(new PropertyValueFactory<>("visinskaRaz"));
 		DUZINA_NIVELMANSKE_STRANE.setCellValueFactory(new PropertyValueFactory<>("duzinaStrane"));
 		BROJ_STANICA.setCellValueFactory(new PropertyValueFactory<>("brojStanica"));
-		File proba = new File("matA.txt");
+		File proba = new File("IG_Izravnanje/src/application/matA.txt");
 		try {
 			FileReader fr = new FileReader(proba);
 			BufferedReader br = new BufferedReader(fr);
@@ -540,7 +540,7 @@ public class MainController {
 		tabela_p.setItems(data_pravci);
 		tabela_p.refresh();
 	}
-	
+
 	public void popuniTabeluU(ActionEvent event) {
 		UGAO_OZNAKA.setCellValueFactory(new PropertyValueFactory<>("oznaka"));
 		UGAO_STEPEN.setCellValueFactory(new PropertyValueFactory<>("stepen"));
@@ -548,12 +548,13 @@ public class MainController {
 		UGAO_SEKUND.setCellValueFactory(new PropertyValueFactory<>("sekund"));
 		UGAO_TACNOST.setCellValueFactory(new PropertyValueFactory<>("tacnost"));
 		String oznaka = txt_lijevo_u.getText() + "-" + txt_sredina_u.getText() + "-" + txt_desno_u.getText();
-		ugao = new Ugao(oznaka, txt_stepen_u.getText(), txt_minut_u.getText(), txt_sekund_u.getText(), txt_tacnost_u.getText());
+		ugao = new Ugao(oznaka, txt_stepen_u.getText(), txt_minut_u.getText(), txt_sekund_u.getText(),
+				txt_tacnost_u.getText());
 		data_uglovi.add(ugao);
 		tabela_u.setItems(data_uglovi);
 		tabela_u.refresh();
 	}
-	
+
 	public void pupuniTabeluD(ActionEvent event) {
 		DUZINA_OD.setCellValueFactory(new PropertyValueFactory<>("Od"));
 		DUZINA_DO.setCellValueFactory(new PropertyValueFactory<>("Do"));
