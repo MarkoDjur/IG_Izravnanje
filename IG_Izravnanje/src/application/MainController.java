@@ -12,6 +12,11 @@ import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
 
+import izravnanje1D.KlasicanNacin1D;
+import izravnanje1D.MinimalniTrag1D;
+import izravnanje1D.Visina;
+import izravnanje1D.VisinskaRazlika;
+import izravnanje2D.Pravac;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
@@ -22,12 +27,14 @@ import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 
 public class MainController {
-
+	
+	// 1D mreza
 	private ObservableList<VisinskaRazlika> data_vr = FXCollections.observableArrayList();
 	private ObservableList<Visina> data_v = FXCollections.observableArrayList();
 	private Visina visina;
 	private VisinskaRazlika visinskaRazlika;
-
+	
+	
 	@FXML
 	private RadioButton radio_klasicno;
 	@FXML
@@ -78,7 +85,38 @@ public class MainController {
 
 	int redVR;
 	int redV;
+	
+	// 2D mreza
+	ObservableList<Pravac> data_pravci = FXCollections.observableArrayList();
+	private Pravac pravac;
+	@FXML
+	private TextField txt_od_p;
+	@FXML
+	private TextField txt_do_p;
+	@FXML
+	private TextField txt_stepen_p;
+	@FXML
+	private TextField txt_minut_p;
+	@FXML
+	private TextField txt_sekund_p;
+	@FXML
+	private TextField txt_tacnost_p;
+	@FXML
+	public TableColumn PRAVAC_OD;
+	@FXML
+	public TableColumn PRAVAC_DO;
+	@FXML
+	public TableColumn PRAVAC_STEPEN;
+	@FXML
+	public TableColumn PRAVAC_MINUT;
+	@FXML
+	public TableColumn PRAVAC_SEKUND;
+	@FXML
+	public TableColumn PRAVAC_TACNOST;
+	@FXML
+	private TableView<Pravac> tabela_p;
 
+	
 	public void initialize() {
 		// Dodavanje dvoklika na tablicu
 		klikTabelaVR();
@@ -329,6 +367,20 @@ public class MainController {
 				tabela_v.refresh(); // Osvježi prikaz tablice
 			}
 		});
+	}
+	
+	public void popuniTabeluP(ActionEvent event) {
+		PRAVAC_OD.setCellValueFactory(new PropertyValueFactory<>("Od"));
+		PRAVAC_DO.setCellValueFactory(new PropertyValueFactory<>("Do"));
+		PRAVAC_STEPEN.setCellValueFactory(new PropertyValueFactory<>("stepen"));
+		PRAVAC_MINUT.setCellValueFactory(new PropertyValueFactory<>("minut"));
+		PRAVAC_SEKUND.setCellValueFactory(new PropertyValueFactory<>("sekund"));
+		PRAVAC_TACNOST.setCellValueFactory(new PropertyValueFactory<>("tacnost"));
+		pravac = new Pravac(txt_od_p.getText(), txt_do_p.getText(), txt_stepen_p.getText(),
+				txt_minut_p.getText(), txt_sekund_p.getText(), txt_tacnost_p.getText());
+		data_pravci.add(pravac);
+		tabela_p.setItems(data_pravci);
+		tabela_p.refresh();
 	}
 
 }

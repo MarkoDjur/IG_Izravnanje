@@ -1,4 +1,4 @@
-package application;
+package izravnanje1D;
 
 import javafx.beans.property.SimpleStringProperty;
 

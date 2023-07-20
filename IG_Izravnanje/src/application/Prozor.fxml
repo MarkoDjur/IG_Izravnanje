@@ -8,12 +8,14 @@
 <?import javafx.scene.control.TableColumn?>
 <?import javafx.scene.control.TableView?>
 <?import javafx.scene.control.TextField?>
+<?import javafx.scene.control.TitledPane?>
 <?import javafx.scene.control.ToggleGroup?>
 <?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
 
 <AnchorPane prefHeight="899.0" prefWidth="1166.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="application.MainController">
    <children>
-      <TabPane prefHeight="899.0" prefWidth="1166.0" tabClosingPolicy="UNAVAILABLE">
+      <TabPane prefHeight="899.0" prefWidth="1304.0" tabClosingPolicy="UNAVAILABLE">
         <tabs>
           <Tab text="Izravnanje 1D mreže">
             <content>
@@ -69,7 +71,90 @@
           </Tab>
           <Tab text="Izravnanje 2D mreže">
             <content>
-              <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" />
+              <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                     <children>
+                        <TitledPane animated="false" layoutX="1.0" prefHeight="678.0" prefWidth="464.0" text="Pravac">
+                          <content>
+                            <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="613.0" prefWidth="361.0">
+                                 <children>
+                                    <TextField fx:id="txt_od_p" layoutX="33.0" layoutY="-1.0" />
+                                    <Label layoutX="1.0" layoutY="4.0" text="OD:" />
+                                    <TextField fx:id="txt_do_p" layoutX="32.0" layoutY="44.0" />
+                                    <Label layoutY="49.0" text="DO:" />
+                                    <Label layoutX="36.0" layoutY="130.0" text="o" />
+                                    <Label layoutX="146.0" layoutY="130.0" text="'">
+                                       <font>
+                                          <Font size="28.0" />
+                                       </font>
+                                    </Label>
+                                    <Label layoutX="246.0" layoutY="130.0" text="''" textAlignment="CENTER">
+                                       <font>
+                                          <Font size="28.0" />
+                                       </font>
+                                    </Label>
+                                    <TextField fx:id="txt_stepen_p" alignment="CENTER" layoutY="152.0" prefHeight="31.0" prefWidth="80.0" />
+                                    <TextField fx:id="txt_minut_p" alignment="CENTER" layoutX="109.0" layoutY="152.0" prefHeight="31.0" prefWidth="80.0" />
+                                    <TextField fx:id="txt_sekund_p" alignment="CENTER" layoutX="213.0" layoutY="152.0" prefHeight="31.0" prefWidth="80.0" />
+                                    <TableView fx:id="tabela_p" layoutX="1.0" layoutY="264.0" prefHeight="381.0" prefWidth="460.0">
+                                      <columns>
+                                        <TableColumn fx:id="PRAVAC_OD" prefWidth="62.0" text="OD" />
+                                        <TableColumn fx:id="PRAVAC_DO" prefWidth="69.0" text="DO" />
+                                          <TableColumn fx:id="PRAVAC_STEPEN" prefWidth="75.0" text="o" />
+                                          <TableColumn fx:id="PRAVAC_MINUT" prefWidth="75.0" text="'" />
+                                          <TableColumn fx:id="PRAVAC_SEKUND" prefWidth="75.0" text="''" />
+                                          <TableColumn fx:id="PRAVAC_TACNOST" prefWidth="106.0" text="Tačnost ['']" />
+                                      </columns>
+                                    </TableView>
+                                    <TextField fx:id="txt_tacnost_p" layoutX="79.0" layoutY="90.0" />
+                                    <Label layoutX="1.0" layoutY="95.0" />
+                                    <Label layoutY="95.0" prefHeight="21.0" prefWidth="85.0" text="Tačnost ['']:" />
+                                    <Button fx:id="dgm_dodaj_pravac" layoutY="199.0" mnemonicParsing="false" onAction="#popuniTabeluP" prefHeight="48.0" prefWidth="197.0" text="DODAJ" />
+                                 </children>
+                              </AnchorPane>
+                          </content>
+                        </TitledPane>
+                        <TitledPane animated="false" layoutX="465.0" prefHeight="678.0" prefWidth="387.0" text="Ugao">
+                           <content>
+                              <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="646.0" prefWidth="403.0">
+                                 <children>
+                                    <Label layoutX="36.0" layoutY="130.0" text="o" />
+                                    <Label layoutX="146.0" layoutY="130.0" text="'">
+                                       <font>
+                                          <Font size="28.0" />
+                                       </font>
+                                    </Label>
+                                    <Label layoutX="246.0" layoutY="130.0" text="''" textAlignment="CENTER">
+                                       <font>
+                                          <Font size="28.0" />
+                                       </font>
+                                    </Label>
+                                    <TextField alignment="CENTER" layoutY="152.0" prefHeight="31.0" prefWidth="80.0" />
+                                    <TextField alignment="CENTER" layoutX="109.0" layoutY="152.0" prefHeight="31.0" prefWidth="80.0" />
+                                    <TextField alignment="CENTER" layoutX="213.0" layoutY="152.0" prefHeight="31.0" prefWidth="80.0" />
+                                    <TableView layoutX="1.0" layoutY="195.0" prefHeight="450.0" prefWidth="384.0">
+                                       <columns>
+                                          <TableColumn prefWidth="83.0" text="Oznaka" />
+                                          <TableColumn prefWidth="63.0" text="o" />
+                                          <TableColumn prefWidth="64.0" text="'" />
+                                          <TableColumn prefWidth="78.0" text="''" />
+                                          <TableColumn prefWidth="92.0" text="Tačnost ['']" />
+                                       </columns>
+                                    </TableView>
+                                    <TextField fx:id="txt_od1111" layoutX="79.0" layoutY="90.0" />
+                                    <Label layoutX="1.0" layoutY="95.0" />
+                                    <Label layoutY="95.0" prefHeight="21.0" prefWidth="85.0" text="Tačnost ['']:" />
+                                    <Label layoutX="1.0" layoutY="21.0" prefHeight="21.0" prefWidth="56.0" text="Oznaka:" />
+                                    <TextField alignment="CENTER" layoutX="57.0" layoutY="16.0" prefHeight="31.0" prefWidth="80.0" />
+                                    <TextField alignment="CENTER" layoutX="166.0" layoutY="16.0" prefHeight="31.0" prefWidth="80.0" />
+                                    <TextField alignment="CENTER" layoutX="273.0" layoutY="16.0" prefHeight="31.0" prefWidth="80.0" />
+                                    <Label layoutX="149.0" layoutY="21.0" text="-" />
+                                    <Label layoutX="256.0" layoutY="21.0" text="-" />
+                                 </children>
+                              </AnchorPane>
+                           </content>
+                        </TitledPane>
+                     </children>
+                  </AnchorPane>
             </content>
           </Tab>
         </tabs>

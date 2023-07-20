@@ -1,4 +1,4 @@
-package application;
+package matematika;
 
 import org.apache.commons.math3.distribution.FDistribution;
 

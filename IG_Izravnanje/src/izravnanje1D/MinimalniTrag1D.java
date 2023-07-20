@@ -1,4 +1,4 @@
-package application;
+package izravnanje1D;
 
 import java.awt.Desktop;
 import java.io.File;
@@ -9,6 +9,8 @@ import java.text.DecimalFormat;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.stage.FileChooser;
+import matematika.Matrix;
+import matematika.Raspodjela;
 
 public class MinimalniTrag1D {
 
