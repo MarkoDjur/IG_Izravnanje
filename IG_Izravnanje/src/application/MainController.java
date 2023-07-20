@@ -7,6 +7,7 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
+import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseButton;
@@ -90,6 +91,7 @@ public class MainController {
 
 	private List<TextField> listaTxtVr = new ArrayList<>();
 	private List<TextField> listaTxtV = new ArrayList<>();
+	private List<TextField> listaTxtIzravnaj = new ArrayList<>();
 
 	int redVR;
 	int redV;
@@ -185,15 +187,21 @@ public class MainController {
 		// Dodavanje fields u listu V
 		listaTxtV.add(txt_oznaka);
 		listaTxtV.add(txt_visina);
+		// Dodavanje fields u listu Izravnaj
+		listaTxtIzravnaj.add(txt_s0);
+		listaTxtIzravnaj.add(txt_nivoZnacajnosti);
 
-		// Dodavanje listener-a za tabeluVR
+		// Dodavanje listener-a za fields VR
 		addTextFieldChangeListener(txt_od);
 		addTextFieldChangeListener(txt_do);
 		addTextFieldChangeListener(txt_visinskaRazlika);
 		addTextFieldChangeListener(txt_duzinaStrane);
-		// Dodavanje listener-a za tabeluV
+		// Dodavanje listener-a za fields V
 		addTextFieldChangeListener(txt_oznaka);
 		addTextFieldChangeListener(txt_visina);
+		// Dodavanje listener-a za fields Izravnaj
+		addTextFieldChangeListener(txt_s0);
+		addTextFieldChangeListener(txt_nivoZnacajnosti);
 
 		// Dodavanje tooltip-a
 		toolTip();
@@ -305,7 +313,7 @@ public class MainController {
 		data_v.add(visina = new Visina("4", "", false));
 		data_v.add(visina = new Visina("5", "", false));
 
-		radio_minimalanTrag.setSelected(true);
+		// radio_minimalanTrag.setSelected(true);
 		txt_s0.setText("0.8");
 		tabela_v.setItems(data_v);
 		tabela_v.refresh();
@@ -390,16 +398,36 @@ public class MainController {
 	}
 
 	public void izravnaj(ActionEvent e) {
-		MinimalniTrag1D mt = new MinimalniTrag1D(data_v, data_vr, Double.parseDouble(txt_s0.getText()),
-				Double.parseDouble(txt_nivoZnacajnosti.getText()));
-		KlasicanNacin1D kn = new KlasicanNacin1D(data_v, data_vr, Double.parseDouble(txt_s0.getText()),
-				Double.parseDouble(txt_nivoZnacajnosti.getText()));
-		if (radio_klasicno.isSelected()) {
-			kn.napraviIzvjestaj();
+
+		// Provjeravamo jesu li svi TextField-ovi popunjeni prije dodavanja u tabelu
+		boolean allFieldsFilledIz = listaTxtIzravnaj.stream().allMatch(textField -> !textField.getText().isEmpty());
+		boolean allNumbersValidIz = listaTxtIzravnaj.stream()
+				.allMatch(textField -> textField.getText().matches("\\d*\\.?\\d*"));
+
+		if (allFieldsFilledIz && allNumbersValidIz) {
+			MinimalniTrag1D mt = new MinimalniTrag1D(data_v, data_vr, Double.parseDouble(txt_s0.getText()),
+					Double.parseDouble(txt_nivoZnacajnosti.getText()));
+			KlasicanNacin1D kn = new KlasicanNacin1D(data_v, data_vr, Double.parseDouble(txt_s0.getText()),
+					Double.parseDouble(txt_nivoZnacajnosti.getText()));
+			if (radio_klasicno.isSelected()) {
+				kn.napraviIzvjestaj();
+			} else if (radio_minimalanTrag.isSelected()) {
+				mt.napraviIzvjestaj();
+			} else {
+				showAlert("GRESKA", "Morate izabrati jednu od metoda!",AlertType.ERROR);
+			}
+
+			listaTxtV.forEach(textField -> textField.getStyleClass().remove("red-outline"));
+		} else {
+			// Ako nisu svi TextField-ovi popunjeni ili nisu uneseni validni brojevi,
+			// obojimo odgovarajući TextField u crveno
+			for (TextField textField : listaTxtIzravnaj) {
+				if (textField.getText().isEmpty() || !textField.getText().matches("\\d*\\.?\\d*")) {
+					textField.getStyleClass().add("red-outline");
+				}
+			}
 		}
-		if (radio_minimalanTrag.isSelected()) {
-			mt.napraviIzvjestaj();
-		}
+
 	}
 
 	public void otvoriDijalogZaUredivanjeVR(VisinskaRazlika odabranaVR) {
@@ -569,6 +597,15 @@ public class MainController {
 		data_duzine.add(duzina);
 		tabela_d.setItems(data_duzine);
 		tabela_d.refresh();
+	}
+
+	// Metoda za prikazivanje Alert dijaloga
+	private void showAlert(String title, String message, AlertType alertType) {
+		Alert alert = new Alert(alertType);
+		alert.setTitle(title);
+		alert.setHeaderText(null);
+		alert.setContentText(message);
+		alert.showAndWait();
 	}
 
 }
