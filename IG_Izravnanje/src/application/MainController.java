@@ -26,6 +26,8 @@ import izravnanje1D.MinimalniTrag1D;
 import izravnanje1D.Visina;
 import izravnanje1D.VisinskaRazlika;
 import izravnanje2D.Duzina;
+import izravnanje2D.KlasicanNacin2D;
+import izravnanje2D.Koordinata;
 import izravnanje2D.Pravac;
 import izravnanje2D.Ugao;
 import javafx.event.ActionEvent;
@@ -100,9 +102,11 @@ public class MainController {
 	ObservableList<Pravac> data_pravci = FXCollections.observableArrayList();
 	ObservableList<Ugao> data_uglovi = FXCollections.observableArrayList();
 	ObservableList<Duzina> data_duzine = FXCollections.observableArrayList();
+	ObservableList<Koordinata> data_koordinate = FXCollections.observableArrayList();
 	private Pravac pravac;
 	private Ugao ugao;
 	private Duzina duzina;
+	private Koordinata koordinata;
 	@FXML
 	private TextField txt_od_p;
 	@FXML
@@ -129,6 +133,10 @@ public class MainController {
 	public TableColumn PRAVAC_TACNOST;
 	@FXML
 	private TableView<Pravac> tabela_p;
+	@FXML
+	private RadioButton radio_poznata_p;
+	@FXML
+	private RadioButton radio_nepoznata_p;
 
 	@FXML
 	private TextField txt_lijevo_u;
@@ -177,6 +185,29 @@ public class MainController {
 	public TableColumn DUZINA_TACNOST;
 	@FXML
 	private TableView<Duzina> tabela_d;
+	
+	@FXML
+	private TextField txt_oznaka_k;
+	@FXML
+	private TextField txt_y_k;
+	@FXML
+	private TextField txt_x_k;
+	@FXML
+	private RadioButton datum2d;
+	@FXML
+	public TableColumn KOORDINATA_OZNAKA;
+	@FXML
+	public TableColumn KOORDINATA_Y;
+	@FXML
+	public TableColumn KOORDINATA_X;
+	@FXML
+	private TableView<Koordinata> tabela_k;
+	
+	@FXML
+	private TextField txt_s0_2d;
+	@FXML
+	private TextField txt_nivoZnacajnosti_2d;
+	
 
 	public void initialize() {
 		// Dodavanje fields u listu VR
@@ -563,7 +594,8 @@ public class MainController {
 		PRAVAC_SEKUND.setCellValueFactory(new PropertyValueFactory<>("sekund"));
 		PRAVAC_TACNOST.setCellValueFactory(new PropertyValueFactory<>("tacnost"));
 		pravac = new Pravac(txt_od_p.getText(), txt_do_p.getText(), txt_stepen_p.getText(),
-				txt_minut_p.getText(), txt_sekund_p.getText(), txt_tacnost_p.getText());
+				txt_minut_p.getText(), txt_sekund_p.getText(), 
+				txt_tacnost_p.getText(), radio_poznata_p.isSelected(), radio_nepoznata_p.isSelected());
 		data_pravci.add(pravac);
 		tabela_p.setItems(data_pravci);
 		tabela_p.refresh();
@@ -598,6 +630,16 @@ public class MainController {
 		tabela_d.setItems(data_duzine);
 		tabela_d.refresh();
 	}
+	
+	public void popuniTabeluK(ActionEvent event) {
+		KOORDINATA_OZNAKA.setCellValueFactory(new PropertyValueFactory<>("oznaka"));
+		KOORDINATA_Y.setCellValueFactory(new PropertyValueFactory<>("y"));
+		KOORDINATA_X.setCellValueFactory(new PropertyValueFactory<>("x"));
+		koordinata = new Koordinata(txt_oznaka_k.getText(), txt_y_k.getText(), txt_x_k.getText(), datum2d.isSelected());
+		data_koordinate.add(koordinata);
+		tabela_k.setItems(data_koordinate);
+		tabela_k.refresh();
+	}
 
 	// Metoda za prikazivanje Alert dijaloga
 	private void showAlert(String title, String message, AlertType alertType) {
@@ -606,6 +648,12 @@ public class MainController {
 		alert.setHeaderText(null);
 		alert.setContentText(message);
 		alert.showAndWait();
+	}
+	
+	public void izravnaj2D(ActionEvent event) {
+		KlasicanNacin2D kn = new KlasicanNacin2D(data_pravci, data_uglovi, data_duzine, data_koordinate,
+				Double.parseDouble(txt_s0_2d.getText()), Double.parseDouble(txt_nivoZnacajnosti_2d.getText()));
+		kn.napraviIzvjestaj();
 	}
 
 }

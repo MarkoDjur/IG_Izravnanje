@@ -13,9 +13,9 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane prefHeight="899.0" prefWidth="1166.0" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="application.MainController">
+<AnchorPane prefHeight="899.0" prefWidth="1166.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="application.MainController">
    <children>
-      <TabPane prefHeight="899.0" prefWidth="1228.0" tabClosingPolicy="UNAVAILABLE">
+      <TabPane prefHeight="899.0" prefWidth="1617.0" tabClosingPolicy="UNAVAILABLE">
         <tabs>
           <Tab text="Izravnanje 1D mreže">
             <content>
@@ -26,11 +26,11 @@
                         <Label layoutX="10.0" layoutY="62.0" text="DO:" />
                         <TextField fx:id="txt_do" layoutX="36.0" layoutY="57.0" />
                         <Label layoutX="10.0" layoutY="104.0" prefHeight="21.0" prefWidth="132.0" text="Visinska razlika [m]:" />
-                        <TextField fx:id="txt_visinskaRazlika" layoutX="128.0" layoutY="101.0" />
+                        <TextField fx:id="txt_visinskaRazlika" layoutX="142.0" layoutY="99.0" />
                         <Label layoutX="10.0" layoutY="142.0" prefHeight="21.0" prefWidth="209.0" text="Dužina nivelmanske strane [m]:" />
                         <Label layoutX="10.0" layoutY="184.0" prefHeight="21.0" prefWidth="83.0" text="Broj stanica:" />
-                        <TextField fx:id="txt_duzinaStrane" layoutX="189.0" layoutY="139.0" />
-                        <TextField fx:id="txt_brojStanica" layoutX="90.0" layoutY="180.0" />
+                        <TextField fx:id="txt_duzinaStrane" layoutX="219.0" layoutY="137.0" />
+                        <TextField fx:id="txt_brojStanica" layoutX="93.0" layoutY="179.0" />
                         <Button layoutX="8.0" layoutY="269.0" mnemonicParsing="false" onAction="#popuniTabeluVr" prefHeight="53.0" prefWidth="266.0" text=" DODAJ VISINSKU RAZLIKU" />
                         <Button fx:id="ucitajButton" layoutX="559.0" layoutY="295.0" mnemonicParsing="false" onAction="#ucitaj" text="UCITAJ" />
                         <TableView fx:id="tabela_vr" layoutY="329.0" prefHeight="530.0" prefWidth="712.0">
@@ -49,10 +49,10 @@
                             <TableColumn fx:id="VISINA" prefWidth="110.0" text="VISINA [m]" />
                           </columns>
                         </TableView>
-                        <TextField fx:id="txt_oznaka" layoutX="770.0" layoutY="182.0" />
+                        <TextField fx:id="txt_oznaka" layoutX="780.0" layoutY="184.0" />
                         <Label layoutX="717.0" layoutY="187.0" text="Oznaka:" />
-                        <TextField fx:id="txt_visina" layoutX="782.0" layoutY="223.0" />
-                        <Label layoutX="717.0" layoutY="228.0" text="Visina[m]:" />
+                        <TextField fx:id="txt_visina" layoutX="796.0" layoutY="225.0" />
+                        <Label layoutX="717.0" layoutY="228.0" text="Visina [m]:" />
                         <Button layoutX="717.0" layoutY="269.0" mnemonicParsing="false" onAction="#popuniTabeluV" prefHeight="53.0" prefWidth="266.0" text="DODAJ VISINU" />
                         <Label layoutX="10.0" layoutY="232.0" text="s0:" />
                         <RadioButton fx:id="radio_klasicno" layoutX="1024.0" layoutY="35.0" mnemonicParsing="false" text="Klasično">
@@ -63,18 +63,18 @@
                         <RadioButton fx:id="radio_minimalanTrag" layoutX="1024.0" layoutY="65.0" mnemonicParsing="false" text="Minimalan trag" toggleGroup="$radio" />
                         <Label layoutX="1024.0" layoutY="9.0" prefHeight="21.0" prefWidth="128.0" text="Vrsta izravnanja:" />
                         <TextField fx:id="txt_s0" layoutX="36.0" layoutY="227.0" />
-                        <RadioButton fx:id="datum1d" layoutX="969.0" layoutY="184.0" mnemonicParsing="false" text="Definise datum" />
+                        <RadioButton fx:id="datum1d" layoutX="973.0" layoutY="184.0" mnemonicParsing="false" text="Definise datum" />
                         <Label layoutX="236.0" layoutY="232.0" prefHeight="21.0" prefWidth="121.0" text="Nivo značajnosti:" />
-                        <TextField fx:id="txt_nivoZnacajnosti" layoutX="344.0" layoutY="228.0" />
+                        <TextField fx:id="txt_nivoZnacajnosti" layoutX="357.0" layoutY="227.0" />
                      </children>
                   </AnchorPane>
             </content>
           </Tab>
           <Tab text="Izravnanje 2D mreže">
             <content>
-              <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+              <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="858.0" prefWidth="1242.0">
                      <children>
-                        <TitledPane animated="false" layoutX="1.0" prefHeight="678.0" prefWidth="464.0" text="Pravac">
+                        <TitledPane animated="false" collapsible="false" layoutX="1.0" prefHeight="678.0" prefWidth="464.0" text="Pravac">
                           <content>
                             <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="613.0" prefWidth="361.0">
                                  <children>
@@ -110,11 +110,17 @@
                                     <Label layoutX="1.0" layoutY="95.0" />
                                     <Label layoutY="95.0" prefHeight="21.0" prefWidth="85.0" text="Tačnost ['']:" />
                                     <Button fx:id="dgm_dodaj_pravac" layoutY="199.0" mnemonicParsing="false" onAction="#popuniTabeluP" prefHeight="48.0" prefWidth="197.0" text="DODAJ" />
+                                    <RadioButton fx:id="radio_poznata_p" layoutX="231.0" layoutY="11.0" mnemonicParsing="false" text="Poznata">
+                                       <toggleGroup>
+                                          <ToggleGroup fx:id="radio2" />
+                                       </toggleGroup>
+                                    </RadioButton>
+                                    <RadioButton fx:id="radio_nepoznata_p" layoutX="321.0" layoutY="11.0" mnemonicParsing="false" text="Nepoznata" toggleGroup="$radio2" />
                                  </children>
                               </AnchorPane>
                           </content>
                         </TitledPane>
-                        <TitledPane animated="false" layoutX="465.0" prefHeight="678.0" prefWidth="387.0" text="Ugao">
+                        <TitledPane animated="false" collapsible="false" layoutX="465.0" prefHeight="678.0" prefWidth="387.0" text="Ugao">
                            <content>
                               <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="646.0" prefWidth="403.0">
                                  <children>
@@ -155,7 +161,7 @@
                               </AnchorPane>
                            </content>
                         </TitledPane>
-                        <TitledPane animated="false" layoutX="852.0" prefHeight="678.0" prefWidth="381.0" text="Dužina">
+                        <TitledPane animated="false" collapsible="false" layoutX="852.0" prefHeight="678.0" prefWidth="381.0" text="Dužina">
                            <content>
                               <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="646.0" prefWidth="403.0">
                                  <children>
@@ -184,6 +190,35 @@
                               </AnchorPane>
                            </content>
                         </TitledPane>
+                        <TitledPane animated="false" collapsible="false" layoutX="1233.0" prefHeight="678.0" prefWidth="381.0" text="Približne koordinate">
+                           <content>
+                              <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="646.0" prefWidth="403.0">
+                                 <children>
+                                    <TableView fx:id="tabela_k" layoutX="1.0" layoutY="264.0" prefHeight="381.0" prefWidth="384.0">
+                                       <columns>
+                                          <TableColumn fx:id="KOORDINATA_OZNAKA" prefWidth="86.0" text="OZNAKA" />
+                                          <TableColumn fx:id="KOORDINATA_Y" prefWidth="146.0" text="Y [m]" />
+                                          <TableColumn fx:id="KOORDINATA_X" prefWidth="148.0" text="X [m]" />
+                                       </columns>
+                                    </TableView>
+                                    <Label layoutX="1.0" layoutY="95.0" />
+                                    <Button fx:id="dgm_dodaj_k" layoutX="-1.0" layoutY="199.0" mnemonicParsing="false" onAction="#popuniTabeluK" prefHeight="48.0" prefWidth="197.0" text="DODAJ" />
+                                    <TextField fx:id="txt_y_k" layoutX="47.0" layoutY="57.0" />
+                                    <Label layoutX="2.0" layoutY="62.0" text="Y [m]:" />
+                                    <TextField fx:id="txt_x_k" layoutX="46.0" layoutY="102.0" />
+                                    <Label layoutX="1.0" layoutY="107.0" text="X [m]:" />
+                                    <TextField fx:id="txt_oznaka_k" layoutX="57.0" layoutY="14.0" />
+                                    <Label layoutX="-1.0" layoutY="19.0" prefHeight="21.0" prefWidth="57.0" text="Oznaka:" />
+                                    <RadioButton fx:id="datum2d" layoutX="2.0" layoutY="152.0" mnemonicParsing="false" text="Definiše datum" />
+                                 </children>
+                              </AnchorPane>
+                           </content>
+                        </TitledPane>
+                        <Button fx:id="dgm_izravnaj_2d" layoutX="14.0" layoutY="788.0" mnemonicParsing="false" onAction="#izravnaj2D" prefHeight="48.0" prefWidth="197.0" text="IZRAVNAJ" />
+                        <Label layoutX="14.0" layoutY="694.0" text="s0:" />
+                        <TextField fx:id="txt_s0_2d" layoutX="38.0" layoutY="689.0" />
+                        <Label layoutX="14.0" layoutY="744.0" prefHeight="21.0" prefWidth="121.0" text="Nivo značajnosti:" />
+                        <TextField fx:id="txt_nivoZnacajnosti_2d" layoutX="132.0" layoutY="739.0" />
                      </children>
                   </AnchorPane>
             </content>
