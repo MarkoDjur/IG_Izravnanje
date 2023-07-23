@@ -1,23 +1,20 @@
 package application;
 
-import javafx.beans.value.ChangeListener;
-import javafx.beans.value.ObservableValue;
-
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.cell.PropertyValueFactory;
-import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseButton;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.VBox;
-import javafx.scene.text.TextAlignment;
+import javafx.stage.FileChooser;
+import javafx.stage.FileChooser.ExtensionFilter;
 
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -185,7 +182,7 @@ public class MainController {
 	public TableColumn DUZINA_TACNOST;
 	@FXML
 	private TableView<Duzina> tabela_d;
-	
+
 	@FXML
 	private TextField txt_oznaka_k;
 	@FXML
@@ -202,14 +199,33 @@ public class MainController {
 	public TableColumn KOORDINATA_X;
 	@FXML
 	private TableView<Koordinata> tabela_k;
-	
+
 	@FXML
 	private TextField txt_s0_2d;
 	@FXML
 	private TextField txt_nivoZnacajnosti_2d;
-	
 
 	public void initialize() {
+		OD.setCellValueFactory(new PropertyValueFactory<>("Od"));
+		DO.setCellValueFactory(new PropertyValueFactory<>("Do"));
+		VISINSKA_RAZLIKA.setCellValueFactory(new PropertyValueFactory<>("visinskaRaz"));
+		DUZINA_NIVELMANSKE_STRANE.setCellValueFactory(new PropertyValueFactory<>("duzinaStrane"));
+		BROJ_STANICA.setCellValueFactory(new PropertyValueFactory<>("brojStanica"));
+		OZNAKA.setCellValueFactory(new PropertyValueFactory<>("oznaka"));
+		VISINA.setCellValueFactory(new PropertyValueFactory<>("visina"));
+		UGAO_OZNAKA.setCellValueFactory(new PropertyValueFactory<>("oznaka"));
+		UGAO_STEPEN.setCellValueFactory(new PropertyValueFactory<>("stepen"));
+		UGAO_MINUT.setCellValueFactory(new PropertyValueFactory<>("minut"));
+		UGAO_SEKUND.setCellValueFactory(new PropertyValueFactory<>("sekund"));
+		UGAO_TACNOST.setCellValueFactory(new PropertyValueFactory<>("tacnost"));
+		DUZINA_OD.setCellValueFactory(new PropertyValueFactory<>("Od"));
+		DUZINA_DO.setCellValueFactory(new PropertyValueFactory<>("Do"));
+		DUZINA_VRIJEDNOST.setCellValueFactory(new PropertyValueFactory<>("vrijednost"));
+		DUZINA_TACNOST.setCellValueFactory(new PropertyValueFactory<>("tacnost"));
+		KOORDINATA_OZNAKA.setCellValueFactory(new PropertyValueFactory<>("oznaka"));
+		KOORDINATA_Y.setCellValueFactory(new PropertyValueFactory<>("y"));
+		KOORDINATA_X.setCellValueFactory(new PropertyValueFactory<>("x"));
+
 		// Dodavanje fields u listu VR
 		listaTxtVr.add(txt_od);
 		listaTxtVr.add(txt_do);
@@ -262,7 +278,10 @@ public class MainController {
 
 	// Postavljanje tooltip-a za dugme
 	public void toolTip() {
-		Tooltip tipUcitaj = new Tooltip("Učitana txt datoteka\n" + "mora biti formata:\n" + "OD,DO,VR,D,BS");
+		Tooltip tipUcitaj = new Tooltip(
+				"Učitana .txt datoteka\n" + "za tabelu Visine razlike\n" + "mora biti formata:\n" + "OD,DO,VR,D,BS\n"
+						+ "A za tabelu Visine\n" + "format je: OZ,V,DATUM(da,ne)\n" + "Ako vam neki podatak\n"
+						+ "ne treba, zamijenite ga sa -");
 		ucitajButton.setTooltip(tipUcitaj);
 
 		Tooltip tipVR = new Tooltip("Format je tipa #.###");
@@ -309,45 +328,151 @@ public class MainController {
 	}
 
 	public void ucitaj(ActionEvent event) {
-		OD.setCellValueFactory(new PropertyValueFactory<>("Od"));
-		DO.setCellValueFactory(new PropertyValueFactory<>("Do"));
-		VISINSKA_RAZLIKA.setCellValueFactory(new PropertyValueFactory<>("visinskaRaz"));
-		DUZINA_NIVELMANSKE_STRANE.setCellValueFactory(new PropertyValueFactory<>("duzinaStrane"));
-		BROJ_STANICA.setCellValueFactory(new PropertyValueFactory<>("brojStanica"));
-		File proba = new File("IG_Izravnanje/src/application/matA.txt");
-		try {
-			FileReader fr = new FileReader(proba);
-			BufferedReader br = new BufferedReader(fr);
+		FileChooser fileChooser = new FileChooser();
+		fileChooser.getExtensionFilters().add(new ExtensionFilter("Text Files",
+				"*.txt"));
+
+		File selectedFile = fileChooser.showOpenDialog(null);
+
+		if (selectedFile != null) {
+			System.out.println("Izabrali ste datoteku: " +
+					selectedFile.getAbsolutePath());
+		} else {
+			System.out.println("Niste izabrali datoteku.");
+		}
+
+		// File proba1 = new File("IG_Izravnanje/src/application/matA.txt");
+		// OD.setCellValueFactory(new PropertyValueFactory<>("Od"));
+		// DO.setCellValueFactory(new PropertyValueFactory<>("Do"));
+		// VISINSKA_RAZLIKA.setCellValueFactory(new
+		// PropertyValueFactory<>("visinskaRaz"));
+		// DUZINA_NIVELMANSKE_STRANE.setCellValueFactory(new
+		// PropertyValueFactory<>("duzinaStrane"));
+		// BROJ_STANICA.setCellValueFactory(new PropertyValueFactory<>("brojStanica"));
+
+		// try {
+		// FileReader fr = new FileReader(proba1);
+		// BufferedReader br = new BufferedReader(fr);
+		// String line;
+		// while ((line = br.readLine()) != null) {
+		// String[] odada = line.split(",");
+		// String OD = odada[0];
+		// String DO = odada[1];
+		// String VR = odada[2];
+		// String D = odada[3];
+		// String bs = odada[4];
+		// VisinskaRazlika VS = new VisinskaRazlika(OD, DO, VR, D, bs);
+		// data_vr.add(VS);
+		// }
+
+		// } catch (Exception e) {
+		// // TODO: handle exception
+		// }
+		// tabela_vr.setItems(data_vr);
+		// tabela_vr.refresh();
+
+		// OZNAKA.setCellValueFactory(new PropertyValueFactory<>("oznaka"));
+		// VISINA.setCellValueFactory(new PropertyValueFactory<>("visina"));
+		// File proba2 = new File("IG_Izravnanje/src/application/Visine.txt");
+
+		// try {
+		// FileReader fr = new FileReader(proba2);
+		// BufferedReader br = new BufferedReader(fr);
+		// String line;
+		// while ((line = br.readLine()) != null) {
+		// String[] odada = line.split(",");
+		// String Oznaka = odada[0];
+		// String Visine = odada[1];
+		// String datum = odada[2];
+		// if (datum.equals("da")) {
+		// Visina V = new Visina(Oznaka, Visine, true);
+		// data_v.add(V);
+		// } else {
+		// Visina V = new Visina(Oznaka, Visine, false);
+		// data_v.add(V);
+		// }
+		// }
+
+		// } catch (Exception e) {
+		// // TODO: handle exception
+		// }
+
+		// // radio_minimalanTrag.setSelected(true);
+		// txt_s0.setText("0.8");
+		// tabela_v.setItems(data_v);
+		// tabela_v.refresh();
+
+		try (
+				BufferedReader br = new BufferedReader(new FileReader(selectedFile))) {
 			String line;
 			while ((line = br.readLine()) != null) {
-				String[] odada = line.split(",");
-				String OD = odada[0];
-				String DO = odada[1];
-				String VR = odada[2];
-				String D = odada[3];
-				VisinskaRazlika VS = new VisinskaRazlika(OD, DO, VR, D, "");
-				data_vr.add(VS);
+				String[] parts = line.split(",");
+
+				// Proveravamo da li je red u formatu "Od,Do,Visina,Duzina,Brojstanica"
+				if (parts.length == 5) {
+
+					try {
+						// Iteriramo kroz sve delove reda (atribute)
+						for (int i = 0; i < parts.length; i++) {
+							// Proveravamo da li atribut sadrži znak "-"
+							if (parts[i].equals("-")) {
+								// Ako sadrži, zamenjujemo ga sa praznim stringom
+								parts[i] = "";
+							}
+						}
+						String OD = parts[0];
+						String DO = parts[1];
+						String VR = parts[2];
+						String D = parts[3];
+						String bs = parts[4];
+						VisinskaRazlika VS = new VisinskaRazlika(OD, DO, VR, D, bs);
+						data_vr.add(VS);
+
+					} catch (Exception e) {
+						// TODO: handle exception
+					}
+					tabela_vr.setItems(data_vr);
+					tabela_vr.refresh();
+
+				} else if (parts.length == 3) {
+
+					try {
+						// Iteriramo kroz sve delove reda (atribute)
+						for (int i = 0; i < parts.length; i++) {
+							// Proveravamo da li atribut sadrži znak "-"
+							if (parts[i].equals("-")) {
+								// Ako sadrži, zamenjujemo ga sa praznim stringom
+								parts[i] = "";
+							}
+						}
+						String Oznaka = parts[0];
+						String Visine = parts[1];
+						String datum = parts[2];
+						if (datum.equals("da")) {
+							Visina V = new Visina(Oznaka, Visine, true);
+							data_v.add(V);
+						} else {
+							Visina V = new Visina(Oznaka, Visine, false);
+							data_v.add(V);
+						}
+
+					} catch (Exception e) {
+						// TODO: handle exception
+					}
+
+					// radio_minimalanTrag.setSelected(true);
+
+					tabela_v.setItems(data_v);
+					tabela_v.refresh();
+
+				}
 			}
+		} catch (
 
-		} catch (Exception e) {
-			// TODO: handle exception
+		IOException e) {
+			e.printStackTrace();
 		}
-		tabela_vr.setItems(data_vr);
-		tabela_vr.refresh();
 
-		OZNAKA.setCellValueFactory(new PropertyValueFactory<>("oznaka"));
-		VISINA.setCellValueFactory(new PropertyValueFactory<>("visina"));
-
-		data_v.add(visina = new Visina("1", "100", true));
-		data_v.add(visina = new Visina("2", "", false));
-		data_v.add(visina = new Visina("3", "", false));
-		data_v.add(visina = new Visina("4", "", false));
-		data_v.add(visina = new Visina("5", "", false));
-
-		// radio_minimalanTrag.setSelected(true);
-		txt_s0.setText("0.8");
-		tabela_v.setItems(data_v);
-		tabela_v.refresh();
 	}
 
 	public void popuniTabeluVr(ActionEvent event) {
@@ -360,11 +485,6 @@ public class MainController {
 		if (allFieldsFilledVR && allNumbersValidVR) {
 			// Ako su svi TextField-ovi popunjeni i uneseni su validni brojevi, dodajemo
 			// podatke u tabelu
-			OD.setCellValueFactory(new PropertyValueFactory<>("Od"));
-			DO.setCellValueFactory(new PropertyValueFactory<>("Do"));
-			VISINSKA_RAZLIKA.setCellValueFactory(new PropertyValueFactory<>("visinskaRaz"));
-			DUZINA_NIVELMANSKE_STRANE.setCellValueFactory(new PropertyValueFactory<>("duzinaStrane"));
-			BROJ_STANICA.setCellValueFactory(new PropertyValueFactory<>("brojStanica"));
 			visinskaRazlika = new VisinskaRazlika(txt_od.getText(), txt_do.getText(),
 					txt_visinskaRazlika.getText(),
 					txt_duzinaStrane.getText(), txt_brojStanica.getText());
@@ -399,8 +519,7 @@ public class MainController {
 		if (allFieldsFilledV && allNumbersValidV) {
 			// Ako su svi TextField-ovi popunjeni i uneseni su validni brojevi, dodajemo
 			// podatke u tabelu
-			OZNAKA.setCellValueFactory(new PropertyValueFactory<>("oznaka"));
-			VISINA.setCellValueFactory(new PropertyValueFactory<>("visina"));
+
 			if (datum1d.isSelected()) {
 				visina = new Visina(txt_oznaka.getText(), txt_visina.getText(), true);
 			}
@@ -445,7 +564,7 @@ public class MainController {
 			} else if (radio_minimalanTrag.isSelected()) {
 				mt.napraviIzvjestaj();
 			} else {
-				showAlert("GRESKA", "Morate izabrati jednu od metoda!",AlertType.ERROR);
+				showAlert("GRESKA", "Morate izabrati jednu od metoda!", AlertType.ERROR);
 			}
 
 			listaTxtV.forEach(textField -> textField.getStyleClass().remove("red-outline"));
@@ -594,7 +713,7 @@ public class MainController {
 		PRAVAC_SEKUND.setCellValueFactory(new PropertyValueFactory<>("sekund"));
 		PRAVAC_TACNOST.setCellValueFactory(new PropertyValueFactory<>("tacnost"));
 		pravac = new Pravac(txt_od_p.getText(), txt_do_p.getText(), txt_stepen_p.getText(),
-				txt_minut_p.getText(), txt_sekund_p.getText(), 
+				txt_minut_p.getText(), txt_sekund_p.getText(),
 				txt_tacnost_p.getText(), radio_poznata_p.isSelected(), radio_nepoznata_p.isSelected());
 		data_pravci.add(pravac);
 		tabela_p.setItems(data_pravci);
@@ -602,11 +721,7 @@ public class MainController {
 	}
 
 	public void popuniTabeluU(ActionEvent event) {
-		UGAO_OZNAKA.setCellValueFactory(new PropertyValueFactory<>("oznaka"));
-		UGAO_STEPEN.setCellValueFactory(new PropertyValueFactory<>("stepen"));
-		UGAO_MINUT.setCellValueFactory(new PropertyValueFactory<>("minut"));
-		UGAO_SEKUND.setCellValueFactory(new PropertyValueFactory<>("sekund"));
-		UGAO_TACNOST.setCellValueFactory(new PropertyValueFactory<>("tacnost"));
+
 		String oznaka = txt_lijevo_u.getText() + "-" + txt_sredina_u.getText() + "-" + txt_desno_u.getText();
 		ugao = new Ugao(oznaka, txt_stepen_u.getText(), txt_minut_u.getText(), txt_sekund_u.getText(),
 				txt_tacnost_u.getText());
@@ -616,10 +731,6 @@ public class MainController {
 	}
 
 	public void pupuniTabeluD(ActionEvent event) {
-		DUZINA_OD.setCellValueFactory(new PropertyValueFactory<>("Od"));
-		DUZINA_DO.setCellValueFactory(new PropertyValueFactory<>("Do"));
-		DUZINA_VRIJEDNOST.setCellValueFactory(new PropertyValueFactory<>("vrijednost"));
-		DUZINA_TACNOST.setCellValueFactory(new PropertyValueFactory<>("tacnost"));
 		double mm = Double.parseDouble(txt_mm_d.getText());
 		double ppm = Double.parseDouble(txt_ppm_d.getText());
 		double duz = Double.parseDouble(txt_vrijednost_d.getText());
@@ -630,11 +741,8 @@ public class MainController {
 		tabela_d.setItems(data_duzine);
 		tabela_d.refresh();
 	}
-	
+
 	public void popuniTabeluK(ActionEvent event) {
-		KOORDINATA_OZNAKA.setCellValueFactory(new PropertyValueFactory<>("oznaka"));
-		KOORDINATA_Y.setCellValueFactory(new PropertyValueFactory<>("y"));
-		KOORDINATA_X.setCellValueFactory(new PropertyValueFactory<>("x"));
 		koordinata = new Koordinata(txt_oznaka_k.getText(), txt_y_k.getText(), txt_x_k.getText(), datum2d.isSelected());
 		data_koordinate.add(koordinata);
 		tabela_k.setItems(data_koordinate);
@@ -649,7 +757,7 @@ public class MainController {
 		alert.setContentText(message);
 		alert.showAndWait();
 	}
-	
+
 	public void izravnaj2D(ActionEvent event) {
 		KlasicanNacin2D kn = new KlasicanNacin2D(data_pravci, data_uglovi, data_duzine, data_koordinate,
 				Double.parseDouble(txt_s0_2d.getText()), Double.parseDouble(txt_nivoZnacajnosti_2d.getText()));
