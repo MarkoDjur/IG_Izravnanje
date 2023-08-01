@@ -22,6 +22,7 @@ public class KlasicanNacin1D {
 
 	private ObservableList<Visina> visine;
 	private ObservableList<VisinskaRazlika> visinske_razlike;
+	private List<Visina> nepoznate_visine = new ArrayList<Visina>();
 	DecimalFormat df = new DecimalFormat("###.#####");
 	private double s0;
 
@@ -66,6 +67,12 @@ public class KlasicanNacin1D {
 		this.visinske_razlike = visinske_razlike;
 		this.s0 = s0;
 		this.nivo_znacajnosti = nivo_znacajnosti;
+		
+		for(int i = 0; i < visine.size(); i++) {
+			if(!visine.get(i).definiseDatum()) {
+				nepoznate_visine.add(visine.get(i));
+			}
+		}
 	}
 
 	public void napraviIzvjestaj() {
@@ -174,7 +181,7 @@ public class KlasicanNacin1D {
 		List<List<String>> lista2 = new ArrayList<>();
 		List<String> red2 = new ArrayList<>();
 		for (int i = 0; i < niz_x.length; i++) {
-			red2.add(visine.get(i).getOznaka());
+			red2.add(nepoznate_visine.get(i).getOznaka());
 			red2.add(df.format(niz_x[i][0]));
 			red2.add(df.format(niz_ocjenjeneVisine[i][0]));
 			red2.add(df.format(niz_standardnoOdstupanjeVisina[i][0]));

@@ -90,6 +90,19 @@ public class KlasicanNacin2D {
 		}
 		a++;
 		
+		// Dodatak za ugao Z
+		for(int i = 0; i < pravci.size(); i++) {
+			for(int j = broj_nepoznatih_koordinata - 1; j < broj_nepoznatih_koordinata + broj_uglova_z; j++) {
+				for(int k = 0; k < broj_nepoznatih_koordinata-1; k++) {
+					if(pravci.get(i).getOd().equals(nepoznate_koordinate.get(k).getOznaka())) {
+						niz[i][j] = 1;
+					}else {
+						niz[i][j] = 0;
+					}
+				}
+			}
+		}
+		
 		// Za uglove
 		int b = 0;
 		for(int i = 0; i < uglovi.size(); i++) {
