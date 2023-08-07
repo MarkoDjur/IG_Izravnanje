@@ -239,28 +239,28 @@ public class MainController {
 		listaTxtIzravnaj.add(txt_nivoZnacajnosti);
 
 		// Dodavanje listener-a za fields VR
-		addTextFieldChangeListener(txt_od);
-		addTextFieldChangeListener(txt_do);
-		addTextFieldChangeListener(txt_visinskaRazlika);
-		addTextFieldChangeListener(txt_duzinaStrane);
+		addTextFieldChangeListenerSlova(txt_od);
+		addTextFieldChangeListenerSlova(txt_do);
+		addTextFieldChangeListenerBrojeva(txt_visinskaRazlika);
+		addTextFieldChangeListenerBrojeva(txt_duzinaStrane);
 		// Dodavanje listener-a za fields V
-		addTextFieldChangeListener(txt_oznaka);
-		addTextFieldChangeListener(txt_visina);
+		addTextFieldChangeListenerSlova(txt_oznaka);
+		addTextFieldChangeListenerBrojeva(txt_visina);
 		// Dodavanje listener-a za fields Izravnaj
-		addTextFieldChangeListener(txt_s0);
-		addTextFieldChangeListener(txt_nivoZnacajnosti);
+		addTextFieldChangeListenerBrojeva(txt_s0);
+		addTextFieldChangeListenerBrojeva(txt_nivoZnacajnosti);
 
 		// Dodavanje tooltip-a
 		toolTip();
 		// Dodavanje dvoklika na tablicu
 		klikTabelaVR();
-		klikTabelaVisina();
+		klikTabelaV();
 
 	}
 
-	private void addTextFieldChangeListener(TextField textField) {
+	private void addTextFieldChangeListenerBrojeva(TextField textField) {
 		textField.textProperty().addListener((observable, oldValue, newValue) -> {
-			// Provjera popunjenosti TextField-ova i primjena crvenog obruba
+			// Provjera popunjenosti TextField-ova i primjena crvenog ruba
 			if (newValue.isEmpty()) {
 				textField.getStyleClass().add("red-outline");
 			} else {
@@ -268,6 +268,24 @@ public class MainController {
 
 				// Provjeravanje je li unesen samo brojčani niz i tacka
 				if (!newValue.matches("\\d*\\.?\\d*")) {
+					textField.getStyleClass().add("red-outline");
+				} else {
+					textField.getStyleClass().remove("red-outline");
+				}
+			}
+		});
+	}
+
+	private void addTextFieldChangeListenerSlova(TextField textField) {
+		textField.textProperty().addListener((observable, oldValue, newValue) -> {
+			// Provjera popunjenosti TextField-ova i primjena crvenog ruba
+			if (newValue.isEmpty()) {
+				textField.getStyleClass().add("red-outline");
+			} else {
+				textField.getStyleClass().remove("red-outline");
+
+				// Provjeravanje je li unesen brojčani niz, tacka i slova abecede
+				if (!newValue.matches("[a-zA-Z0-9\\.]*")) {
 					textField.getStyleClass().add("red-outline");
 				} else {
 					textField.getStyleClass().remove("red-outline");
@@ -303,7 +321,7 @@ public class MainController {
 		});
 	}
 
-	public void klikTabelaVisina() {
+	public void klikTabelaV() {
 		tabela_v.setRowFactory(tv -> {
 			TableRow<Visina> row = new TableRow<>();
 			row.setOnMouseClicked(event -> {
@@ -316,7 +334,7 @@ public class MainController {
 
 			row.itemProperty().addListener((obs, oldVal, newVal) -> {
 				if (newVal != null) {
-					if (newVal.definiseDatum()) { // Prilagodite s atributom koji provjeravate
+					if (newVal.definiseDatum()) {
 						row.getStyleClass().add("table-row-true");
 					} else {
 						row.getStyleClass().remove("table-row-true");
@@ -412,7 +430,7 @@ public class MainController {
 				if (parts.length == 5) {
 
 					try {
-						// Iteriramo kroz sve delove reda (atribute)
+						// Iteriramo kroz sve djelove reda (atribute)
 						for (int i = 0; i < parts.length; i++) {
 							// Proveravamo da li atribut sadrži znak "-"
 							if (parts[i].equals("-")) {
@@ -434,10 +452,11 @@ public class MainController {
 					tabela_vr.setItems(data_vr);
 					tabela_vr.refresh();
 
+					// Proveravamo da li je red u formatu "Oznaka, Visina, Datum"
 				} else if (parts.length == 3) {
 
 					try {
-						// Iteriramo kroz sve delove reda (atribute)
+						// Iteriramo kroz sve djelove reda (atribute)
 						for (int i = 0; i < parts.length; i++) {
 							// Proveravamo da li atribut sadrži znak "-"
 							if (parts[i].equals("-")) {
@@ -476,47 +495,71 @@ public class MainController {
 	}
 
 	public void popuniTabeluVr(ActionEvent event) {
-
-		// Provjeravamo jesu li svi TextField-ovi popunjeni prije dodavanja u tabelu
 		boolean allFieldsFilledVR = listaTxtVr.stream().allMatch(textField -> !textField.getText().isEmpty());
-		boolean allNumbersValidVR = listaTxtVr.stream()
-				.allMatch(textField -> textField.getText().matches("\\d*\\.?\\d*"));
 
-		if (allFieldsFilledVR && allNumbersValidVR) {
-			// Ako su svi TextField-ovi popunjeni i uneseni su validni brojevi, dodajemo
-			// podatke u tabelu
-			visinskaRazlika = new VisinskaRazlika(txt_od.getText(), txt_do.getText(),
-					txt_visinskaRazlika.getText(),
-					txt_duzinaStrane.getText(), txt_brojStanica.getText());
-			data_vr.add(visinskaRazlika);
-			tabela_vr.setItems(data_vr);
-			tabela_vr.refresh();
+		if (allFieldsFilledVR) {
+			// Ako su svi TextField-ovi popunjeni, nastavite sa dodavanjem u tabelu
 
-			// Očistimo TextField-ove nakon dodavanja u tabelu
-			listaTxtVr.forEach(TextField::clear);
-			listaTxtVr.forEach(textField -> textField.getStyleClass().remove("red-outline"));
-			System.out.println("Dodano u tabelu!");
-		} else {
-			// Ako nisu svi TextField-ovi popunjeni ili nisu uneseni validni brojevi,
-			// obojimo odgovarajući TextField u crveno
-			System.out.println("Popunite sva polja s brojevima prije dodavanja u tabelu.");
-			for (TextField textField : listaTxtVr) {
-				if (textField.getText().isEmpty() || !textField.getText().matches("\\d*\\.?\\d*")) {
-					textField.getStyleClass().add("red-outline");
+			// Provjera validnosti za određenog polja
+			boolean validNumbers = true;
+			for (int i = 0; i < listaTxtVr.size(); i++) {
+				TextField textField = listaTxtVr.get(i);
+				String text = textField.getText();
+
+				if (i == 0 || i == 1) { // Polja 1 i 2 su polja u kojima dozvoljavamo slova
+					if (!text.matches("[a-zA-Z0-9\\.]*")) {
+						textField.getStyleClass().add("red-outline");
+						validNumbers = false;
+					} else {
+						textField.getStyleClass().remove("red-outline");
+					}
+				} else { // Ostala polja su polja u kojima treba unijeti brojeve ili tačku
+					if (!text.matches("\\d*\\.?\\d*")) {
+						textField.getStyleClass().add("red-outline");
+						validNumbers = false;
+					} else {
+						textField.getStyleClass().remove("red-outline");
+					}
 				}
 			}
-		}
 
+			if (validNumbers) {
+				// Ako su uneseni validni brojevi i slova, dodajemo podatke u tabelu
+				visinskaRazlika = new VisinskaRazlika(txt_od.getText(), txt_do.getText(),
+						txt_visinskaRazlika.getText(),
+						txt_duzinaStrane.getText(), txt_brojStanica.getText());
+				data_vr.add(visinskaRazlika);
+				tabela_vr.setItems(data_vr);
+				tabela_vr.refresh();
+
+				// Očistimo TextField-ove nakon dodavanja u tabelu
+				listaTxtVr.forEach(TextField::clear);
+				listaTxtVr.forEach(textField -> textField.getStyleClass().remove("red-outline"));
+				System.out.println("Dodano u tabelu!");
+			} else {
+				// Ako nisu uneseni validni brojevi i slova, obavjestavamo korisnika
+				System.out.println("Popunite sva polja sa validnim brojevima i slovima prije dodavanja u tabelu.");
+			}
+		} else {
+			// Ako nisu svi TextField-ovi popunjeni, obojite odgovarajuće TextField-ove u
+			// crveno
+			System.out.println("Popunite sva polja prije dodavanja u tabelu.");
+			listaTxtVr.forEach(textField -> {
+				if (textField.getText().isEmpty()) {
+					textField.getStyleClass().add("red-outline");
+				}
+			});
+		}
 	}
 
 	public void popuniTabeluV(ActionEvent event) {
 
-		// Provjeravamo jesu li svi TextField-ovi popunjeni prije dodavanja u tabelu
+		// Proveravamo da li su svi TextField-ovi popunjeni pre dodavanja u tabelu
 		boolean allFieldsFilledV = listaTxtV.stream().allMatch(textField -> !textField.getText().isEmpty());
-		boolean allNumbersValidV = listaTxtV.stream()
-				.allMatch(textField -> textField.getText().matches("\\d*\\.?\\d*"));
+		boolean allFieldsValidV = listaTxtV.stream()
+				.allMatch(textField -> textField.getText().matches("\\d*\\.?\\d*") || textField == txt_oznaka);
 
-		if (allFieldsFilledV && allNumbersValidV) {
+		if (allFieldsFilledV && allFieldsValidV) {
 			// Ako su svi TextField-ovi popunjeni i uneseni su validni brojevi, dodajemo
 			// podatke u tabelu
 
@@ -530,21 +573,21 @@ public class MainController {
 			tabela_v.setItems(data_v);
 			tabela_v.refresh();
 
-			// Očistimo TextField-ove nakon dodavanja u tabelu
+			// Čistimo TextField-ove nakon dodavanja u tabelu
 			listaTxtV.forEach(TextField::clear);
 			listaTxtV.forEach(textField -> textField.getStyleClass().remove("red-outline"));
-			System.out.println("Dodano u tabelu!");
+			System.out.println("Dodato u tabelu!");
 		} else {
-			// Ako nisu svi TextField-ovi popunjeni ili nisu uneseni validni brojevi,
-			// obojimo odgovarajući TextField u crveno
-			System.out.println("Popunite sva polja s brojevima prije dodavanja u tabelu.");
+			// Ako nisu sva TextField polja popunjena ili nisu uneseni validni brojevi,
+			// označavamo odgovarajući TextField crvenom bojom
+			System.out.println("Popunite sva polja brojevima pre dodavanja u tabelu.");
 			for (TextField textField : listaTxtV) {
-				if (textField.getText().isEmpty() || !textField.getText().matches("\\d*\\.?\\d*")) {
+				if (textField.getText().isEmpty()
+						|| (!textField.getText().matches("\\d*\\.?\\d*") && textField != txt_oznaka)) {
 					textField.getStyleClass().add("red-outline");
 				}
 			}
 		}
-
 	}
 
 	public void izravnaj(ActionEvent e) {
@@ -643,7 +686,7 @@ public class MainController {
 		Dialog<Boolean> dialog = new Dialog<>();
 		dialog.setTitle("Uredi visinsku razliku: " + redV);
 
-		// Kreirajte polja za unos atributa
+		// Kreiramo polja za unos atributa
 		TextField OzField = new TextField();
 		OzField.setText(odabranaV.getOznaka());
 		TextField VField = new TextField();
@@ -659,7 +702,7 @@ public class MainController {
 			radioButtonNe.setSelected(true);
 		}
 
-		// Kreirajte višeslojni raspored za elemente
+		// Kreiramo višeslojni raspored za elemente
 		GridPane gridPane = new GridPane();
 		gridPane.setHgap(10);
 		gridPane.setVgap(10);
@@ -672,15 +715,15 @@ public class MainController {
 		radioButtonDa.setToggleGroup(radioGroup);
 		radioButtonNe.setToggleGroup(radioGroup);
 
-		// Dodajte raspored u dijalog
+		// Dodajemo raspored u dijalog
 		VBox content = new VBox(gridPane);
 		dialog.getDialogPane().setContent(content);
 
-		// Dodajte gumb "Potvrdi" u dijalog
+		// Dodajemo gumb "Potvrdi" u dijalog
 		ButtonType potvrdiButton = new ButtonType("Potvrdi", ButtonBar.ButtonData.OK_DONE);
 		dialog.getDialogPane().getButtonTypes().addAll(potvrdiButton, ButtonType.CANCEL);
 
-		// Obrada potvrde gumba
+		// Obrada potvrde dugmeta
 		dialog.setResultConverter(dialogButton -> {
 			if (dialogButton == potvrdiButton) {
 				odabranaV.setOznaka(OzField.getText());
@@ -700,7 +743,7 @@ public class MainController {
 		// Prikaži dijalog i obradi rezultat
 		dialog.showAndWait().ifPresent(result -> {
 			if (result) {
-				tabela_v.refresh(); // Osvježi prikaz tablice
+				tabela_v.refresh(); // Osvježi prikaz tabele
 			}
 		});
 	}
