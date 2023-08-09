@@ -92,10 +92,12 @@ public class MainController {
 	private List<TextField> listaTxtV = new ArrayList<>();
 	private List<TextField> listaTxtIzravnaj = new ArrayList<>();
 	private List<TextField> listaTxtPravac = new ArrayList<>();
+	private List<TextField> listaTxtUgao = new ArrayList<>();
 
 	int redVR;
 	int redV;
 	int redP;
+	int redU;
 
 	// 2D mreza
 	ObservableList<Pravac> data_pravci = FXCollections.observableArrayList();
@@ -248,16 +250,17 @@ public class MainController {
 		listaTxtIzravnaj.add(txt_nivoZnacajnosti);
 
 		// Dodavanje listener-a za fields VR
-		addTextFieldChangeListenerSlova(txt_od);
-		addTextFieldChangeListenerSlova(txt_do);
-		addTextFieldChangeListenerBrojeva(txt_visinskaRazlika);
-		addTextFieldChangeListenerBrojeva(txt_duzinaStrane);
+		addTextFieldChangeListener(txt_od, "slova", 0);
+		addTextFieldChangeListener(txt_do, "slova", 0);
+		addTextFieldChangeListener(txt_brojStanica, "cijeliBr", Integer.MAX_VALUE);
+		addTextFieldChangeListener(txt_visinskaRazlika, "decimalniBr", 0);
+		addTextFieldChangeListener(txt_duzinaStrane, "decimalniBr", 0);
 		// Dodavanje listener-a za fields V
-		addTextFieldChangeListenerSlova(txt_oznaka);
-		addTextFieldChangeListenerBrojeva(txt_visina);
+		addTextFieldChangeListener(txt_oznaka, "slova", 0);
+		addTextFieldChangeListener(txt_visina, "decimalniBr", 0);
 		// Dodavanje listener-a za fields Izravnaj
-		addTextFieldChangeListenerBrojeva(txt_s0);
-		addTextFieldChangeListenerBrojeva(txt_nivoZnacajnosti);
+		addTextFieldChangeListener(txt_s0, "decimalniBr", 0);
+		addTextFieldChangeListener(txt_nivoZnacajnosti, "decimalniBr", 0);
 
 		// 2D mreza
 		// Dodavanje fields u listu Pravac
@@ -267,14 +270,31 @@ public class MainController {
 		listaTxtPravac.add(txt_minut_p);
 		listaTxtPravac.add(txt_sekund_p);
 		listaTxtPravac.add(txt_tacnost_p);
-
 		// dodavanje listener-a za fields Pravac
-		addTextFieldChangeListenerSlova(txt_od_p);
-		addTextFieldChangeListenerSlova(txt_do_p);
-		addTextFieldChangeListenerBrojeva(txt_stepen_p);
-		addTextFieldChangeListenerBrojeva(txt_minut_p);
-		addTextFieldChangeListenerBrojeva(txt_sekund_p);
-		addTextFieldChangeListenerBrojeva(txt_tacnost_p);
+		addTextFieldChangeListener(txt_od_p, "slova", 0);
+		addTextFieldChangeListener(txt_do_p, "slova", 0);
+		addTextFieldChangeListener(txt_tacnost_p, "decimalniBr", Integer.MAX_VALUE);
+		addTextFieldChangeListener(txt_stepen_p, "cijeliBr", 360);
+		addTextFieldChangeListener(txt_minut_p, "cijeliBr", 60);
+		addTextFieldChangeListener(txt_sekund_p, "decimalniBr", 60);
+		addTextFieldChangeListener(txt_od, "slova", 0);
+
+		// Dodavanje fields u listu Ugao
+		listaTxtUgao.add(txt_lijevo_u);
+		listaTxtUgao.add(txt_sredina_u);
+		listaTxtUgao.add(txt_desno_u);
+		listaTxtUgao.add(txt_tacnost_u);
+		listaTxtUgao.add(txt_stepen_u);
+		listaTxtUgao.add(txt_minut_u);
+		listaTxtUgao.add(txt_sekund_u);
+		// Dodavanje listener-a za fields Ugao
+		addTextFieldChangeListener(txt_lijevo_u, "slova", 0);
+		addTextFieldChangeListener(txt_sredina_u, "slova", 0);
+		addTextFieldChangeListener(txt_desno_u, "slova", 0);
+		addTextFieldChangeListener(txt_tacnost_u, "decimalniBr", Integer.MAX_VALUE);
+		addTextFieldChangeListener(txt_stepen_u, "cijeliBr", 360);
+		addTextFieldChangeListener(txt_minut_u, "cijeliBr", 60);
+		addTextFieldChangeListener(txt_sekund_u, "decimalniBr", 60);
 
 		// Dodavanje tooltip-a
 		toolTip();
@@ -285,7 +305,7 @@ public class MainController {
 
 	}
 
-	private void addTextFieldChangeListenerBrojeva(TextField textField) {
+	private void addTextFieldChangeListener(TextField textField, String type, int maxValue) {
 		textField.textProperty().addListener((observable, oldValue, newValue) -> {
 			// Provjera popunjenosti TextField-ova i primjena crvenog ruba
 			if (newValue.isEmpty()) {
@@ -293,29 +313,38 @@ public class MainController {
 			} else {
 				textField.getStyleClass().remove("red-outline");
 
-				// Provjeravanje je li unesen samo brojčani niz i tacka
-				if (!newValue.matches("\\d*\\.?\\d*")) {
-					textField.getStyleClass().add("red-outline");
-				} else {
-					textField.getStyleClass().remove("red-outline");
-				}
-			}
-		});
-	}
-
-	private void addTextFieldChangeListenerSlova(TextField textField) {
-		textField.textProperty().addListener((observable, oldValue, newValue) -> {
-			// Provjera popunjenosti TextField-ova i primjena crvenog ruba
-			if (newValue.isEmpty()) {
-				textField.getStyleClass().add("red-outline");
-			} else {
-				textField.getStyleClass().remove("red-outline");
-
-				// Provjeravanje je li unesen brojčani niz, tacka i slova abecede
-				if (!newValue.matches("[a-zA-Z0-9\\.]*")) {
-					textField.getStyleClass().add("red-outline");
-				} else {
-					textField.getStyleClass().remove("red-outline");
+				// Provjeravanje tipa
+				switch (type) {
+					case "decimalniBr":
+						// Provjeravanje je li unesen brojčani niz i tacka
+						if (!newValue.matches("\\d*\\.?\\d*")) {
+							textField.getStyleClass().add("red-outline");
+						} else {
+							// Provjera da li je broj manji od zadatog maksimuma
+							double numericValue = Double.parseDouble(newValue);
+							if (numericValue < 0 || numericValue >= maxValue) {
+								textField.getStyleClass().add("red-outline");
+							}
+						}
+						break;
+					case "slova":
+						// Provjeravanje je li unesen brojčani niz, tacka i slova abecede
+						if (!newValue.matches("[a-zA-Z0-9\\.]*")) {
+							textField.getStyleClass().add("red-outline");
+						}
+						break;
+					case "cijeliBr":
+						// Provjeravanje je li unesen samo brojčani niz
+						if (!newValue.matches("\\d*")) {
+							textField.getStyleClass().add("red-outline");
+						} else {
+							// Provjera ograničenja (ne veće od maxValue i ne negativno)
+							int numericValue = Integer.parseInt(newValue);
+							if (numericValue < 0 || numericValue >= maxValue) {
+								textField.getStyleClass().add("red-outline");
+							}
+						}
+						break;
 				}
 			}
 		});
@@ -798,62 +827,68 @@ public class MainController {
 	}
 
 	public void popuniTabeluP(ActionEvent event) {
-		boolean allFieldsFilledPravac = listaTxtPravac.stream().allMatch(textField -> !textField.getText().isEmpty());
+		if (radio_poznata_p.isSelected() || radio_nepoznata_p.isSelected()) {
 
-		if (allFieldsFilledPravac) {
-			// Ako su svi TextField-ovi popunjeni, nastavite sa dodavanjem u tabelu
+			boolean allFieldsFilledPravac = listaTxtPravac.stream()
+					.allMatch(textField -> !textField.getText().isEmpty());
 
-			// Provjera validnosti za određenog polja
-			boolean validNumbers = true;
-			for (int i = 0; i < listaTxtVr.size(); i++) {
-				TextField textField = listaTxtVr.get(i);
-				String text = textField.getText();
+			if (allFieldsFilledPravac) {
+				// Ako su svi TextField-ovi popunjeni, nastavite sa dodavanjem u tabelu
 
-				if (i == 0 || i == 1) { // Polja 1 i 2 su polja u kojima dozvoljavamo slova
-					if (!text.matches("[a-zA-Z0-9\\.]*")) {
-						textField.getStyleClass().add("red-outline");
-						validNumbers = false;
-					} else {
-						textField.getStyleClass().remove("red-outline");
-					}
-				} else { // Ostala polja su polja u kojima treba unijeti brojeve ili tačku
-					if (!text.matches("\\d*\\.?\\d*")) {
-						textField.getStyleClass().add("red-outline");
-						validNumbers = false;
-					} else {
-						textField.getStyleClass().remove("red-outline");
+				// Provjera validnosti za određenog polja
+				boolean validNumbers = true;
+				for (int i = 0; i < listaTxtVr.size(); i++) {
+					TextField textField = listaTxtVr.get(i);
+					String text = textField.getText();
+
+					if (i == 0 || i == 1) { // Polja 1 i 2 su polja u kojima dozvoljavamo slova
+						if (!text.matches("[a-zA-Z0-9\\.]*")) {
+							textField.getStyleClass().add("red-outline");
+							validNumbers = false;
+						} else {
+							textField.getStyleClass().remove("red-outline");
+						}
+					} else { // Ostala polja su polja u kojima treba unijeti brojeve ili tačku
+						if (!text.matches("\\d*\\.?\\d*")) {
+							textField.getStyleClass().add("red-outline");
+							validNumbers = false;
+						} else {
+							textField.getStyleClass().remove("red-outline");
+						}
 					}
 				}
-			}
 
-			if (validNumbers) {
-				// Ako su uneseni validni brojevi i slova, dodajemo podatke u tabelu
-				pravac = new Pravac(txt_od_p.getText(), txt_do_p.getText(), txt_stepen_p.getText(),
-						txt_minut_p.getText(), txt_sekund_p.getText(),
-						txt_tacnost_p.getText(), radio_poznata_p.isSelected(), radio_nepoznata_p.isSelected());
-				data_pravci.add(pravac);
-				tabela_p.setItems(data_pravci);
-				tabela_p.refresh();
+				if (validNumbers) {
+					// Ako su uneseni validni brojevi i slova, dodajemo podatke u tabelu
+					pravac = new Pravac(txt_od_p.getText(), txt_do_p.getText(), txt_stepen_p.getText(),
+							txt_minut_p.getText(), txt_sekund_p.getText(),
+							txt_tacnost_p.getText(), radio_poznata_p.isSelected(), radio_nepoznata_p.isSelected());
+					data_pravci.add(pravac);
+					tabela_p.setItems(data_pravci);
+					tabela_p.refresh();
 
-				// Očistimo TextField-ove nakon dodavanja u tabelu
-				listaTxtPravac.forEach(TextField::clear);
-				radio_poznata_p.setSelected(false);
-				radio_nepoznata_p.setSelected(false);
-				listaTxtPravac.forEach(textField -> textField.getStyleClass().remove("red-outline"));
-				System.out.println("Dodano u tabelu!");
+					// Očistimo TextField-ove nakon dodavanja u tabelu
+					listaTxtPravac.forEach(TextField::clear);
+					radio_poznata_p.setSelected(false);
+					radio_nepoznata_p.setSelected(false);
+					listaTxtPravac.forEach(textField -> textField.getStyleClass().remove("red-outline"));
+					System.out.println("Dodano u tabelu!");
+				} else {
+					// Ako nisu uneseni validni brojevi i slova, obavjestavamo korisnika
+					System.out.println("Popunite sva polja sa validnim brojevima i slovima prije dodavanja u tabelu.");
+				}
 			} else {
-				// Ako nisu uneseni validni brojevi i slova, obavjestavamo korisnika
-				System.out.println("Popunite sva polja sa validnim brojevima i slovima prije dodavanja u tabelu.");
+				// Ako nisu svi TextField-ovi popunjeni, obojite odgovarajuće TextField-ove u
+				// crveno
+				System.out.println("Popunite sva polja prije dodavanja u tabelu.");
+				listaTxtPravac.forEach(textField -> {
+					if (textField.getText().isEmpty()) {
+						textField.getStyleClass().add("red-outline");
+					}
+				});
 			}
 		} else {
-			// Ako nisu svi TextField-ovi popunjeni, obojite odgovarajuće TextField-ove u
-			// crveno
-			System.out.println("Popunite sva polja prije dodavanja u tabelu.");
-			listaTxtPravac.forEach(textField -> {
-				if (textField.getText().isEmpty()) {
-					textField.getStyleClass().add("red-outline");
-				}
-			});
+			showAlert("GRESKA", "Morate izabrati da li je tacka poznata ili ne!", AlertType.ERROR);
 		}
 
 	}
@@ -944,12 +979,92 @@ public class MainController {
 
 	public void popuniTabeluU(ActionEvent event) {
 
-		String oznaka = txt_lijevo_u.getText() + "-" + txt_sredina_u.getText() + "-" + txt_desno_u.getText();
-		ugao = new Ugao(oznaka, txt_stepen_u.getText(), txt_minut_u.getText(), txt_sekund_u.getText(),
-				txt_tacnost_u.getText());
-		data_uglovi.add(ugao);
-		tabela_u.setItems(data_uglovi);
-		tabela_u.refresh();
+		boolean allFieldsFilledUgao = listaTxtUgao.stream()
+				.allMatch(textField -> !textField.getText().isEmpty());
+
+		if (allFieldsFilledUgao) {
+			// Ako su svi TextField-ovi popunjeni, nastavite sa dodavanjem u tabelu
+
+			// Provjera validnosti za određenog polja
+			boolean validData = true;
+			for (int i = 0; i < listaTxtUgao.size(); i++) {
+				TextField textField = listaTxtUgao.get(i);
+				String text = textField.getText();
+
+				if (i == 0 || i == 1 || i == 2) { // Polja 1, 2 i 3 dozvoljavaju slova, brojeve i tacku
+					if (!text.matches("[a-zA-Z0-9\\.]*")) {
+						textField.getStyleClass().add("red-outline");
+						validData = false;
+					} else {
+						textField.getStyleClass().remove("red-outline");
+					}
+				} else if (i == 6 || i == 3) { // Polje 6 i 3 dozvoljavaju decimalne brojeve i tacku
+					if (!text.matches("\\d*\\.?\\d*")) {
+						textField.getStyleClass().add("red-outline");
+						validData = false;
+					} else {
+						textField.getStyleClass().remove("red-outline");
+						double numericValue = Double.parseDouble(text);
+						if (i == 6 && (numericValue >= 60 || numericValue < 0)) {
+							textField.getStyleClass().add("red-outline");
+							validData = false;
+						}
+
+					}
+				} else if (i == 4 || i == 5) { // Polja 4 i 5 dozvoljavaju cijele brojeve
+					if (!text.matches("\\d*")) {
+						textField.getStyleClass().add("red-outline");
+						validData = false;
+					} else {
+						textField.getStyleClass().remove("red-outline");
+						int numericValue = Integer.parseInt(text);
+						if (i == 4 && (numericValue >= 360 || numericValue < 0)) {
+							textField.getStyleClass().add("red-outline");
+							validData = false;
+						}
+						if (i == 5 && (numericValue >= 60 || numericValue < 0)) {
+							textField.getStyleClass().add("red-outline");
+							validData = false;
+						}
+					}
+				}
+			}
+
+			if (validData) {
+				// Ako su uneseni validni brojevi i slova, dodajemo podatke u tabelu
+				String oznaka = txt_lijevo_u.getText() + "-" + txt_sredina_u.getText() + "-" + txt_desno_u.getText();
+				int stepen = Integer.parseInt(txt_stepen_u.getText());
+				int minut = Integer.parseInt(txt_minut_u.getText());
+				double sekund = Double.parseDouble(txt_sekund_u.getText());
+
+				if (stepen < 360 && minut < 60 && sekund < 60) {
+					ugao = new Ugao(oznaka, txt_stepen_u.getText(), txt_minut_u.getText(), txt_sekund_u.getText(),
+							txt_tacnost_u.getText());
+					data_uglovi.add(ugao);
+					tabela_u.setItems(data_uglovi);
+					tabela_u.refresh();
+
+					// Očistimo TextField-ove nakon dodavanja u tabelu
+					listaTxtUgao.forEach(TextField::clear);
+					listaTxtUgao.forEach(textField -> textField.getStyleClass().remove("red-outline"));
+					System.out.println("Dodano u tabelu!");
+				} else {
+					System.out.println("Vrijednosti stepena, minuta ili sekundi nisu u dozvoljenom opsegu.");
+				}
+			} else {
+				// Ako nisu uneseni validni brojevi i slova, obavestavamo korisnika
+				System.out.println("Popunite sva polja sa validnim brojevima i slovima prije dodavanja u tabelu.");
+			}
+		} else {
+			// Ako nisu svi TextField-ovi popunjeni, obojite odgovarajuće TextField-ove u
+			// crveno
+			System.out.println("Popunite sva polja prije dodavanja u tabelu.");
+			listaTxtUgao.forEach(textField -> {
+				if (textField.getText().isEmpty()) {
+					textField.getStyleClass().add("red-outline");
+				}
+			});
+		}
 	}
 
 	public void pupuniTabeluD(ActionEvent event) {
