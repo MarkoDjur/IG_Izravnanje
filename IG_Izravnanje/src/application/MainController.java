@@ -91,9 +91,11 @@ public class MainController {
 	private List<TextField> listaTxtVr = new ArrayList<>();
 	private List<TextField> listaTxtV = new ArrayList<>();
 	private List<TextField> listaTxtIzravnaj = new ArrayList<>();
+	private List<TextField> listaTxtPravac = new ArrayList<>();
 
 	int redVR;
 	int redV;
+	int redP;
 
 	// 2D mreza
 	ObservableList<Pravac> data_pravci = FXCollections.observableArrayList();
@@ -225,7 +227,14 @@ public class MainController {
 		KOORDINATA_OZNAKA.setCellValueFactory(new PropertyValueFactory<>("oznaka"));
 		KOORDINATA_Y.setCellValueFactory(new PropertyValueFactory<>("y"));
 		KOORDINATA_X.setCellValueFactory(new PropertyValueFactory<>("x"));
+		PRAVAC_OD.setCellValueFactory(new PropertyValueFactory<>("Od"));
+		PRAVAC_DO.setCellValueFactory(new PropertyValueFactory<>("Do"));
+		PRAVAC_STEPEN.setCellValueFactory(new PropertyValueFactory<>("stepen"));
+		PRAVAC_MINUT.setCellValueFactory(new PropertyValueFactory<>("minut"));
+		PRAVAC_SEKUND.setCellValueFactory(new PropertyValueFactory<>("sekund"));
+		PRAVAC_TACNOST.setCellValueFactory(new PropertyValueFactory<>("tacnost"));
 
+		// 1D mreza
 		// Dodavanje fields u listu VR
 		listaTxtVr.add(txt_od);
 		listaTxtVr.add(txt_do);
@@ -250,11 +259,29 @@ public class MainController {
 		addTextFieldChangeListenerBrojeva(txt_s0);
 		addTextFieldChangeListenerBrojeva(txt_nivoZnacajnosti);
 
+		// 2D mreza
+		// Dodavanje fields u listu Pravac
+		listaTxtPravac.add(txt_od_p);
+		listaTxtPravac.add(txt_do_p);
+		listaTxtPravac.add(txt_stepen_p);
+		listaTxtPravac.add(txt_minut_p);
+		listaTxtPravac.add(txt_sekund_p);
+		listaTxtPravac.add(txt_tacnost_p);
+
+		// dodavanje listener-a za fields Pravac
+		addTextFieldChangeListenerSlova(txt_od_p);
+		addTextFieldChangeListenerSlova(txt_do_p);
+		addTextFieldChangeListenerBrojeva(txt_stepen_p);
+		addTextFieldChangeListenerBrojeva(txt_minut_p);
+		addTextFieldChangeListenerBrojeva(txt_sekund_p);
+		addTextFieldChangeListenerBrojeva(txt_tacnost_p);
+
 		// Dodavanje tooltip-a
 		toolTip();
 		// Dodavanje dvoklika na tablicu
 		klikTabelaVR();
 		klikTabelaV();
+		klikTabelaPravac();
 
 	}
 
@@ -335,6 +362,30 @@ public class MainController {
 			row.itemProperty().addListener((obs, oldVal, newVal) -> {
 				if (newVal != null) {
 					if (newVal.definiseDatum()) {
+						row.getStyleClass().add("table-row-true");
+					} else {
+						row.getStyleClass().remove("table-row-true");
+					}
+				}
+			});
+			return row;
+		});
+
+	}
+
+	public void klikTabelaPravac() {
+		tabela_p.setRowFactory(tv -> {
+			TableRow<Pravac> row = new TableRow<>();
+			row.setOnMouseClicked(event -> {
+				if (event.getButton() == MouseButton.PRIMARY && event.getClickCount() == 2 && !row.isEmpty()) {
+					Pravac rowData = row.getItem();
+					otvoriDijalogZaUredivanjePravca(rowData);
+				}
+				redP = row.getIndex() + 1;
+			});
+			row.itemProperty().addListener((obs, oldVal, newVal) -> {
+				if (newVal != null) {
+					if (newVal.selektovano_poznata) {
 						row.getStyleClass().add("table-row-true");
 					} else {
 						row.getStyleClass().remove("table-row-true");
@@ -575,6 +626,7 @@ public class MainController {
 
 			// Čistimo TextField-ove nakon dodavanja u tabelu
 			listaTxtV.forEach(TextField::clear);
+			datum1d.setSelected(false);
 			listaTxtV.forEach(textField -> textField.getStyleClass().remove("red-outline"));
 			System.out.println("Dodato u tabelu!");
 		} else {
@@ -679,9 +731,6 @@ public class MainController {
 		});
 	}
 
-	/**
-	 * @param odabranaV
-	 */
 	public void otvoriDijalogZaUredivanjeV(Visina odabranaV) {
 		Dialog<Boolean> dialog = new Dialog<>();
 		dialog.setTitle("Uredi visinsku razliku: " + redV);
@@ -749,18 +798,148 @@ public class MainController {
 	}
 
 	public void popuniTabeluP(ActionEvent event) {
-		PRAVAC_OD.setCellValueFactory(new PropertyValueFactory<>("Od"));
-		PRAVAC_DO.setCellValueFactory(new PropertyValueFactory<>("Do"));
-		PRAVAC_STEPEN.setCellValueFactory(new PropertyValueFactory<>("stepen"));
-		PRAVAC_MINUT.setCellValueFactory(new PropertyValueFactory<>("minut"));
-		PRAVAC_SEKUND.setCellValueFactory(new PropertyValueFactory<>("sekund"));
-		PRAVAC_TACNOST.setCellValueFactory(new PropertyValueFactory<>("tacnost"));
-		pravac = new Pravac(txt_od_p.getText(), txt_do_p.getText(), txt_stepen_p.getText(),
-				txt_minut_p.getText(), txt_sekund_p.getText(),
-				txt_tacnost_p.getText(), radio_poznata_p.isSelected(), radio_nepoznata_p.isSelected());
-		data_pravci.add(pravac);
-		tabela_p.setItems(data_pravci);
-		tabela_p.refresh();
+		boolean allFieldsFilledPravac = listaTxtPravac.stream().allMatch(textField -> !textField.getText().isEmpty());
+
+		if (allFieldsFilledPravac) {
+			// Ako su svi TextField-ovi popunjeni, nastavite sa dodavanjem u tabelu
+
+			// Provjera validnosti za određenog polja
+			boolean validNumbers = true;
+			for (int i = 0; i < listaTxtVr.size(); i++) {
+				TextField textField = listaTxtVr.get(i);
+				String text = textField.getText();
+
+				if (i == 0 || i == 1) { // Polja 1 i 2 su polja u kojima dozvoljavamo slova
+					if (!text.matches("[a-zA-Z0-9\\.]*")) {
+						textField.getStyleClass().add("red-outline");
+						validNumbers = false;
+					} else {
+						textField.getStyleClass().remove("red-outline");
+					}
+				} else { // Ostala polja su polja u kojima treba unijeti brojeve ili tačku
+					if (!text.matches("\\d*\\.?\\d*")) {
+						textField.getStyleClass().add("red-outline");
+						validNumbers = false;
+					} else {
+						textField.getStyleClass().remove("red-outline");
+					}
+				}
+			}
+
+			if (validNumbers) {
+				// Ako su uneseni validni brojevi i slova, dodajemo podatke u tabelu
+				pravac = new Pravac(txt_od_p.getText(), txt_do_p.getText(), txt_stepen_p.getText(),
+						txt_minut_p.getText(), txt_sekund_p.getText(),
+						txt_tacnost_p.getText(), radio_poznata_p.isSelected(), radio_nepoznata_p.isSelected());
+				data_pravci.add(pravac);
+				tabela_p.setItems(data_pravci);
+				tabela_p.refresh();
+
+				// Očistimo TextField-ove nakon dodavanja u tabelu
+				listaTxtPravac.forEach(TextField::clear);
+				radio_poznata_p.setSelected(false);
+				radio_nepoznata_p.setSelected(false);
+				listaTxtPravac.forEach(textField -> textField.getStyleClass().remove("red-outline"));
+				System.out.println("Dodano u tabelu!");
+			} else {
+				// Ako nisu uneseni validni brojevi i slova, obavjestavamo korisnika
+				System.out.println("Popunite sva polja sa validnim brojevima i slovima prije dodavanja u tabelu.");
+			}
+		} else {
+			// Ako nisu svi TextField-ovi popunjeni, obojite odgovarajuće TextField-ove u
+			// crveno
+			System.out.println("Popunite sva polja prije dodavanja u tabelu.");
+			listaTxtPravac.forEach(textField -> {
+				if (textField.getText().isEmpty()) {
+					textField.getStyleClass().add("red-outline");
+				}
+			});
+		}
+
+	}
+
+	public void otvoriDijalogZaUredivanjePravca(Pravac odabraniPravac) {
+		Dialog<Boolean> dialog = new Dialog<>();
+		dialog.setTitle("Uredi pravac: " + redV);
+
+		// Kreiramo polja za unos atributa
+		TextField OdField = new TextField();
+		OdField.setText(odabraniPravac.getOd());
+		TextField DoField = new TextField();
+		DoField.setText(odabraniPravac.getDo());
+		TextField StepenField = new TextField();
+		StepenField.setText(odabraniPravac.getStepen());
+		TextField MinutField = new TextField();
+		MinutField.setText(odabraniPravac.getMinut());
+		TextField SekundField = new TextField();
+		SekundField.setText(odabraniPravac.getSekund());
+		TextField TacnostField = new TextField();
+		TacnostField.setText(odabraniPravac.getTacnost());
+
+		RadioButton radioButtonP = new RadioButton("Poznata");
+		RadioButton radioButtonN = new RadioButton("Nepoznata");
+
+		if (odabraniPravac.getSelektovanoPoznata()) {
+			radioButtonP.setSelected(true);
+			radioButtonN.setSelected(false);
+		} else if (odabraniPravac.getSelektovanoNepoznata()) {
+			radioButtonP.setSelected(false);
+			radioButtonN.setSelected(true);
+		}
+
+		// Kreiramo višeslojni raspored za elemente
+		GridPane gridPane = new GridPane();
+		gridPane.setHgap(10);
+		gridPane.setVgap(10);
+		gridPane.addRow(0, new Label("Od:"), OdField);
+		gridPane.addRow(1, new Label("Do:"), DoField);
+		gridPane.addRow(2, new Label("Stepen:"), StepenField);
+		gridPane.addRow(3, new Label("Minut:"), MinutField);
+		gridPane.addRow(4, new Label("Sekund:"), SekundField);
+		gridPane.addRow(5, new Label("Tacnost:"), TacnostField);
+		gridPane.addRow(6, new Label("Da li je poznata tacka:"));
+		gridPane.addRow(7, radioButtonP, radioButtonN);
+
+		ToggleGroup radioGroup = new ToggleGroup();
+		radioButtonP.setToggleGroup(radioGroup);
+		radioButtonN.setToggleGroup(radioGroup);
+
+		// Dodajemo raspored u dijalog
+		VBox content = new VBox(gridPane);
+		dialog.getDialogPane().setContent(content);
+
+		// Dodajemo gumb "Potvrdi" u dijalog
+		ButtonType potvrdiButton = new ButtonType("Potvrdi", ButtonBar.ButtonData.OK_DONE);
+		dialog.getDialogPane().getButtonTypes().addAll(potvrdiButton, ButtonType.CANCEL);
+
+		// Obrada potvrde dugmeta
+		dialog.setResultConverter(dialogButton -> {
+			if (dialogButton == potvrdiButton) {
+				odabraniPravac.setOd(OdField.getText());
+				odabraniPravac.setDo(DoField.getText());
+				odabraniPravac.setTacnost(TacnostField.getText());
+				odabraniPravac.setStepen(StepenField.getText());
+				odabraniPravac.setMinut(MinutField.getText());
+				odabraniPravac.setSekund(SekundField.getText());
+
+				if (radioButtonP.isSelected()) {
+					odabraniPravac.setPoznata(true);
+					odabraniPravac.setNePoznata(false);
+				} else {
+					odabraniPravac.setPoznata(false);
+					odabraniPravac.setNePoznata(true);
+				}
+				return true;
+			}
+			return false;
+		});
+
+		// Prikaži dijalog i obradi rezultat
+		dialog.showAndWait().ifPresent(result -> {
+			if (result) {
+				tabela_p.refresh(); // Osvježi prikaz tabele
+			}
+		});
 	}
 
 	public void popuniTabeluU(ActionEvent event) {

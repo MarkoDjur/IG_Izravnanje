@@ -10,7 +10,7 @@ public class Pravac {
 	private SimpleStringProperty minut;
 	private SimpleStringProperty sekund;
 	private SimpleStringProperty tacnost;
-	private boolean selektovano_poznata;
+	public boolean selektovano_poznata;
 	private boolean selektovano_nepoznata;
 	
 	public Pravac(String Od, String Do, String stepen, String minut, String sekund, String tacnost, boolean selektovano_poznata, boolean selektovano_nepoznata) {
@@ -48,6 +48,29 @@ public class Pravac {
 	public String getTacnost() {
 		return tacnost.get();
 	}
+
+	public void setOd(String Od) {
+		this.Od.set(Od);
+	}
+
+	public void setDo(String Do) {
+		this.Do.set(Do);
+	}
+	public void setStepen(String stepen) {
+		this.stepen.set(stepen);
+	}
+
+	public void setMinut(String minut) {
+		this.minut.set(minut);
+	}
+
+	public void setSekund(String sekund) {
+		this.sekund.set(sekund);
+	}
+
+	public void setTacnost(String tacnost) {
+		this.tacnost.set(tacnost);
+	}
 	
 	public String getVrijednost() {
 		double st = Double.parseDouble(stepen.get());
@@ -67,6 +90,14 @@ public class Pravac {
 	
 	public boolean getSelektovanoNepoznata() {
 		return selektovano_nepoznata;
+	}
+
+	public void setPoznata(boolean selektovano_poznata) {
+		this.selektovano_poznata = selektovano_poznata;
+	}
+
+	public void setNePoznata(boolean selektovano_nepoznata) {
+		this.selektovano_nepoznata = selektovano_nepoznata;
 	}
 
 }
