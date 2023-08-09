@@ -266,10 +266,10 @@ public class MainController {
 		// Dodavanje fields u listu Pravac
 		listaTxtPravac.add(txt_od_p);
 		listaTxtPravac.add(txt_do_p);
+		listaTxtPravac.add(txt_tacnost_p);
 		listaTxtPravac.add(txt_stepen_p);
 		listaTxtPravac.add(txt_minut_p);
 		listaTxtPravac.add(txt_sekund_p);
-		listaTxtPravac.add(txt_tacnost_p);
 		// dodavanje listener-a za fields Pravac
 		addTextFieldChangeListener(txt_od_p, "slova", 0);
 		addTextFieldChangeListener(txt_do_p, "slova", 0);
@@ -826,6 +826,78 @@ public class MainController {
 		});
 	}
 
+	// public void popuniTabeluP(ActionEvent event) {
+	// if (radio_poznata_p.isSelected() || radio_nepoznata_p.isSelected()) {
+
+	// boolean allFieldsFilledPravac = listaTxtPravac.stream()
+	// .allMatch(textField -> !textField.getText().isEmpty());
+
+	// if (allFieldsFilledPravac) {
+	// // Ako su svi TextField-ovi popunjeni, nastavite sa dodavanjem u tabelu
+
+	// // Provjera validnosti za određenog polja
+	// boolean validNumbers = true;
+	// for (int i = 0; i < listaTxtVr.size(); i++) {
+	// TextField textField = listaTxtVr.get(i);
+	// String text = textField.getText();
+
+	// if (i == 0 || i == 1) { // Polja 1 i 2 su polja u kojima dozvoljavamo slova
+	// if (!text.matches("[a-zA-Z0-9\\.]*")) {
+	// textField.getStyleClass().add("red-outline");
+	// validNumbers = false;
+	// } else {
+	// textField.getStyleClass().remove("red-outline");
+	// }
+	// } else { // Ostala polja su polja u kojima treba unijeti brojeve ili tačku
+	// if (!text.matches("\\d*\\.?\\d*")) {
+	// textField.getStyleClass().add("red-outline");
+	// validNumbers = false;
+	// } else {
+	// textField.getStyleClass().remove("red-outline");
+	// }
+	// }
+	// }
+
+	// if (validNumbers) {
+	// // Ako su uneseni validni brojevi i slova, dodajemo podatke u tabelu
+	// pravac = new Pravac(txt_od_p.getText(), txt_do_p.getText(),
+	// txt_stepen_p.getText(),
+	// txt_minut_p.getText(), txt_sekund_p.getText(),
+	// txt_tacnost_p.getText(), radio_poznata_p.isSelected(),
+	// radio_nepoznata_p.isSelected());
+	// data_pravci.add(pravac);
+	// tabela_p.setItems(data_pravci);
+	// tabela_p.refresh();
+
+	// // Očistimo TextField-ove nakon dodavanja u tabelu
+	// listaTxtPravac.forEach(TextField::clear);
+	// radio_poznata_p.setSelected(false);
+	// radio_nepoznata_p.setSelected(false);
+	// listaTxtPravac.forEach(textField ->
+	// textField.getStyleClass().remove("red-outline"));
+	// System.out.println("Dodano u tabelu!");
+	// } else {
+	// // Ako nisu uneseni validni brojevi i slova, obavjestavamo korisnika
+	// System.out.println("Popunite sva polja sa validnim brojevima i slovima prije
+	// dodavanja u tabelu.");
+	// }
+	// } else {
+	// // Ako nisu svi TextField-ovi popunjeni, obojite odgovarajuće TextField-ove u
+	// // crveno
+	// System.out.println("Popunite sva polja prije dodavanja u tabelu.");
+	// listaTxtPravac.forEach(textField -> {
+	// if (textField.getText().isEmpty()) {
+	// textField.getStyleClass().add("red-outline");
+	// }
+	// });
+	// }
+	// } else {
+	// showAlert("GRESKA", "Morate izabrati da li je tacka poznata ili ne!",
+	// AlertType.ERROR);
+	// }
+
+	// }
+
 	public void popuniTabeluP(ActionEvent event) {
 		if (radio_poznata_p.isSelected() || radio_nepoznata_p.isSelected()) {
 
@@ -836,36 +908,81 @@ public class MainController {
 				// Ako su svi TextField-ovi popunjeni, nastavite sa dodavanjem u tabelu
 
 				// Provjera validnosti za određenog polja
-				boolean validNumbers = true;
-				for (int i = 0; i < listaTxtVr.size(); i++) {
-					TextField textField = listaTxtVr.get(i);
+				boolean validData = true;
+				for (int i = 0; i < listaTxtPravac.size(); i++) {
+					TextField textField = listaTxtPravac.get(i);
 					String text = textField.getText();
 
-					if (i == 0 || i == 1) { // Polja 1 i 2 su polja u kojima dozvoljavamo slova
+					if (i == 0 || i == 1) { // Polja 0 i 1 dozvoljavaju slova
 						if (!text.matches("[a-zA-Z0-9\\.]*")) {
 							textField.getStyleClass().add("red-outline");
-							validNumbers = false;
+							validData = false;
 						} else {
 							textField.getStyleClass().remove("red-outline");
 						}
-					} else { // Ostala polja su polja u kojima treba unijeti brojeve ili tačku
+					} else if (i == 2 || i == 5) { // Polja 2 i 5 dozvoljavaju decimalne brojeve
 						if (!text.matches("\\d*\\.?\\d*")) {
 							textField.getStyleClass().add("red-outline");
-							validNumbers = false;
+							validData = false;
 						} else {
 							textField.getStyleClass().remove("red-outline");
+							double numericValue = Double.parseDouble(text);
+							if (i == 5 && (numericValue >= 60 || numericValue < 0)) {
+								textField.getStyleClass().add("red-outline");
+								validData = false;
+							}
+						}
+
+					} else if (i == 3) { // Polje 3 dozvoljava cijele brojeve manje od 360
+						if (!text.matches("\\d*")) {
+							textField.getStyleClass().add("red-outline");
+							validData = false;
+						} else {
+							textField.getStyleClass().remove("red-outline");
+							int numericValue = Integer.parseInt(text);
+							if (numericValue >= 360) {
+								textField.getStyleClass().add("red-outline");
+								validData = false;
+							}
+						}
+					} else if (i == 4) { // Polje 4 dozvoljava cijele brojeve manje od 60
+						if (!text.matches("\\d*")) {
+							textField.getStyleClass().add("red-outline");
+							validData = false;
+						} else {
+							textField.getStyleClass().remove("red-outline");
+							int numericValue = Integer.parseInt(text);
+							if (numericValue >= 60) {
+								textField.getStyleClass().add("red-outline");
+								validData = false;
+							}
 						}
 					}
 				}
 
-				if (validNumbers) {
+				if (validData) {
 					// Ako su uneseni validni brojevi i slova, dodajemo podatke u tabelu
-					pravac = new Pravac(txt_od_p.getText(), txt_do_p.getText(), txt_stepen_p.getText(),
-							txt_minut_p.getText(), txt_sekund_p.getText(),
-							txt_tacnost_p.getText(), radio_poznata_p.isSelected(), radio_nepoznata_p.isSelected());
-					data_pravci.add(pravac);
-					tabela_p.setItems(data_pravci);
-					tabela_p.refresh();
+					int stepen = Integer.parseInt(txt_stepen_p.getText());
+					int minut = Integer.parseInt(txt_minut_p.getText());
+					double sekund = Double.parseDouble(txt_sekund_p.getText());
+
+					if (stepen < 360 && minut < 60 && sekund < 60) {
+						pravac = new Pravac(txt_od_p.getText(), txt_do_p.getText(),
+								txt_stepen_p.getText(),
+								txt_minut_p.getText(), txt_sekund_p.getText(),
+								txt_tacnost_p.getText(), radio_poznata_p.isSelected(),
+								radio_nepoznata_p.isSelected());
+						data_pravci.add(pravac);
+						tabela_p.setItems(data_pravci);
+						tabela_p.refresh();
+
+						// Očistimo TextField-ove nakon dodavanja u tabelu
+						listaTxtPravac.forEach(TextField::clear);
+						listaTxtPravac.forEach(textField -> textField.getStyleClass().remove("red-outline"));
+						System.out.println("Dodano u tabelu!");
+					} else {
+						System.out.println("Vrijednosti stepena, minuta ili sekundi nisu u dozvoljenom opsegu.");
+					}
 
 					// Očistimo TextField-ove nakon dodavanja u tabelu
 					listaTxtPravac.forEach(TextField::clear);
@@ -874,7 +991,7 @@ public class MainController {
 					listaTxtPravac.forEach(textField -> textField.getStyleClass().remove("red-outline"));
 					System.out.println("Dodano u tabelu!");
 				} else {
-					// Ako nisu uneseni validni brojevi i slova, obavjestavamo korisnika
+					// Ako nisu uneseni validni brojevi i slova, obavestavamo korisnika
 					System.out.println("Popunite sva polja sa validnim brojevima i slovima prije dodavanja u tabelu.");
 				}
 			} else {
@@ -890,7 +1007,6 @@ public class MainController {
 		} else {
 			showAlert("GRESKA", "Morate izabrati da li je tacka poznata ili ne!", AlertType.ERROR);
 		}
-
 	}
 
 	public void otvoriDijalogZaUredivanjePravca(Pravac odabraniPravac) {
