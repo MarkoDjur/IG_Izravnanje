@@ -70,4 +70,20 @@ public class Ugao {
 		this.tacnost.set(tacnost);
 	}
 
+	public Ugao(String oznaka) {
+		this.oznaka = new SimpleStringProperty(oznaka);
+	}
+
+	public String getLijevo() {
+		return oznaka.get().split("-")[0];
+	}
+
+	public String getSredina() {
+		return oznaka.get().split("-")[1];
+	}
+
+	public String getDesno() {
+		return oznaka.get().split("-")[2];
+	}
+
 }

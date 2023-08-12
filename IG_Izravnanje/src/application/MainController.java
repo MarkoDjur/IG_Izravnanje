@@ -7,6 +7,7 @@ import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.MouseButton;
 import javafx.scene.layout.GridPane;
+import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.stage.FileChooser;
 import javafx.stage.FileChooser.ExtensionFilter;
@@ -93,11 +94,13 @@ public class MainController {
 	private List<TextField> listaTxtIzravnaj = new ArrayList<>();
 	private List<TextField> listaTxtPravac = new ArrayList<>();
 	private List<TextField> listaTxtUgao = new ArrayList<>();
+	private List<TextField> listaTxtDuzina = new ArrayList<>();
 
 	int redVR;
 	int redV;
 	int redP;
 	int redU;
+	int redD;
 
 	// 2D mreza
 	ObservableList<Pravac> data_pravci = FXCollections.observableArrayList();
@@ -296,12 +299,26 @@ public class MainController {
 		addTextFieldChangeListener(txt_minut_u, "cijeliBr", 60);
 		addTextFieldChangeListener(txt_sekund_u, "decimalniBr", 60);
 
+		// Dodavanje fields u listu Duzina
+		listaTxtDuzina.add(txt_od_d);
+		listaTxtDuzina.add(txt_do_d);
+		listaTxtDuzina.add(txt_vrijednost_d);
+		listaTxtDuzina.add(txt_mm_d);
+		listaTxtDuzina.add(txt_ppm_d);
+		// Dodavanje listenera-a za fields Duzina
+		addTextFieldChangeListener(txt_od_d, "slova", 0);
+		addTextFieldChangeListener(txt_do_d, "slova", 0);
+		addTextFieldChangeListener(txt_vrijednost_d, "decimalniBr", Integer.MAX_VALUE);
+		addTextFieldChangeListener(txt_mm_d, "decimalniBr", Integer.MAX_VALUE);
+		addTextFieldChangeListener(txt_ppm_d, "decimalniBr", Integer.MAX_VALUE);
+
 		// Dodavanje tooltip-a
 		toolTip();
 		// Dodavanje dvoklika na tablicu
 		klikTabelaVR();
 		klikTabelaV();
 		klikTabelaPravac();
+		klikTabelaUgao();
 
 	}
 
@@ -420,6 +437,34 @@ public class MainController {
 						row.getStyleClass().remove("table-row-true");
 					}
 				}
+			});
+			return row;
+		});
+	}
+
+	public void klikTabelaUgao() {
+		tabela_u.setRowFactory(tv -> {
+			TableRow<Ugao> row = new TableRow<>();
+			row.setOnMouseClicked(event -> {
+				if (event.getButton() == MouseButton.PRIMARY && event.getClickCount() == 2 && !row.isEmpty()) {
+					Ugao rowData = row.getItem();
+					otvoriDijalogZaUredivanjeUgao(rowData);
+				}
+				redVR = row.getIndex() + 1;
+			});
+			return row;
+		});
+	}
+
+	public void klikTabelaDuzina() {
+		tabela_vr.setRowFactory(tv -> {
+			TableRow<VisinskaRazlika> row = new TableRow<>();
+			row.setOnMouseClicked(event -> {
+				if (event.getButton() == MouseButton.PRIMARY && event.getClickCount() == 2 && !row.isEmpty()) {
+					VisinskaRazlika rowData = row.getItem();
+					otvoriDijalogZaUredivanjeVR(rowData);
+				}
+				redVR = row.getIndex() + 1;
 			});
 			return row;
 		});
@@ -826,78 +871,6 @@ public class MainController {
 		});
 	}
 
-	// public void popuniTabeluP(ActionEvent event) {
-	// if (radio_poznata_p.isSelected() || radio_nepoznata_p.isSelected()) {
-
-	// boolean allFieldsFilledPravac = listaTxtPravac.stream()
-	// .allMatch(textField -> !textField.getText().isEmpty());
-
-	// if (allFieldsFilledPravac) {
-	// // Ako su svi TextField-ovi popunjeni, nastavite sa dodavanjem u tabelu
-
-	// // Provjera validnosti za određenog polja
-	// boolean validNumbers = true;
-	// for (int i = 0; i < listaTxtVr.size(); i++) {
-	// TextField textField = listaTxtVr.get(i);
-	// String text = textField.getText();
-
-	// if (i == 0 || i == 1) { // Polja 1 i 2 su polja u kojima dozvoljavamo slova
-	// if (!text.matches("[a-zA-Z0-9\\.]*")) {
-	// textField.getStyleClass().add("red-outline");
-	// validNumbers = false;
-	// } else {
-	// textField.getStyleClass().remove("red-outline");
-	// }
-	// } else { // Ostala polja su polja u kojima treba unijeti brojeve ili tačku
-	// if (!text.matches("\\d*\\.?\\d*")) {
-	// textField.getStyleClass().add("red-outline");
-	// validNumbers = false;
-	// } else {
-	// textField.getStyleClass().remove("red-outline");
-	// }
-	// }
-	// }
-
-	// if (validNumbers) {
-	// // Ako su uneseni validni brojevi i slova, dodajemo podatke u tabelu
-	// pravac = new Pravac(txt_od_p.getText(), txt_do_p.getText(),
-	// txt_stepen_p.getText(),
-	// txt_minut_p.getText(), txt_sekund_p.getText(),
-	// txt_tacnost_p.getText(), radio_poznata_p.isSelected(),
-	// radio_nepoznata_p.isSelected());
-	// data_pravci.add(pravac);
-	// tabela_p.setItems(data_pravci);
-	// tabela_p.refresh();
-
-	// // Očistimo TextField-ove nakon dodavanja u tabelu
-	// listaTxtPravac.forEach(TextField::clear);
-	// radio_poznata_p.setSelected(false);
-	// radio_nepoznata_p.setSelected(false);
-	// listaTxtPravac.forEach(textField ->
-	// textField.getStyleClass().remove("red-outline"));
-	// System.out.println("Dodano u tabelu!");
-	// } else {
-	// // Ako nisu uneseni validni brojevi i slova, obavjestavamo korisnika
-	// System.out.println("Popunite sva polja sa validnim brojevima i slovima prije
-	// dodavanja u tabelu.");
-	// }
-	// } else {
-	// // Ako nisu svi TextField-ovi popunjeni, obojite odgovarajuće TextField-ove u
-	// // crveno
-	// System.out.println("Popunite sva polja prije dodavanja u tabelu.");
-	// listaTxtPravac.forEach(textField -> {
-	// if (textField.getText().isEmpty()) {
-	// textField.getStyleClass().add("red-outline");
-	// }
-	// });
-	// }
-	// } else {
-	// showAlert("GRESKA", "Morate izabrati da li je tacka poznata ili ne!",
-	// AlertType.ERROR);
-	// }
-
-	// }
-
 	public void popuniTabeluP(ActionEvent event) {
 		if (radio_poznata_p.isSelected() || radio_nepoznata_p.isSelected()) {
 
@@ -1183,16 +1156,162 @@ public class MainController {
 		}
 	}
 
+	public void otvoriDijalogZaUredivanjeUgao(Ugao odabraniUgao) {
+		Dialog<Boolean> dialog = new Dialog<>();
+		dialog.setTitle("Uredi visinsku razliku: " + redVR);
+
+		// Kreirajte polja za unos atributa
+		TextField LField = new TextField();
+		LField.setText(odabraniUgao.getLijevo());
+		TextField SField = new TextField();
+		SField.setText(odabraniUgao.getSredina());
+		TextField DField = new TextField();
+		DField.setText(odabraniUgao.getDesno());
+		TextField tacField = new TextField();
+		tacField.setText(odabraniUgao.getTacnost());
+		TextField stepenField = new TextField();
+		stepenField.setText(odabraniUgao.getStepen());
+		TextField minutField = new TextField();
+		minutField.setText(odabraniUgao.getMinut());
+		TextField sekundField = new TextField();
+		sekundField.setText(odabraniUgao.getSekund());
+
+		addTextFieldChangeListener(minutField, "cijeliBr", 60);
+
+		// Kreirajte višeslojni raspored za elemente
+		GridPane gridPane = new GridPane();
+		gridPane.setHgap(10);
+		gridPane.setVgap(10);
+		Label oznakaLabel = new Label("Oznaka:");
+		HBox oznakaHBox = new HBox(LField, new Label(" _ "), SField, new Label(" _ "), DField);
+		gridPane.addRow(0, oznakaLabel, oznakaHBox);
+		gridPane.addRow(1, new Label("Tacnost:"), tacField);
+		Label ugaoLabel = new Label("Ugao:");
+		HBox ugaoHBox = new HBox(stepenField, new Label("\u00B0   "), minutField, new Label("'  "), sekundField,
+				new Label("\""));
+		gridPane.addRow(2, ugaoLabel, ugaoHBox);
+
+		// Dodajte raspored u dijalog
+		VBox content = new VBox(gridPane);
+		dialog.getDialogPane().setContent(content);
+
+		// Dodajte gumb "Potvrdi" u dijalog
+		ButtonType potvrdiButton = new ButtonType("Potvrdi", ButtonBar.ButtonData.OK_DONE);
+		dialog.getDialogPane().getButtonTypes().addAll(potvrdiButton, ButtonType.CANCEL);
+
+		// // Obrada potvrde gumba
+		// dialog.setResultConverter(dialogButton -> {
+		// 	if (dialogButton == potvrdiButton) {
+		// 		String oznaka = LField.getText() + "-" + SField.getText() + "-" + DField.getText();
+
+		// 		odabraniUgao.setOznaka(oznaka);
+		// 		odabraniUgao.setTacnost(tacField.getText());
+		// 		odabraniUgao.setStepen(stepenField.getText());
+		// 		odabraniUgao.setMinut(minutField.getText());
+		// 		odabraniUgao.setSekund(sekundField.getText());
+
+		// 		return true;
+		// 	}
+		// 	return false;
+		// });
+
+		// Obrada potvrde gumba
+		dialog.setResultConverter(dialogButton -> {
+			if (dialogButton == potvrdiButton) {
+
+				int stepen = Integer.parseInt(stepenField.getText());
+				int minut = Integer.parseInt(minutField.getText());
+				int sekund = Integer.parseInt(sekundField.getText());
+
+				if (stepen >= 360 || minut >= 60 || sekund >= 60) {
+					showAlert("Greška", "Unesene vrijednosti prelaze ograničenja.",
+							AlertType.ERROR);
+					return false; // Zaustavi ažuriranje
+				}
+
+				String oznaka = LField.getText() + "-" + SField.getText() + "-" + DField.getText();
+
+				odabraniUgao.setOznaka(oznaka);
+				odabraniUgao.setTacnost(tacField.getText());
+				odabraniUgao.setStepen(stepenField.getText());
+				odabraniUgao.setMinut(minutField.getText());
+				odabraniUgao.setSekund(sekundField.getText());
+
+				return true;
+			}
+			return false;
+		});
+
+		// Prikaži dijalog i obradi rezultat
+		dialog.showAndWait().ifPresent(result -> {
+			if (result) {
+				tabela_u.refresh(); // Osvježi prikaz tablice
+			}
+		});
+	}
+
 	public void pupuniTabeluD(ActionEvent event) {
-		double mm = Double.parseDouble(txt_mm_d.getText());
-		double ppm = Double.parseDouble(txt_ppm_d.getText());
-		double duz = Double.parseDouble(txt_vrijednost_d.getText());
-		double tac = mm + (ppm * (duz / 1000));
-		String tacnost = "" + tac;
-		duzina = new Duzina(txt_od_d.getText(), txt_do_d.getText(), txt_vrijednost_d.getText(), tacnost);
-		data_duzine.add(duzina);
-		tabela_d.setItems(data_duzine);
-		tabela_d.refresh();
+
+		boolean allFieldsFilledDuzina = listaTxtDuzina.stream()
+				.allMatch(textField -> !textField.getText().isEmpty());
+
+		if (allFieldsFilledDuzina) {
+			// Ako su svi TextField-ovi popunjeni, nastavite sa dodavanjem u tabelu
+
+			// Provjera validnosti za određenog polja
+			boolean validData = true;
+			for (int i = 0; i < listaTxtDuzina.size(); i++) {
+				TextField textField = listaTxtDuzina.get(i);
+				String text = textField.getText();
+
+				if (i == 0 || i == 1) { // Polja 1, 2 i 3 dozvoljavaju slova, brojeve i tacku
+					if (!text.matches("[a-zA-Z0-9\\.]*")) {
+						textField.getStyleClass().add("red-outline");
+						validData = false;
+					} else {
+						textField.getStyleClass().remove("red-outline");
+					}
+				} else if (i == 2 || i == 3 || i == 4) { // Polje 6 i 3 dozvoljavaju decimalne brojeve i tacku
+					if (!text.matches("\\d*\\.?\\d*")) {
+						textField.getStyleClass().add("red-outline");
+						validData = false;
+					} else {
+						textField.getStyleClass().remove("red-outline");
+					}
+
+				}
+			}
+
+			if (validData) {
+				double mm = Double.parseDouble(txt_mm_d.getText());
+				double ppm = Double.parseDouble(txt_ppm_d.getText());
+				double duz = Double.parseDouble(txt_vrijednost_d.getText());
+				double tac = mm + (ppm * (duz / 1000));
+				String tacnost = "" + tac;
+				duzina = new Duzina(txt_od_d.getText(), txt_do_d.getText(), txt_vrijednost_d.getText(), tacnost);
+				data_duzine.add(duzina);
+				tabela_d.setItems(data_duzine);
+				tabela_d.refresh();
+
+				// Očistimo TextField-ove nakon dodavanja u tabelu
+				listaTxtDuzina.forEach(TextField::clear);
+				listaTxtDuzina.forEach(textField -> textField.getStyleClass().remove("red-outline"));
+				System.out.println("Dodano u tabelu!");
+			} else {
+				// Ako nisu uneseni validni brojevi i slova, obavestavamo korisnika
+				System.out.println("Popunite sva polja sa validnim brojevima i slovima prije dodavanja u tabelu.");
+			}
+		} else {
+			// Ako nisu svi TextField-ovi popunjeni, obojite odgovarajuće TextField-ove u
+			// crveno
+			System.out.println("Popunite sva polja prije dodavanja u tabelu.");
+			listaTxtUgao.forEach(textField -> {
+				if (textField.getText().isEmpty()) {
+					textField.getStyleClass().add("red-outline");
+				}
+			});
+		}
+
 	}
 
 	public void popuniTabeluK(ActionEvent event) {
