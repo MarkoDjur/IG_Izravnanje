@@ -8,6 +8,11 @@ public class Duzina {
 	private SimpleStringProperty Do;
 	private SimpleStringProperty vrijednost;
 	private SimpleStringProperty tacnost;
+	private double mm;
+	private double ppm;
+	private double duz;
+
+	
 
 	public Duzina(String Od, String Do, String vrijednost, String tacnost) {
 		this.Od = new SimpleStringProperty(Od);
@@ -15,6 +20,10 @@ public class Duzina {
 		this.vrijednost = new SimpleStringProperty(vrijednost);
 		this.tacnost = new SimpleStringProperty(tacnost);
 	}
+
+	public static double calculateTacnost(double mm, double ppm, double duz) {
+        return mm + (ppm * (duz / 1000));
+    }
 
 	public String getOd() {
 		return Od.get();

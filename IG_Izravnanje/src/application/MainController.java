@@ -322,6 +322,10 @@ public class MainController {
 		addTextFieldChangeListener(txt_vrijednost_d, "decimalniBr", Integer.MAX_VALUE);
 		addTextFieldChangeListener(txt_mm_d, "decimalniBr", Integer.MAX_VALUE);
 		addTextFieldChangeListener(txt_ppm_d, "decimalniBr", Integer.MAX_VALUE);
+		Duzina d = new Duzina("a", "b", "1", "2");
+		data_duzine.add(d);
+		tabela_d.setItems(data_duzine);
+		tabela_d.refresh();
 
 		// Dodavanje tooltip-a
 		toolTip();
@@ -330,6 +334,7 @@ public class MainController {
 		klikTabelaV();
 		klikTabelaPravac();
 		klikTabelaUgao();
+		klikTabelaDuzina();
 
 	}
 
@@ -568,14 +573,14 @@ public class MainController {
 	}
 
 	public void klikTabelaDuzina() {
-		tabela_vr.setRowFactory(tv -> {
-			TableRow<VisinskaRazlika> row = new TableRow<>();
+		tabela_d.setRowFactory(tv -> {
+			TableRow<Duzina> row = new TableRow<>();
 			row.setOnMouseClicked(event -> {
 				if (event.getButton() == MouseButton.PRIMARY && event.getClickCount() == 2 && !row.isEmpty()) {
-					VisinskaRazlika rowData = row.getItem();
-					otvoriDijalogZaUredivanjeVR(rowData);
+					Duzina rowData = row.getItem();
+					otvoriDijalogZaUredivanjeDuzine(rowData);
 				}
-				redVR = row.getIndex() + 1;
+				redD = row.getIndex() + 1;
 			});
 			return row;
 		});
@@ -1312,11 +1317,12 @@ public class MainController {
 			}
 
 			if (validData) {
+
 				double mm = Double.parseDouble(txt_mm_d.getText());
 				double ppm = Double.parseDouble(txt_ppm_d.getText());
 				double duz = Double.parseDouble(txt_vrijednost_d.getText());
-				double tac = mm + (ppm * (duz / 1000));
-				String tacnost = "" + tac;
+				double tac = Duzina.calculateTacnost(mm, ppm, duz);
+				String tacnost = Double.toString(tac);
 				duzina = new Duzina(txt_od_d.getText(), txt_do_d.getText(), txt_vrijednost_d.getText(), tacnost);
 				data_duzine.add(duzina);
 				tabela_d.setItems(data_duzine);
@@ -1340,6 +1346,72 @@ public class MainController {
 				}
 			});
 		}
+
+	}
+
+	public void otvoriDijalogZaUredivanjeDuzine(Duzina odabranaDuzina) {
+		Dialog<Boolean> dialog = new Dialog<>();
+		dialog.setTitle("Uredi duzinu: " + redD);
+
+		// Kreirajte polja za unos atributa
+		TextField OdField = createAlphanumericTextField(odabranaDuzina.getOd());
+		TextField DoField = createAlphanumericTextField(odabranaDuzina.getDo());
+		TextField VField = createDecimalTextField(odabranaDuzina.getVrijednost());
+		TextField mmField = createDecimalTextField("");
+		TextField ppmField = createDecimalTextField("");
+
+		// Kreiramo višeslojni raspored za elemente
+		GridPane gridPane = new GridPane();
+		gridPane.setHgap(10);
+		gridPane.setVgap(10);
+		gridPane.addRow(0, new Label("Od:"), OdField);
+		gridPane.addRow(1, new Label("Do:"), DoField);
+		gridPane.addRow(2, new Label("Vrijednost:"), VField);
+		Label tacnostLabel = new Label("Ugao:");
+		HBox tacnostHBox = new HBox(mmField, new Label("  mm + "), ppmField, new Label("  ppm"));
+		gridPane.addRow(3, tacnostLabel, tacnostHBox);
+
+		// Dodajemo raspored u dijalog
+		VBox content = new VBox(gridPane);
+		dialog.getDialogPane().setContent(content);
+
+		// Dodajemo gumb "Potvrdi" u dijalog
+		ButtonType potvrdiButton = new ButtonType("Potvrdi", ButtonBar.ButtonData.OK_DONE);
+		dialog.getDialogPane().getButtonTypes().addAll(potvrdiButton, ButtonType.CANCEL);
+
+		dialog.setResultConverter(dialogButton -> {
+			if (dialogButton == potvrdiButton) {
+
+				// Ako su polja za mm i ppm popunjena, izračunaj tacnost i postavi je
+				if (!mmField.getText().isEmpty() && !ppmField.getText().isEmpty()) {
+					odabranaDuzina.setOd(OdField.getText());
+					odabranaDuzina.setDo(DoField.getText());
+					odabranaDuzina.setVrijednost(VField.getText());
+
+					double mm = Double.parseDouble(mmField.getText());
+					double ppm = Double.parseDouble(ppmField.getText());
+					double duz = Double.parseDouble(VField.getText());
+					double tac = Duzina.calculateTacnost(mm, ppm, duz);
+					String tacnost = Double.toString(tac);
+					odabranaDuzina.setTacnost(tacnost);
+				} else {
+					showAlert("Greška", "Morate unijeti iste vrijednosti za mm i ppm ili razlicite!", AlertType.ERROR);
+					mmField.setStyle(style);
+					ppmField.setStyle(style);
+					return false; // Ne zatvaraj dijalog ako postoje greške
+				}
+
+				return true;
+			}
+			return true;
+		});
+
+		Optional<Boolean> result = dialog.showAndWait();
+		while (result.isPresent() && !result.get()) {
+			result = dialog.showAndWait();
+		}
+
+		tabela_d.refresh();
 
 	}
 
