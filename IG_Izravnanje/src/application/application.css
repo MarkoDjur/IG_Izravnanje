@@ -11,7 +11,9 @@
     -fx-font-size: 12px; /* Veličina fonta tooltip-a (ovdje povećana na 14px) */
 }
 .red-outline {
-    -fx-border-color: red; /* Crvena boja obruba */
-    -fx-border-width: 2px; /* Debljina obruba */
-    -fx-border-radius: 5px; /* Zaobljenje obruba */
+    -fx-border-color: red;
+    -fx-border-width: 2px;
+    -fx-border-radius: 5px;
 }
+
+

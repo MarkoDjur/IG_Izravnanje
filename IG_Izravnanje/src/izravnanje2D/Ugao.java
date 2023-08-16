@@ -86,4 +86,12 @@ public class Ugao {
 		return oznaka.get().split("-")[2];
 	}
 
+	@Override
+	public String toString() {
+		return "Ugao [oznaka=" + oznaka + ", stepen=" + stepen + ", minut=" + minut + ", sekund=" + sekund
+				+ ", tacnost=" + tacnost + "]";
+	}
+
+	
+
 }

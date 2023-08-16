@@ -1,0 +1,1001 @@
+#
+# A fatal error has been detected by the Java Runtime Environment:
+#
+#  SIGSEGV (0xb) at pc=0x000000011491f680, pid=15759, tid=0x0000000000000103
+#
+# JRE version: Java(TM) SE Runtime Environment (8.0_381) (build 1.8.0_381-b09)
+# Java VM: Java HotSpot(TM) 64-Bit Server VM (25.381-b09 mixed mode bsd-amd64 compressed oops)
+# Problematic frame:
+# J 4020 C1 application.MainController.createTextField(Ljava/lang/String;)Ljavafx/scene/control/TextField; (21 bytes) @ 0x000000011491f680 [0x000000011491f660+0x20]
+#
+# Failed to write core dump. Core dumps have been disabled. To enable core dumping, try "ulimit -c unlimited" before starting Java again
+#
+# If you would like to submit a bug report, please visit:
+#   http://bugreport.java.com/bugreport/crash.jsp
+#
+
+---------------  T H R E A D  ---------------
+
+Current thread (0x00007fd355a71800):  JavaThread "JavaFX Application Thread" [_thread_in_Java, id=259, stack(0x000000030c7ca000,0x000000030cfca000)]
+
+siginfo: si_signo: 11 (SIGSEGV), si_code: 1 (SEGV_MAPERR), si_addr: 0x000000030c7cdfa8
+
+Registers:
+RAX=0x000000011491f680, RBX=0x000000012cfe04e0, RCX=0x00000007401818c0, RDX=0x0000000795612340
+RSP=0x000000030c7e1fa8, RBP=0x000000030cf33720, RSI=0x00000007401818c0, RDI=0x00000007401818c0
+R8 =0x0000000000000001, R9 =0x00007fd355a71800, R10=0x0000000112525a70, R11=0x000000011491f680
+R12=0x0000000000000000, R13=0x000000030cf336d0, R14=0x000000030cf33740, R15=0x00007fd355a71800
+RIP=0x000000011491f680, EFLAGS=0x0000000000000206, ERR=0x0000000000000006
+  TRAPNO=0x000000000000000e
+
+Top of Stack: (sp=0x000000030c7e1fa8)
+0x000000030c7e1fa8:   000000011491f724 0000000000000000
+0x000000030c7e1fb8:   000000001491f680 0000000000000000
+0x000000030c7e1fc8:   0000000000000000 0000000000000000
+0x000000030c7e1fd8:   0000000000000000 0000000000000000
+0x000000030c7e1fe8:   0000000000000000 0000000000000000
+0x000000030c7e1ff8:   0000000000000000 0000000000000000
+0x000000030c7e2008:   0000000000000000 0000000000000000
+0x000000030c7e2018:   0000000000000000 0000000000000000
+0x000000030c7e2028:   0000000000000000 000000030cf33720
+0x000000030c7e2038:   000000011491f724 0000000000000000
+0x000000030c7e2048:   000000001491f680 0000000000000000
+0x000000030c7e2058:   0000000000000000 0000000000000000
+0x000000030c7e2068:   0000000000000000 0000000000000000
+0x000000030c7e2078:   0000000000000000 0000000000000000
+0x000000030c7e2088:   0000000000000000 0000000000000000
+0x000000030c7e2098:   0000000000000000 0000000000000000
+0x000000030c7e20a8:   0000000000000000 0000000000000000
+0x000000030c7e20b8:   0000000000000000 000000030cf33720
+0x000000030c7e20c8:   000000011491f724 0000000000000000
+0x000000030c7e20d8:   000000001491f680 0000000000000000
+0x000000030c7e20e8:   0000000000000000 0000000000000000
+0x000000030c7e20f8:   0000000000000000 0000000000000000
+0x000000030c7e2108:   0000000000000000 0000000000000000
+0x000000030c7e2118:   0000000000000000 0000000000000000
+0x000000030c7e2128:   0000000000000000 0000000000000000
+0x000000030c7e2138:   0000000000000000 0000000000000000
+0x000000030c7e2148:   0000000000000000 000000030cf33720
+0x000000030c7e2158:   000000011491f724 0000000000000000
+0x000000030c7e2168:   000000001491f680 0000000000000000
+0x000000030c7e2178:   0000000000000000 0000000000000000
+0x000000030c7e2188:   0000000000000000 0000000000000000
+0x000000030c7e2198:   0000000000000000 0000000000000000 
+
+Instructions: (pc=0x000000011491f680)
+0x000000011491f660:   44 8b 56 08 49 c1 e2 03 4c 3b d0 0f 85 6f d8 32
+0x000000011491f670:   ff 66 66 66 0f 1f 84 00 00 00 00 00 66 66 66 90
+0x000000011491f680:   89 84 24 00 c0 fe ff 55 48 81 ec 80 00 00 00 48
+0x000000011491f690:   bf e0 04 fe 2c 01 00 00 00 8b 9f dc 00 00 00 83 
+
+Register to memory mapping:
+
+RAX=0x000000011491f680 is at entry_point+32 in (nmethod*)0x000000011491f490
+RBX=0x000000012cfe04e0 is pointing into metadata
+RCX=0x00000007401818c0 is an oop
+application.MainController 
+ - klass: 'application/MainController'
+ - ---- fields (total size 49 words):
+ - 'redVR' 'I' @12  0
+ - 'redV' 'I' @16  0
+ - 'redP' 'I' @20  1
+ - 'redU' 'I' @24  0
+ - 'redD' 'I' @28  0
+ - private strict 'data_vr' 'Ljavafx/collections/ObservableList;' @32  a 'com/sun/javafx/collections/ObservableListWrapper' (e8030349 e8030355)
+ - private strict 'data_v' 'Ljavafx/collections/ObservableList;' @36  a 'com/sun/javafx/collections/ObservableListWrapper' (e8030355 0)
+ - private 'visina' 'Lizravnanje1D/Visina;' @40  NULL (0 0)
+ - private 'visinskaRazlika' 'Lizravnanje1D/VisinskaRazlika;' @44  NULL (0 e8030361)
+ - private 'radio_klasicno' 'Ljavafx/scene/control/RadioButton;' @48  a 'javafx/scene/control/RadioButton' (e8030361 e80345a2)
+ - private 'radio_minimalanTrag' 'Ljavafx/scene/control/RadioButton;' @52  a 'javafx/scene/control/RadioButton' (e80345a2 e80392f2)
+ - private 'datum1d' 'Ljavafx/scene/control/RadioButton;' @56  a 'javafx/scene/control/RadioButton' (e80392f2 e803c464)
+ - public 'ucitajButton' 'Ljavafx/scene/control/Button;' @60  a 'javafx/scene/control/Button' (e803c464 0)
+ - private 'myLabel' 'Ljavafx/scene/control/Label;' @64  NULL (0 e8042f46)
+ - private 'txt_od' 'Ljavafx/scene/control/TextField;' @68  a 'javafx/scene/control/TextField' (e8042f46 e804bee0)
+ - private 'txt_do' 'Ljavafx/scene/control/TextField;' @72  a 'javafx/scene/control/TextField' (e804bee0 e80572c8)
+ - private 'txt_visinskaRazlika' 'Ljavafx/scene/control/TextField;' @76  a 'javafx/scene/control/TextField' (e80572c8 e80643c6)
+ - private 'txt_duzinaStrane' 'Ljavafx/scene/control/TextField;' @80  a 'javafx/scene/control/TextField' (e80643c6 e807121f)
+ - private 'txt_brojStanica' 'Ljavafx/scene/control/TextField;' @84  a 'javafx/scene/control/TextField' (e807121f e807d070)
+ - private 'txt_oznaka' 'Ljavafx/scene/control/TextField;' @88  a 'javafx/scene/control/TextField' (e807d070 e8086ac2)
+ - private 'txt_visina' 'Ljavafx/scene/control/TextField;' @92  a 'javafx/scene/control/TextField' (e8086ac2 e8091930)
+ - private 'txt_s0' 'Ljavafx/scene/control/TextField;' @96  a 'javafx/scene/control/TextField' (e8091930 e809d46a)
+ - private 'txt_nivoZnacajnosti' 'Ljavafx/scene/control/TextField;' @100  a 'javafx/scene/control/TextField' (e809d46a e8013b83)
+ - private strict 'tabela_vr' 'Ljavafx/scene/control/TableView;' @104  a 'javafx/scene/control/TableView' (e8013b83 e802289f)
+ - public 'OD' 'Ljavafx/scene/control/TableColumn;' @108  a 'javafx/scene/control/TableColumn' (e802289f e803acd7)
+ - public 'DO' 'Ljavafx/scene/control/TableColumn;' @112  a 'javafx/scene/control/TableColumn' (e803acd7 e8034987)
+ - public 'VISINSKA_RAZLIKA' 'Ljavafx/scene/control/TableColumn;' @116  a 'javafx/scene/control/TableColumn' (e8034987 e802f5ea)
+ - public 'DUZINA_NIVELMANSKE_STRANE' 'Ljavafx/scene/control/TableColumn;' @120  a 'javafx/scene/control/TableColumn' (e802f5ea e802bc46)
+ - public 'BROJ_STANICA' 'Ljavafx/scene/control/TableColumn;' @124  a 'javafx/scene/control/TableColumn' (e802bc46 e800d189)
+ - private strict 'tabela_v' 'Ljavafx/scene/control/TableView;' @128  a 'javafx/scene/control/TableView' (e800d189 e801e2ff)
+ - public 'OZNAKA' 'Ljavafx/scene/control/TableColumn;' @132  a 'javafx/scene/control/TableColumn' (e801e2ff e8018f33)
+ - public 'VISINA' 'Ljavafx/scene/control/TableColumn;' @136  a 'javafx/scene/control/TableColumn' (e8018f33 e809cb9b)
+ - private strict 'listaTxtVr' 'Ljava/util/List;' @140  a 'java/util/ArrayList' (e809cb9b e809cba5)
+ - private strict 'listaTxtV' 'Ljava/util/List;' @144  a 'java/util/ArrayList' (e809cba5 e809cbaf)
+ - private strict 'listaTxtIzravnaj' 'Ljava/util/List;' @148  a 'java/util/ArrayList' (e809cbaf e809cbb9)
+ - private strict 'listaTxtPravac' 'Ljava/util/List;' @152  a 'java/util/ArrayList' (e809cbb9 e80bb77d)
+ - private strict 'listaTxtUgao' 'Ljava/util/List;' @156  a 'java/util/ArrayList' (e80bb77d e80cefe4)
+ - private strict 'listaTxtDuzina' 'Ljava/util/List;' @160  a 'java/util/ArrayList' (e80cefe4 e80cefee)
+ - strict 'data_pravci' 'Ljavafx/collections/ObservableList;' @164  a 'com/sun/javafx/collections/ObservableListWrapper' (e80cefee e80ceffa)
+ - strict 'data_uglovi' 'Ljavafx/collections/ObservableList;' @168  a 'com/sun/javafx/collections/ObservableListWrapper' (e80ceffa e80e89d4)
+ - strict 'data_duzine' 'Ljavafx/collections/ObservableList;' @172  a 'com/sun/javafx/collections/ObservableListWrapper' (e80e89d4 e80e89e0)
+ - strict 'data_koordinate' 'Ljavafx/collections/ObservableList;' @176  a 'com/sun/javafx/collections/ObservableListWrapper' (e80e89e0 f2ac2463)
+ - private 'pravac' 'Lizravnanje2D/Pravac;' @180  a 'izravnanje2D/Pravac' (f2ac2463 0)
+ - private 'ugao' 'Lizravnanje2D/Ugao;' @184  NULL (0 0)
+ - private 'duzina' 'Lizravnanje2D/Duzina;' @188  NULL (0 0)
+ - private 'koordinata' 'Lizravnanje2D/Koordinata;' @192  NULL (0 e80b5152)
+ - private 'txt_od_p' 'Ljavafx/scene/control/TextField;' @196  a 'javafx/scene/control/TextField' (e80b5152 e80af377)
+ - private 'txt_do_p' 'Ljavafx/scene/control/TextField;' @200  a 'javafx/scene/control/TextField' (e80af377 e80a7645)
+ - private 'txt_stepen_p' 'Ljavafx/scene/control/TextField;' @204  a 'javafx/scene/control/TextField' (e80a7645 e80a715d)
+ - private 'txt_minut_p' 'Ljavafx/scene/control/TextField;' @208  a 'javafx/scene/control/TextField' (e80a715d e809cbc3)
+ - private 'txt_sekund_p' 'Ljavafx/scene/control/TextField;' @212  a 'javafx/scene/control/TextField' (e809cbc3 e80a04f7)
+ - private 'txt_tacnost_p' 'Ljavafx/scene/control/TextField;' @216  a 'javafx/scene/control/TextField' (e80a04f7 e80647bd)
+ - public 'PRAVAC_OD' 'Ljavafx/scene/control/TableColumn;' @220  a 'javafx/scene/control/TableColumn' (e80647bd e8083661)
+ - public 'PRAVAC_DO' 'Ljavafx/scene/control/TableColumn;' @224  a 'javafx/scene/control/TableColumn' (e8083661 e807dec0)
+ - public 'PRAVAC_STEPEN' 'Ljavafx/scene/control/TableColumn;' @228  a 'javafx/scene/control/TableColumn' (e807dec0 e8077f11)
+ - public 'PRAVAC_MINUT' 'Ljavafx/scene/control/TableColumn;' @232  a 'javafx/scene/control/TableColumn' (e8077f11 e8070f50)
+ - public 'PRAVAC_SEKUND' 'Ljavafx/scene/control/TableColumn;' @236  a 'javafx/scene/control/TableColumn' (e8070f50 e806c330)
+ - public 'PRAVAC_TACNOST' 'Ljavafx/scene/control/TableColumn;' @240  a 'javafx/scene/control/TableColumn' (e806c330 e8055a17)
+ - private strict 'tabela_p' 'Ljavafx/scene/control/TableView;' @244  a 'javafx/scene/control/TableView' (e8055a17 e809646a)
+ - private 'radio_poznata_p' 'Ljavafx/scene/control/RadioButton;' @248  a 'javafx/scene/control/RadioButton' (e809646a e8092638)
+ - private 'radio_nepoznata_p' 'Ljavafx/scene/control/RadioButton;' @252  a 'javafx/scene/control/RadioButton' (e8092638 e80bbe97)
+ - private 'txt_lijevo_u' 'Ljavafx/scene/control/TextField;' @256  a 'javafx/scene/control/TextField' (e80bbe97 e80b10b9)
+ - private 'txt_sredina_u' 'Ljavafx/scene/control/TextField;' @260  a 'javafx/scene/control/TextField' (e80b10b9 e80a39b6)
+ - private 'txt_desno_u' 'Ljavafx/scene/control/TextField;' @264  a 'javafx/scene/control/TextField' (e80a39b6 e80c96f9)
+ - private 'txt_tacnost_u' 'Ljavafx/scene/control/TextField;' @268  a 'javafx/scene/control/TextField' (e80c96f9 e80c65ef)
+ - private 'txt_stepen_u' 'Ljavafx/scene/control/TextField;' @272  a 'javafx/scene/control/TextField' (e80c65ef e80c5991)
+ - private 'txt_minut_u' 'Ljavafx/scene/control/TextField;' @276  a 'javafx/scene/control/TextField' (e80c5991 e80bb787)
+ - private 'txt_sekund_u' 'Ljavafx/scene/control/TextField;' @280  a 'javafx/scene/control/TextField' (e80bb787 e801f20b)
+ - public 'UGAO_OZNAKA' 'Ljavafx/scene/control/TableColumn;' @284  a 'javafx/scene/control/TableColumn' (e801f20b e8052c4c)
+ - public 'UGAO_STEPEN' 'Ljavafx/scene/control/TableColumn;' @288  a 'javafx/scene/control/TableColumn' (e8052c4c e8041c55)
+ - public 'UGAO_MINUT' 'Ljavafx/scene/control/TableColumn;' @292  a 'javafx/scene/control/TableColumn' (e8041c55 e80318c2)
+ - public 'UGAO_SEKUND' 'Ljavafx/scene/control/TableColumn;' @296  a 'javafx/scene/control/TableColumn' (e80318c2 e8027be2)
+ - public 'UGAO_TACNOST' 'Ljavafx/scene/control/TableColumn;' @300  a 'javafx/scene/control/TableColumn' (e8027be2 e8013394)
+ - private strict 'tabela_u' 'Ljavafx/scene/control/TableView;' @304  a 'javafx/scene/control/TableView' (e8013394 e80a2f41)
+ - private 'txt_od_d' 'Ljavafx/scene/control/TextField;' @308  a 'javafx/scene/control/TextField' (e80a2f41 e8094fc0)
+ - private 'txt_do_d' 'Ljavafx/scene/control/TextField;' @312  a 'javafx/scene/control/TextField' (e8094fc0 e8086f4f)
+ - private 'txt_vrijednost_d' 'Ljavafx/scene/control/TextField;' @316  a 'javafx/scene/control/TextField' (e8086f4f e8079ecb)
+ - private 'txt_mm_d' 'Ljavafx/scene/control/TextField;' @320  a 'javafx/scene/control/TextField' (e8079ecb e806886c)
+ - private 'txt_ppm_d' 'Ljavafx/scene/control/TextField;' @324  a 'javafx/scene/control/TextField' (e806886c e80a9cc6)
+ - public 'DUZINA_OD' 'Ljavafx/scene/control/TableColumn;' @328  a 'javafx/scene/control/TableColumn' (e80a9cc6 e80a456d)
+ - public 'DUZINA_DO' 'Ljavafx/scene/control/TableColumn;' @332  a 'javafx/scene/control/TableColumn' (e80a456d e8096b83)
+ - public 'DUZINA_VRIJEDNOST' 'Ljavafx/scene/control/TableColumn;' @336  a 'javafx/scene/control/TableColumn' (e8096b83 e809fab1)
+ - public 'DUZINA_TACNOST' 'Ljavafx/scene/control/TableColumn;' @340  a 'javafx/scene/control/TableColumn' (e809fab1 e80891e2)
+ - private strict 'tabela_d' 'Ljavafx/scene/control/TableView;' @344  a 'javafx/scene/control/TableView' (e80891e2 e804d925)
+ - private 'txt_oznaka_k' 'Ljavafx/scene/control/TextField;' @348  a 'javafx/scene/control/TextField' (e804d925 e8065a4b)
+ - private 'txt_y_k' 'Ljavafx/scene/control/TextField;' @352  a 'javafx/scene/control/TextField' (e8065a4b e805b595)
+ - private 'txt_x_k' 'Ljavafx/scene/control/TextField;' @356  a 'javafx/scene/control/TextField' (e805b595 e8043bf0)
+ - private 'datum2d' 'Ljavafx/scene/control/RadioButton;' @360  a 'javafx/scene/control/RadioButton' (e8043bf0 e8037a47)
+ - public 'KOORDINATA_OZNAKA' 'Ljavafx/scene/control/TableColumn;' @364  a 'javafx/scene/control/TableColumn' (e8037a47 e80322cf)
+ - public 'KOORDINATA_Y' 'Ljavafx/scene/control/TableColumn;' @368  a 'javafx/scene/control/TableColumn' (e80322cf e802c13e)
+ - public 'KOORDINATA_X' 'Ljavafx/scene/control/TableColumn;' @372  a 'javafx/scene/control/TableColumn' (e802c13e e8020f4f)
+ - private strict 'tabela_k' 'Ljavafx/scene/control/TableView;' @376  a 'javafx/scene/control/TableView' (e8020f4f e8050396)
+ - private 'txt_s0_2d' 'Ljavafx/scene/control/TextField;' @380  a 'javafx/scene/control/TextField' (e8050396 e803fd37)
+ - private 'txt_nivoZnacajnosti_2d' 'Ljavafx/scene/control/TextField;' @384  a 'javafx/scene/control/TextField' (e803fd37 e8051981)
+ - public 'style' 'Ljava/lang/String;' @388  " -fx-border-color: red;
+    -fx-border-width: 1px;
+    -fx-border-radius:
+     5px;" (e8051981 9)
+RDX=0x0000000795612340 is an oop
+java.lang.String 
+ - klass: 'java/lang/String'
+ - string: "asd"
+RSP=0x000000030c7e1fa8 is pointing into the stack for thread: 0x00007fd355a71800
+RBP=0x000000030cf33720 is pointing into the stack for thread: 0x00007fd355a71800
+RSI=0x00000007401818c0 is an oop
+application.MainController 
+ - klass: 'application/MainController'
+ - ---- fields (total size 49 words):
+ - 'redVR' 'I' @12  0
+ - 'redV' 'I' @16  0
+ - 'redP' 'I' @20  1
+ - 'redU' 'I' @24  0
+ - 'redD' 'I' @28  0
+ - private strict 'data_vr' 'Ljavafx/collections/ObservableList;' @32  a 'com/sun/javafx/collections/ObservableListWrapper' (e8030349 e8030355)
+ - private strict 'data_v' 'Ljavafx/collections/ObservableList;' @36  a 'com/sun/javafx/collections/ObservableListWrapper' (e8030355 0)
+ - private 'visina' 'Lizravnanje1D/Visina;' @40  NULL (0 0)
+ - private 'visinskaRazlika' 'Lizravnanje1D/VisinskaRazlika;' @44  NULL (0 e8030361)
+ - private 'radio_klasicno' 'Ljavafx/scene/control/RadioButton;' @48  a 'javafx/scene/control/RadioButton' (e8030361 e80345a2)
+ - private 'radio_minimalanTrag' 'Ljavafx/scene/control/RadioButton;' @52  a 'javafx/scene/control/RadioButton' (e80345a2 e80392f2)
+ - private 'datum1d' 'Ljavafx/scene/control/RadioButton;' @56  a 'javafx/scene/control/RadioButton' (e80392f2 e803c464)
+ - public 'ucitajButton' 'Ljavafx/scene/control/Button;' @60  a 'javafx/scene/control/Button' (e803c464 0)
+ - private 'myLabel' 'Ljavafx/scene/control/Label;' @64  NULL (0 e8042f46)
+ - private 'txt_od' 'Ljavafx/scene/control/TextField;' @68  a 'javafx/scene/control/TextField' (e8042f46 e804bee0)
+ - private 'txt_do' 'Ljavafx/scene/control/TextField;' @72  a 'javafx/scene/control/TextField' (e804bee0 e80572c8)
+ - private 'txt_visinskaRazlika' 'Ljavafx/scene/control/TextField;' @76  a 'javafx/scene/control/TextField' (e80572c8 e80643c6)
+ - private 'txt_duzinaStrane' 'Ljavafx/scene/control/TextField;' @80  a 'javafx/scene/control/TextField' (e80643c6 e807121f)
+ - private 'txt_brojStanica' 'Ljavafx/scene/control/TextField;' @84  a 'javafx/scene/control/TextField' (e807121f e807d070)
+ - private 'txt_oznaka' 'Ljavafx/scene/control/TextField;' @88  a 'javafx/scene/control/TextField' (e807d070 e8086ac2)
+ - private 'txt_visina' 'Ljavafx/scene/control/TextField;' @92  a 'javafx/scene/control/TextField' (e8086ac2 e8091930)
+ - private 'txt_s0' 'Ljavafx/scene/control/TextField;' @96  a 'javafx/scene/control/TextField' (e8091930 e809d46a)
+ - private 'txt_nivoZnacajnosti' 'Ljavafx/scene/control/TextField;' @100  a 'javafx/scene/control/TextField' (e809d46a e8013b83)
+ - private strict 'tabela_vr' 'Ljavafx/scene/control/TableView;' @104  a 'javafx/scene/control/TableView' (e8013b83 e802289f)
+ - public 'OD' 'Ljavafx/scene/control/TableColumn;' @108  a 'javafx/scene/control/TableColumn' (e802289f e803acd7)
+ - public 'DO' 'Ljavafx/scene/control/TableColumn;' @112  a 'javafx/scene/control/TableColumn' (e803acd7 e8034987)
+ - public 'VISINSKA_RAZLIKA' 'Ljavafx/scene/control/TableColumn;' @116  a 'javafx/scene/control/TableColumn' (e8034987 e802f5ea)
+ - public 'DUZINA_NIVELMANSKE_STRANE' 'Ljavafx/scene/control/TableColumn;' @120  a 'javafx/scene/control/TableColumn' (e802f5ea e802bc46)
+ - public 'BROJ_STANICA' 'Ljavafx/scene/control/TableColumn;' @124  a 'javafx/scene/control/TableColumn' (e802bc46 e800d189)
+ - private strict 'tabela_v' 'Ljavafx/scene/control/TableView;' @128  a 'javafx/scene/control/TableView' (e800d189 e801e2ff)
+ - public 'OZNAKA' 'Ljavafx/scene/control/TableColumn;' @132  a 'javafx/scene/control/TableColumn' (e801e2ff e8018f33)
+ - public 'VISINA' 'Ljavafx/scene/control/TableColumn;' @136  a 'javafx/scene/control/TableColumn' (e8018f33 e809cb9b)
+ - private strict 'listaTxtVr' 'Ljava/util/List;' @140  a 'java/util/ArrayList' (e809cb9b e809cba5)
+ - private strict 'listaTxtV' 'Ljava/util/List;' @144  a 'java/util/ArrayList' (e809cba5 e809cbaf)
+ - private strict 'listaTxtIzravnaj' 'Ljava/util/List;' @148  a 'java/util/ArrayList' (e809cbaf e809cbb9)
+ - private strict 'listaTxtPravac' 'Ljava/util/List;' @152  a 'java/util/ArrayList' (e809cbb9 e80bb77d)
+ - private strict 'listaTxtUgao' 'Ljava/util/List;' @156  a 'java/util/ArrayList' (e80bb77d e80cefe4)
+ - private strict 'listaTxtDuzina' 'Ljava/util/List;' @160  a 'java/util/ArrayList' (e80cefe4 e80cefee)
+ - strict 'data_pravci' 'Ljavafx/collections/ObservableList;' @164  a 'com/sun/javafx/collections/ObservableListWrapper' (e80cefee e80ceffa)
+ - strict 'data_uglovi' 'Ljavafx/collections/ObservableList;' @168  a 'com/sun/javafx/collections/ObservableListWrapper' (e80ceffa e80e89d4)
+ - strict 'data_duzine' 'Ljavafx/collections/ObservableList;' @172  a 'com/sun/javafx/collections/ObservableListWrapper' (e80e89d4 e80e89e0)
+ - strict 'data_koordinate' 'Ljavafx/collections/ObservableList;' @176  a 'com/sun/javafx/collections/ObservableListWrapper' (e80e89e0 f2ac2463)
+ - private 'pravac' 'Lizravnanje2D/Pravac;' @180  a 'izravnanje2D/Pravac' (f2ac2463 0)
+ - private 'ugao' 'Lizravnanje2D/Ugao;' @184  NULL (0 0)
+ - private 'duzina' 'Lizravnanje2D/Duzina;' @188  NULL (0 0)
+ - private 'koordinata' 'Lizravnanje2D/Koordinata;' @192  NULL (0 e80b5152)
+ - private 'txt_od_p' 'Ljavafx/scene/control/TextField;' @196  a 'javafx/scene/control/TextField' (e80b5152 e80af377)
+ - private 'txt_do_p' 'Ljavafx/scene/control/TextField;' @200  a 'javafx/scene/control/TextField' (e80af377 e80a7645)
+ - private 'txt_stepen_p' 'Ljavafx/scene/control/TextField;' @204  a 'javafx/scene/control/TextField' (e80a7645 e80a715d)
+ - private 'txt_minut_p' 'Ljavafx/scene/control/TextField;' @208  a 'javafx/scene/control/TextField' (e80a715d e809cbc3)
+ - private 'txt_sekund_p' 'Ljavafx/scene/control/TextField;' @212  a 'javafx/scene/control/TextField' (e809cbc3 e80a04f7)
+ - private 'txt_tacnost_p' 'Ljavafx/scene/control/TextField;' @216  a 'javafx/scene/control/TextField' (e80a04f7 e80647bd)
+ - public 'PRAVAC_OD' 'Ljavafx/scene/control/TableColumn;' @220  a 'javafx/scene/control/TableColumn' (e80647bd e8083661)
+ - public 'PRAVAC_DO' 'Ljavafx/scene/control/TableColumn;' @224  a 'javafx/scene/control/TableColumn' (e8083661 e807dec0)
+ - public 'PRAVAC_STEPEN' 'Ljavafx/scene/control/TableColumn;' @228  a 'javafx/scene/control/TableColumn' (e807dec0 e8077f11)
+ - public 'PRAVAC_MINUT' 'Ljavafx/scene/control/TableColumn;' @232  a 'javafx/scene/control/TableColumn' (e8077f11 e8070f50)
+ - public 'PRAVAC_SEKUND' 'Ljavafx/scene/control/TableColumn;' @236  a 'javafx/scene/control/TableColumn' (e8070f50 e806c330)
+ - public 'PRAVAC_TACNOST' 'Ljavafx/scene/control/TableColumn;' @240  a 'javafx/scene/control/TableColumn' (e806c330 e8055a17)
+ - private strict 'tabela_p' 'Ljavafx/scene/control/TableView;' @244  a 'javafx/scene/control/TableView' (e8055a17 e809646a)
+ - private 'radio_poznata_p' 'Ljavafx/scene/control/RadioButton;' @248  a 'javafx/scene/control/RadioButton' (e809646a e8092638)
+ - private 'radio_nepoznata_p' 'Ljavafx/scene/control/RadioButton;' @252  a 'javafx/scene/control/RadioButton' (e8092638 e80bbe97)
+ - private 'txt_lijevo_u' 'Ljavafx/scene/control/TextField;' @256  a 'javafx/scene/control/TextField' (e80bbe97 e80b10b9)
+ - private 'txt_sredina_u' 'Ljavafx/scene/control/TextField;' @260  a 'javafx/scene/control/TextField' (e80b10b9 e80a39b6)
+ - private 'txt_desno_u' 'Ljavafx/scene/control/TextField;' @264  a 'javafx/scene/control/TextField' (e80a39b6 e80c96f9)
+ - private 'txt_tacnost_u' 'Ljavafx/scene/control/TextField;' @268  a 'javafx/scene/control/TextField' (e80c96f9 e80c65ef)
+ - private 'txt_stepen_u' 'Ljavafx/scene/control/TextField;' @272  a 'javafx/scene/control/TextField' (e80c65ef e80c5991)
+ - private 'txt_minut_u' 'Ljavafx/scene/control/TextField;' @276  a 'javafx/scene/control/TextField' (e80c5991 e80bb787)
+ - private 'txt_sekund_u' 'Ljavafx/scene/control/TextField;' @280  a 'javafx/scene/control/TextField' (e80bb787 e801f20b)
+ - public 'UGAO_OZNAKA' 'Ljavafx/scene/control/TableColumn;' @284  a 'javafx/scene/control/TableColumn' (e801f20b e8052c4c)
+ - public 'UGAO_STEPEN' 'Ljavafx/scene/control/TableColumn;' @288  a 'javafx/scene/control/TableColumn' (e8052c4c e8041c55)
+ - public 'UGAO_MINUT' 'Ljavafx/scene/control/TableColumn;' @292  a 'javafx/scene/control/TableColumn' (e8041c55 e80318c2)
+ - public 'UGAO_SEKUND' 'Ljavafx/scene/control/TableColumn;' @296  a 'javafx/scene/control/TableColumn' (e80318c2 e8027be2)
+ - public 'UGAO_TACNOST' 'Ljavafx/scene/control/TableColumn;' @300  a 'javafx/scene/control/TableColumn' (e8027be2 e8013394)
+ - private strict 'tabela_u' 'Ljavafx/scene/control/TableView;' @304  a 'javafx/scene/control/TableView' (e8013394 e80a2f41)
+ - private 'txt_od_d' 'Ljavafx/scene/control/TextField;' @308  a 'javafx/scene/control/TextField' (e80a2f41 e8094fc0)
+ - private 'txt_do_d' 'Ljavafx/scene/control/TextField;' @312  a 'javafx/scene/control/TextField' (e8094fc0 e8086f4f)
+ - private 'txt_vrijednost_d' 'Ljavafx/scene/control/TextField;' @316  a 'javafx/scene/control/TextField' (e8086f4f e8079ecb)
+ - private 'txt_mm_d' 'Ljavafx/scene/control/TextField;' @320  a 'javafx/scene/control/TextField' (e8079ecb e806886c)
+ - private 'txt_ppm_d' 'Ljavafx/scene/control/TextField;' @324  a 'javafx/scene/control/TextField' (e806886c e80a9cc6)
+ - public 'DUZINA_OD' 'Ljavafx/scene/control/TableColumn;' @328  a 'javafx/scene/control/TableColumn' (e80a9cc6 e80a456d)
+ - public 'DUZINA_DO' 'Ljavafx/scene/control/TableColumn;' @332  a 'javafx/scene/control/TableColumn' (e80a456d e8096b83)
+ - public 'DUZINA_VRIJEDNOST' 'Ljavafx/scene/control/TableColumn;' @336  a 'javafx/scene/control/TableColumn' (e8096b83 e809fab1)
+ - public 'DUZINA_TACNOST' 'Ljavafx/scene/control/TableColumn;' @340  a 'javafx/scene/control/TableColumn' (e809fab1 e80891e2)
+ - private strict 'tabela_d' 'Ljavafx/scene/control/TableView;' @344  a 'javafx/scene/control/TableView' (e80891e2 e804d925)
+ - private 'txt_oznaka_k' 'Ljavafx/scene/control/TextField;' @348  a 'javafx/scene/control/TextField' (e804d925 e8065a4b)
+ - private 'txt_y_k' 'Ljavafx/scene/control/TextField;' @352  a 'javafx/scene/control/TextField' (e8065a4b e805b595)
+ - private 'txt_x_k' 'Ljavafx/scene/control/TextField;' @356  a 'javafx/scene/control/TextField' (e805b595 e8043bf0)
+ - private 'datum2d' 'Ljavafx/scene/control/RadioButton;' @360  a 'javafx/scene/control/RadioButton' (e8043bf0 e8037a47)
+ - public 'KOORDINATA_OZNAKA' 'Ljavafx/scene/control/TableColumn;' @364  a 'javafx/scene/control/TableColumn' (e8037a47 e80322cf)
+ - public 'KOORDINATA_Y' 'Ljavafx/scene/control/TableColumn;' @368  a 'javafx/scene/control/TableColumn' (e80322cf e802c13e)
+ - public 'KOORDINATA_X' 'Ljavafx/scene/control/TableColumn;' @372  a 'javafx/scene/control/TableColumn' (e802c13e e8020f4f)
+ - private strict 'tabela_k' 'Ljavafx/scene/control/TableView;' @376  a 'javafx/scene/control/TableView' (e8020f4f e8050396)
+ - private 'txt_s0_2d' 'Ljavafx/scene/control/TextField;' @380  a 'javafx/scene/control/TextField' (e8050396 e803fd37)
+ - private 'txt_nivoZnacajnosti_2d' 'Ljavafx/scene/control/TextField;' @384  a 'javafx/scene/control/TextField' (e803fd37 e8051981)
+ - public 'style' 'Ljava/lang/String;' @388  " -fx-border-color: red;
+    -fx-border-width: 1px;
+    -fx-border-radius:
+     5px;" (e8051981 9)
+RDI=0x00000007401818c0 is an oop
+application.MainController 
+ - klass: 'application/MainController'
+ - ---- fields (total size 49 words):
+ - 'redVR' 'I' @12  0
+ - 'redV' 'I' @16  0
+ - 'redP' 'I' @20  1
+ - 'redU' 'I' @24  0
+ - 'redD' 'I' @28  0
+ - private strict 'data_vr' 'Ljavafx/collections/ObservableList;' @32  a 'com/sun/javafx/collections/ObservableListWrapper' (e8030349 e8030355)
+ - private strict 'data_v' 'Ljavafx/collections/ObservableList;' @36  a 'com/sun/javafx/collections/ObservableListWrapper' (e8030355 0)
+ - private 'visina' 'Lizravnanje1D/Visina;' @40  NULL (0 0)
+ - private 'visinskaRazlika' 'Lizravnanje1D/VisinskaRazlika;' @44  NULL (0 e8030361)
+ - private 'radio_klasicno' 'Ljavafx/scene/control/RadioButton;' @48  a 'javafx/scene/control/RadioButton' (e8030361 e80345a2)
+ - private 'radio_minimalanTrag' 'Ljavafx/scene/control/RadioButton;' @52  a 'javafx/scene/control/RadioButton' (e80345a2 e80392f2)
+ - private 'datum1d' 'Ljavafx/scene/control/RadioButton;' @56  a 'javafx/scene/control/RadioButton' (e80392f2 e803c464)
+ - public 'ucitajButton' 'Ljavafx/scene/control/Button;' @60  a 'javafx/scene/control/Button' (e803c464 0)
+ - private 'myLabel' 'Ljavafx/scene/control/Label;' @64  NULL (0 e8042f46)
+ - private 'txt_od' 'Ljavafx/scene/control/TextField;' @68  a 'javafx/scene/control/TextField' (e8042f46 e804bee0)
+ - private 'txt_do' 'Ljavafx/scene/control/TextField;' @72  a 'javafx/scene/control/TextField' (e804bee0 e80572c8)
+ - private 'txt_visinskaRazlika' 'Ljavafx/scene/control/TextField;' @76  a 'javafx/scene/control/TextField' (e80572c8 e80643c6)
+ - private 'txt_duzinaStrane' 'Ljavafx/scene/control/TextField;' @80  a 'javafx/scene/control/TextField' (e80643c6 e807121f)
+ - private 'txt_brojStanica' 'Ljavafx/scene/control/TextField;' @84  a 'javafx/scene/control/TextField' (e807121f e807d070)
+ - private 'txt_oznaka' 'Ljavafx/scene/control/TextField;' @88  a 'javafx/scene/control/TextField' (e807d070 e8086ac2)
+ - private 'txt_visina' 'Ljavafx/scene/control/TextField;' @92  a 'javafx/scene/control/TextField' (e8086ac2 e8091930)
+ - private 'txt_s0' 'Ljavafx/scene/control/TextField;' @96  a 'javafx/scene/control/TextField' (e8091930 e809d46a)
+ - private 'txt_nivoZnacajnosti' 'Ljavafx/scene/control/TextField;' @100  a 'javafx/scene/control/TextField' (e809d46a e8013b83)
+ - private strict 'tabela_vr' 'Ljavafx/scene/control/TableView;' @104  a 'javafx/scene/control/TableView' (e8013b83 e802289f)
+ - public 'OD' 'Ljavafx/scene/control/TableColumn;' @108  a 'javafx/scene/control/TableColumn' (e802289f e803acd7)
+ - public 'DO' 'Ljavafx/scene/control/TableColumn;' @112  a 'javafx/scene/control/TableColumn' (e803acd7 e8034987)
+ - public 'VISINSKA_RAZLIKA' 'Ljavafx/scene/control/TableColumn;' @116  a 'javafx/scene/control/TableColumn' (e8034987 e802f5ea)
+ - public 'DUZINA_NIVELMANSKE_STRANE' 'Ljavafx/scene/control/TableColumn;' @120  a 'javafx/scene/control/TableColumn' (e802f5ea e802bc46)
+ - public 'BROJ_STANICA' 'Ljavafx/scene/control/TableColumn;' @124  a 'javafx/scene/control/TableColumn' (e802bc46 e800d189)
+ - private strict 'tabela_v' 'Ljavafx/scene/control/TableView;' @128  a 'javafx/scene/control/TableView' (e800d189 e801e2ff)
+ - public 'OZNAKA' 'Ljavafx/scene/control/TableColumn;' @132  a 'javafx/scene/control/TableColumn' (e801e2ff e8018f33)
+ - public 'VISINA' 'Ljavafx/scene/control/TableColumn;' @136  a 'javafx/scene/control/TableColumn' (e8018f33 e809cb9b)
+ - private strict 'listaTxtVr' 'Ljava/util/List;' @140  a 'java/util/ArrayList' (e809cb9b e809cba5)
+ - private strict 'listaTxtV' 'Ljava/util/List;' @144  a 'java/util/ArrayList' (e809cba5 e809cbaf)
+ - private strict 'listaTxtIzravnaj' 'Ljava/util/List;' @148  a 'java/util/ArrayList' (e809cbaf e809cbb9)
+ - private strict 'listaTxtPravac' 'Ljava/util/List;' @152  a 'java/util/ArrayList' (e809cbb9 e80bb77d)
+ - private strict 'listaTxtUgao' 'Ljava/util/List;' @156  a 'java/util/ArrayList' (e80bb77d e80cefe4)
+ - private strict 'listaTxtDuzina' 'Ljava/util/List;' @160  a 'java/util/ArrayList' (e80cefe4 e80cefee)
+ - strict 'data_pravci' 'Ljavafx/collections/ObservableList;' @164  a 'com/sun/javafx/collections/ObservableListWrapper' (e80cefee e80ceffa)
+ - strict 'data_uglovi' 'Ljavafx/collections/ObservableList;' @168  a 'com/sun/javafx/collections/ObservableListWrapper' (e80ceffa e80e89d4)
+ - strict 'data_duzine' 'Ljavafx/collections/ObservableList;' @172  a 'com/sun/javafx/collections/ObservableListWrapper' (e80e89d4 e80e89e0)
+ - strict 'data_koordinate' 'Ljavafx/collections/ObservableList;' @176  a 'com/sun/javafx/collections/ObservableListWrapper' (e80e89e0 f2ac2463)
+ - private 'pravac' 'Lizravnanje2D/Pravac;' @180  a 'izravnanje2D/Pravac' (f2ac2463 0)
+ - private 'ugao' 'Lizravnanje2D/Ugao;' @184  NULL (0 0)
+ - private 'duzina' 'Lizravnanje2D/Duzina;' @188  NULL (0 0)
+ - private 'koordinata' 'Lizravnanje2D/Koordinata;' @192  NULL (0 e80b5152)
+ - private 'txt_od_p' 'Ljavafx/scene/control/TextField;' @196  a 'javafx/scene/control/TextField' (e80b5152 e80af377)
+ - private 'txt_do_p' 'Ljavafx/scene/control/TextField;' @200  a 'javafx/scene/control/TextField' (e80af377 e80a7645)
+ - private 'txt_stepen_p' 'Ljavafx/scene/control/TextField;' @204  a 'javafx/scene/control/TextField' (e80a7645 e80a715d)
+ - private 'txt_minut_p' 'Ljavafx/scene/control/TextField;' @208  a 'javafx/scene/control/TextField' (e80a715d e809cbc3)
+ - private 'txt_sekund_p' 'Ljavafx/scene/control/TextField;' @212  a 'javafx/scene/control/TextField' (e809cbc3 e80a04f7)
+ - private 'txt_tacnost_p' 'Ljavafx/scene/control/TextField;' @216  a 'javafx/scene/control/TextField' (e80a04f7 e80647bd)
+ - public 'PRAVAC_OD' 'Ljavafx/scene/control/TableColumn;' @220  a 'javafx/scene/control/TableColumn' (e80647bd e8083661)
+ - public 'PRAVAC_DO' 'Ljavafx/scene/control/TableColumn;' @224  a 'javafx/scene/control/TableColumn' (e8083661 e807dec0)
+ - public 'PRAVAC_STEPEN' 'Ljavafx/scene/control/TableColumn;' @228  a 'javafx/scene/control/TableColumn' (e807dec0 e8077f11)
+ - public 'PRAVAC_MINUT' 'Ljavafx/scene/control/TableColumn;' @232  a 'javafx/scene/control/TableColumn' (e8077f11 e8070f50)
+ - public 'PRAVAC_SEKUND' 'Ljavafx/scene/control/TableColumn;' @236  a 'javafx/scene/control/TableColumn' (e8070f50 e806c330)
+ - public 'PRAVAC_TACNOST' 'Ljavafx/scene/control/TableColumn;' @240  a 'javafx/scene/control/TableColumn' (e806c330 e8055a17)
+ - private strict 'tabela_p' 'Ljavafx/scene/control/TableView;' @244  a 'javafx/scene/control/TableView' (e8055a17 e809646a)
+ - private 'radio_poznata_p' 'Ljavafx/scene/control/RadioButton;' @248  a 'javafx/scene/control/RadioButton' (e809646a e8092638)
+ - private 'radio_nepoznata_p' 'Ljavafx/scene/control/RadioButton;' @252  a 'javafx/scene/control/RadioButton' (e8092638 e80bbe97)
+ - private 'txt_lijevo_u' 'Ljavafx/scene/control/TextField;' @256  a 'javafx/scene/control/TextField' (e80bbe97 e80b10b9)
+ - private 'txt_sredina_u' 'Ljavafx/scene/control/TextField;' @260  a 'javafx/scene/control/TextField' (e80b10b9 e80a39b6)
+ - private 'txt_desno_u' 'Ljavafx/scene/control/TextField;' @264  a 'javafx/scene/control/TextField' (e80a39b6 e80c96f9)
+ - private 'txt_tacnost_u' 'Ljavafx/scene/control/TextField;' @268  a 'javafx/scene/control/TextField' (e80c96f9 e80c65ef)
+ - private 'txt_stepen_u' 'Ljavafx/scene/control/TextField;' @272  a 'javafx/scene/control/TextField' (e80c65ef e80c5991)
+ - private 'txt_minut_u' 'Ljavafx/scene/control/TextField;' @276  a 'javafx/scene/control/TextField' (e80c5991 e80bb787)
+ - private 'txt_sekund_u' 'Ljavafx/scene/control/TextField;' @280  a 'javafx/scene/control/TextField' (e80bb787 e801f20b)
+ - public 'UGAO_OZNAKA' 'Ljavafx/scene/control/TableColumn;' @284  a 'javafx/scene/control/TableColumn' (e801f20b e8052c4c)
+ - public 'UGAO_STEPEN' 'Ljavafx/scene/control/TableColumn;' @288  a 'javafx/scene/control/TableColumn' (e8052c4c e8041c55)
+ - public 'UGAO_MINUT' 'Ljavafx/scene/control/TableColumn;' @292  a 'javafx/scene/control/TableColumn' (e8041c55 e80318c2)
+ - public 'UGAO_SEKUND' 'Ljavafx/scene/control/TableColumn;' @296  a 'javafx/scene/control/TableColumn' (e80318c2 e8027be2)
+ - public 'UGAO_TACNOST' 'Ljavafx/scene/control/TableColumn;' @300  a 'javafx/scene/control/TableColumn' (e8027be2 e8013394)
+ - private strict 'tabela_u' 'Ljavafx/scene/control/TableView;' @304  a 'javafx/scene/control/TableView' (e8013394 e80a2f41)
+ - private 'txt_od_d' 'Ljavafx/scene/control/TextField;' @308  a 'javafx/scene/control/TextField' (e80a2f41 e8094fc0)
+ - private 'txt_do_d' 'Ljavafx/scene/control/TextField;' @312  a 'javafx/scene/control/TextField' (e8094fc0 e8086f4f)
+ - private 'txt_vrijednost_d' 'Ljavafx/scene/control/TextField;' @316  a 'javafx/scene/control/TextField' (e8086f4f e8079ecb)
+ - private 'txt_mm_d' 'Ljavafx/scene/control/TextField;' @320  a 'javafx/scene/control/TextField' (e8079ecb e806886c)
+ - private 'txt_ppm_d' 'Ljavafx/scene/control/TextField;' @324  a 'javafx/scene/control/TextField' (e806886c e80a9cc6)
+ - public 'DUZINA_OD' 'Ljavafx/scene/control/TableColumn;' @328  a 'javafx/scene/control/TableColumn' (e80a9cc6 e80a456d)
+ - public 'DUZINA_DO' 'Ljavafx/scene/control/TableColumn;' @332  a 'javafx/scene/control/TableColumn' (e80a456d e8096b83)
+ - public 'DUZINA_VRIJEDNOST' 'Ljavafx/scene/control/TableColumn;' @336  a 'javafx/scene/control/TableColumn' (e8096b83 e809fab1)
+ - public 'DUZINA_TACNOST' 'Ljavafx/scene/control/TableColumn;' @340  a 'javafx/scene/control/TableColumn' (e809fab1 e80891e2)
+ - private strict 'tabela_d' 'Ljavafx/scene/control/TableView;' @344  a 'javafx/scene/control/TableView' (e80891e2 e804d925)
+ - private 'txt_oznaka_k' 'Ljavafx/scene/control/TextField;' @348  a 'javafx/scene/control/TextField' (e804d925 e8065a4b)
+ - private 'txt_y_k' 'Ljavafx/scene/control/TextField;' @352  a 'javafx/scene/control/TextField' (e8065a4b e805b595)
+ - private 'txt_x_k' 'Ljavafx/scene/control/TextField;' @356  a 'javafx/scene/control/TextField' (e805b595 e8043bf0)
+ - private 'datum2d' 'Ljavafx/scene/control/RadioButton;' @360  a 'javafx/scene/control/RadioButton' (e8043bf0 e8037a47)
+ - public 'KOORDINATA_OZNAKA' 'Ljavafx/scene/control/TableColumn;' @364  a 'javafx/scene/control/TableColumn' (e8037a47 e80322cf)
+ - public 'KOORDINATA_Y' 'Ljavafx/scene/control/TableColumn;' @368  a 'javafx/scene/control/TableColumn' (e80322cf e802c13e)
+ - public 'KOORDINATA_X' 'Ljavafx/scene/control/TableColumn;' @372  a 'javafx/scene/control/TableColumn' (e802c13e e8020f4f)
+ - private strict 'tabela_k' 'Ljavafx/scene/control/TableView;' @376  a 'javafx/scene/control/TableView' (e8020f4f e8050396)
+ - private 'txt_s0_2d' 'Ljavafx/scene/control/TextField;' @380  a 'javafx/scene/control/TextField' (e8050396 e803fd37)
+ - private 'txt_nivoZnacajnosti_2d' 'Ljavafx/scene/control/TextField;' @384  a 'javafx/scene/control/TextField' (e803fd37 e8051981)
+ - public 'style' 'Ljava/lang/String;' @388  " -fx-border-color: red;
+    -fx-border-width: 1px;
+    -fx-border-radius:
+     5px;" (e8051981 9)
+R8 =0x0000000000000001 is an unknown value
+R9 =0x00007fd355a71800 is a thread
+R10=0x0000000112525a70: _ZN19TemplateInterpreter20_invoke_return_entryE+0 in /Library/Internet Plug-Ins/JavaAppletPlugin.plugin/Contents/Home/lib/server/libjvm.dylib at 0x0000000111dea000
+R11=0x000000011491f680 is at entry_point+32 in (nmethod*)0x000000011491f490
+R12=0x0000000000000000 is an unknown value
+R13=0x000000030cf336d0 is pointing into the stack for thread: 0x00007fd355a71800
+R14=0x000000030cf33740 is pointing into the stack for thread: 0x00007fd355a71800
+R15=0x00007fd355a71800 is a thread
+
+
+Stack: [0x000000030c7ca000,0x000000030cfca000],  sp=0x000000030c7e1fa8,  free space=95k
+Native frames: (J=compiled Java code, j=interpreted, Vv=VM code, C=native code)
+J 4020 C1 application.MainController.createTextField(Ljava/lang/String;)Ljavafx/scene/control/TextField; (21 bytes) @ 0x000000011491f680 [0x000000011491f660+0x20]
+C  0x000000030cf33720
+
+
+---------------  P R O C E S S  ---------------
+
+Java Threads: ( => current thread )
+  0x00007fd2f4813000 JavaThread "PulseTimer-CVDisplayLink thread" daemon [_thread_in_native, id=76839, stack(0x000000030e726000,0x000000030e7a6000)]
+  0x00007fd355c68000 JavaThread "Prism Font Disposer" daemon [_thread_blocked, id=70535, stack(0x000000030eabd000,0x000000030ebbd000)]
+  0x00007fd3560f1000 JavaThread "JavaFX-Launcher" [_thread_blocked, id=54207, stack(0x000000030e9ba000,0x000000030eaba000)]
+=>0x00007fd355a71800 JavaThread "JavaFX Application Thread" [_thread_in_Java, id=259, stack(0x000000030c7ca000,0x000000030cfca000)]
+  0x00007fd354138000 JavaThread "Thread-1" daemon [_thread_blocked, id=40855, stack(0x000000030e623000,0x000000030e723000)]
+  0x00007fd355a58800 JavaThread "QuantumRenderer-0" daemon [_thread_blocked, id=30735, stack(0x000000030e498000,0x000000030e598000)]
+  0x00007fd354062000 JavaThread "Service Thread" daemon [_thread_blocked, id=31235, stack(0x000000030e292000,0x000000030e392000)]
+  0x00007fd354061000 JavaThread "C1 CompilerThread3" daemon [_thread_blocked, id=22531, stack(0x000000030e18f000,0x000000030e28f000)]
+  0x00007fd354060000 JavaThread "C2 CompilerThread2" daemon [_thread_blocked, id=32259, stack(0x000000030e08c000,0x000000030e18c000)]
+  0x00007fd35405f800 JavaThread "C2 CompilerThread1" daemon [_thread_blocked, id=32515, stack(0x000000030df89000,0x000000030e089000)]
+  0x00007fd354055800 JavaThread "C2 CompilerThread0" daemon [_thread_blocked, id=18947, stack(0x000000030de86000,0x000000030df86000)]
+  0x00007fd35582b800 JavaThread "Signal Dispatcher" daemon [_thread_blocked, id=18467, stack(0x000000030dd83000,0x000000030de83000)]
+  0x00007fd35580e000 JavaThread "Finalizer" daemon [_thread_blocked, id=21023, stack(0x000000030db6f000,0x000000030dc6f000)]
+  0x00007fd35580d800 JavaThread "Reference Handler" daemon [_thread_blocked, id=16675, stack(0x000000030da6c000,0x000000030db6c000)]
+  0x00007fd35400d800 JavaThread "main" [_thread_blocked, id=4867, stack(0x000000030d04e000,0x000000030d14e000)]
+
+Other Threads:
+  0x00007fd355808800 VMThread [stack: 0x000000030d969000,0x000000030da69000] [id=12547]
+  0x00007fd35581a000 WatcherThread [stack: 0x000000030e395000,0x000000030e495000] [id=22795]
+
+VM state:not at safepoint (normal execution)
+
+VM Mutex/Monitor currently owned by a thread: None
+
+heap address: 0x0000000740000000, size: 2048 MB, Compressed Oops mode: Zero based, Oop shift amount: 3
+Narrow klass base: 0x0000000000000000, Narrow klass shift: 3
+Compressed class space size: 1073741824 Address: 0x00000007c0000000
+
+Heap:
+ PSYoungGen      total 71680K, used 11548K [0x0000000795580000, 0x000000079e180000, 0x00000007c0000000)
+  eden space 66560K, 17% used [0x0000000795580000,0x00000007960c70e8,0x0000000799680000)
+  from space 5120K, 0% used [0x0000000799680000,0x0000000799680000,0x0000000799b80000)
+  to   space 5120K, 0% used [0x000000079dc80000,0x000000079dc80000,0x000000079e180000)
+ ParOldGen       total 78848K, used 17875K [0x0000000740000000, 0x0000000744d00000, 0x0000000795580000)
+  object space 78848K, 22% used [0x0000000740000000,0x0000000741174f88,0x0000000744d00000)
+ Metaspace       used 20545K, capacity 21918K, committed 22144K, reserved 1069056K
+  class space    used 2886K, capacity 3175K, committed 3200K, reserved 1048576K
+
+Card table byte_map: [0x00000001113c0000,0x00000001117c1000] byte_map_base: 0x000000010d9c0000
+
+Marking Bits: (ParMarkBitMap*) 0x0000000112519b08
+ Begin Bits: [0x0000000122c07000, 0x0000000124c07000)
+ End Bits:   [0x0000000124c07000, 0x0000000126c07000)
+
+Polling page: 0x000000010cb36000
+
+CodeCache: size=245760Kb used=13383Kb max_used=13383Kb free=232376Kb
+ bounds [0x0000000113c07000, 0x0000000114927000, 0x0000000122c07000]
+ total_blobs=4660 nmethods=4019 adapters=555
+ compilation: enabled
+
+Compilation events (10 events):
+Event: 15.142 Thread 0x00007fd354061000 4016       3       com.sun.javafx.tk.quantum.PrimaryTimer::recordEnd (7 bytes)
+Event: 15.142 Thread 0x00007fd354061000 nmethod 4016 0x000000011491a2d0 code [0x000000011491a460, 0x000000011491a6c8]
+Event: 15.142 Thread 0x00007fd354061000 4017       3       com.sun.scenario.animation.AnimationPulse::recordEnd (81 bytes)
+Event: 15.142 Thread 0x00007fd354061000 nmethod 4017 0x000000011491bfd0 code [0x000000011491c220, 0x000000011491cde8]
+Event: 15.142 Thread 0x00007fd354061000 4018       3       com.sun.scenario.animation.AbstractPrimaryTimer$MainLoop::updateNextPulseTime (170 bytes)
+Event: 15.143 Thread 0x00007fd354061000 nmethod 4018 0x000000011491e590 code [0x000000011491e740, 0x000000011491ed28]
+Event: 15.232 Thread 0x00007fd354061000 4019       3       java.util.Objects::equals (23 bytes)
+Event: 15.232 Thread 0x00007fd354061000 nmethod 4019 0x000000011491ef90 code [0x000000011491f100, 0x000000011491f3c8]
+Event: 15.243 Thread 0x00007fd354061000 4020       3       application.MainController::createTextField (21 bytes)
+Event: 15.243 Thread 0x00007fd354061000 nmethod 4020 0x000000011491f490 code [0x000000011491f660, 0x000000011491fc88]
+
+GC Heap History (8 events):
+Event: 2.015 GC heap before
+{Heap before GC invocations=1 (full 0):
+ PSYoungGen      total 38400K, used 33280K [0x0000000795580000, 0x0000000798000000, 0x00000007c0000000)
+  eden space 33280K, 100% used [0x0000000795580000,0x0000000797600000,0x0000000797600000)
+  from space 5120K, 0% used [0x0000000797b00000,0x0000000797b00000,0x0000000798000000)
+  to   space 5120K, 0% used [0x0000000797600000,0x0000000797600000,0x0000000797b00000)
+ ParOldGen       total 87552K, used 0K [0x0000000740000000, 0x0000000745580000, 0x0000000795580000)
+  object space 87552K, 0% used [0x0000000740000000,0x0000000740000000,0x0000000745580000)
+ Metaspace       used 15184K, capacity 15900K, committed 16128K, reserved 1062912K
+  class space    used 2132K, capacity 2292K, committed 2304K, reserved 1048576K
+Event: 2.042 GC heap after
+Heap after GC invocations=1 (full 0):
+ PSYoungGen      total 38400K, used 5104K [0x0000000795580000, 0x000000079a080000, 0x00000007c0000000)
+  eden space 33280K, 0% used [0x0000000795580000,0x0000000795580000,0x0000000797600000)
+  from space 5120K, 99% used [0x0000000797600000,0x0000000797afc040,0x0000000797b00000)
+  to   space 5120K, 0% used [0x0000000799b80000,0x0000000799b80000,0x000000079a080000)
+ ParOldGen       total 87552K, used 16K [0x0000000740000000, 0x0000000745580000, 0x0000000795580000)
+  object space 87552K, 0% used [0x0000000740000000,0x0000000740004000,0x0000000745580000)
+ Metaspace       used 15184K, capacity 15900K, committed 16128K, reserved 1062912K
+  class space    used 2132K, capacity 2292K, committed 2304K, reserved 1048576K
+}
+Event: 3.776 GC heap before
+{Heap before GC invocations=2 (full 0):
+ PSYoungGen      total 38400K, used 38384K [0x0000000795580000, 0x000000079a080000, 0x00000007c0000000)
+  eden space 33280K, 100% used [0x0000000795580000,0x0000000797600000,0x0000000797600000)
+  from space 5120K, 99% used [0x0000000797600000,0x0000000797afc040,0x0000000797b00000)
+  to   space 5120K, 0% used [0x0000000799b80000,0x0000000799b80000,0x000000079a080000)
+ ParOldGen       total 87552K, used 16K [0x0000000740000000, 0x0000000745580000, 0x0000000795580000)
+  object space 87552K, 0% used [0x0000000740000000,0x0000000740004000,0x0000000745580000)
+ Metaspace       used 18623K, capacity 19818K, committed 20096K, reserved 1067008K
+  class space    used 2665K, capacity 2899K, committed 2944K, reserved 1048576K
+Event: 3.836 GC heap after
+Heap after GC invocations=2 (full 0):
+ PSYoungGen      total 71680K, used 5104K [0x0000000795580000, 0x000000079a080000, 0x00000007c0000000)
+  eden space 66560K, 0% used [0x0000000795580000,0x0000000795580000,0x0000000799680000)
+  from space 5120K, 99% used [0x0000000799b80000,0x000000079a07c040,0x000000079a080000)
+  to   space 5120K, 0% used [0x0000000799680000,0x0000000799680000,0x0000000799b80000)
+ ParOldGen       total 87552K, used 17584K [0x0000000740000000, 0x0000000745580000, 0x0000000795580000)
+  object space 87552K, 20% used [0x0000000740000000,0x000000074112c370,0x0000000745580000)
+ Metaspace       used 18623K, capacity 19818K, committed 20096K, reserved 1067008K
+  class space    used 2665K, capacity 2899K, committed 2944K, reserved 1048576K
+}
+Event: 12.938 GC heap before
+{Heap before GC invocations=3 (full 0):
+ PSYoungGen      total 71680K, used 13565K [0x0000000795580000, 0x000000079a080000, 0x00000007c0000000)
+  eden space 66560K, 12% used [0x0000000795580000,0x0000000795dc33d0,0x0000000799680000)
+  from space 5120K, 99% used [0x0000000799b80000,0x000000079a07c040,0x000000079a080000)
+  to   space 5120K, 0% used [0x0000000799680000,0x0000000799680000,0x0000000799b80000)
+ ParOldGen       total 87552K, used 17584K [0x0000000740000000, 0x0000000745580000, 0x0000000795580000)
+  object space 87552K, 20% used [0x0000000740000000,0x000000074112c370,0x0000000745580000)
+ Metaspace       used 19966K, capacity 21194K, committed 21248K, reserved 1067008K
+  class space    used 2789K, capacity 3051K, committed 3072K, reserved 1048576K
+Event: 12.998 GC heap after
+Heap after GC invocations=3 (full 0):
+ PSYoungGen      total 71680K, used 5104K [0x0000000795580000, 0x000000079e180000, 0x00000007c0000000)
+  eden space 66560K, 0% used [0x0000000795580000,0x0000000795580000,0x0000000799680000)
+  from space 5120K, 99% used [0x0000000799680000,0x0000000799b7c060,0x0000000799b80000)
+  to   space 5120K, 0% used [0x000000079dc80000,0x000000079dc80000,0x000000079e180000)
+ ParOldGen       total 87552K, used 17972K [0x0000000740000000, 0x0000000745580000, 0x0000000795580000)
+  object space 87552K, 20% used [0x0000000740000000,0x000000074118d380,0x0000000745580000)
+ Metaspace       used 19966K, capacity 21194K, committed 21248K, reserved 1067008K
+  class space    used 2789K, capacity 3051K, committed 3072K, reserved 1048576K
+}
+Event: 12.998 GC heap before
+{Heap before GC invocations=4 (full 1):
+ PSYoungGen      total 71680K, used 5104K [0x0000000795580000, 0x000000079e180000, 0x00000007c0000000)
+  eden space 66560K, 0% used [0x0000000795580000,0x0000000795580000,0x0000000799680000)
+  from space 5120K, 99% used [0x0000000799680000,0x0000000799b7c060,0x0000000799b80000)
+  to   space 5120K, 0% used [0x000000079dc80000,0x000000079dc80000,0x000000079e180000)
+ ParOldGen       total 87552K, used 17972K [0x0000000740000000, 0x0000000745580000, 0x0000000795580000)
+  object space 87552K, 20% used [0x0000000740000000,0x000000074118d380,0x0000000745580000)
+ Metaspace       used 19966K, capacity 21194K, committed 21248K, reserved 1067008K
+  class space    used 2789K, capacity 3051K, committed 3072K, reserved 1048576K
+Event: 13.057 GC heap after
+Heap after GC invocations=4 (full 1):
+ PSYoungGen      total 71680K, used 0K [0x0000000795580000, 0x000000079e180000, 0x00000007c0000000)
+  eden space 66560K, 0% used [0x0000000795580000,0x0000000795580000,0x0000000799680000)
+  from space 5120K, 0% used [0x0000000799680000,0x0000000799680000,0x0000000799b80000)
+  to   space 5120K, 0% used [0x000000079dc80000,0x000000079dc80000,0x000000079e180000)
+ ParOldGen       total 78848K, used 17875K [0x0000000740000000, 0x0000000744d00000, 0x0000000795580000)
+  object space 78848K, 22% used [0x0000000740000000,0x0000000741174f88,0x0000000744d00000)
+ Metaspace       used 19966K, capacity 21194K, committed 21248K, reserved 1067008K
+  class space    used 2789K, capacity 3051K, committed 3072K, reserved 1048576K
+}
+
+Deoptimization events (10 events):
+Event: 13.957 Thread 0x00007fd355a58800 Uncommon trap: reason=class_check action=maybe_recompile pc=0x0000000114767798 method=com.sun.javafx.geom.transform.AffineBase.getType()I @ 9
+Event: 13.959 Thread 0x00007fd355a58800 Uncommon trap: reason=class_check action=maybe_recompile pc=0x0000000114767798 method=com.sun.javafx.geom.transform.AffineBase.getType()I @ 9
+Event: 13.959 Thread 0x00007fd355a58800 Uncommon trap: reason=class_check action=maybe_recompile pc=0x0000000114767798 method=com.sun.javafx.geom.transform.AffineBase.getType()I @ 9
+Event: 15.024 Thread 0x00007fd355a71800 Uncommon trap: reason=class_check action=maybe_recompile pc=0x00000001148f5244 method=com.sun.javafx.event.CompositeEventHandler.dispatchCapturingEvent(Ljavafx/event/Event;)V @ 12
+Event: 15.047 Thread 0x00007fd355a71800 Uncommon trap: reason=unstable_if action=reinterpret pc=0x00000001147dae5c method=com.sun.javafx.util.Utils.deriveColor(Ljavafx/scene/paint/Color;D)Ljavafx/scene/paint/Color; @ 68
+Event: 15.047 Thread 0x00007fd355a71800 Uncommon trap: reason=unstable_if action=reinterpret pc=0x00000001143ec604 method=com.sun.javafx.util.Utils.HSBtoRGB(DDD)[D @ 34
+Event: 15.064 Thread 0x00007fd355a71800 Uncommon trap: reason=class_check action=maybe_recompile pc=0x00000001148f5244 method=com.sun.javafx.event.CompositeEventHandler.dispatchCapturingEvent(Ljavafx/event/Event;)V @ 12
+Event: 15.084 Thread 0x00007fd355a71800 Uncommon trap: reason=class_check action=maybe_recompile pc=0x00000001148f5244 method=com.sun.javafx.event.CompositeEventHandler.dispatchCapturingEvent(Ljavafx/event/Event;)V @ 12
+Event: 15.169 Thread 0x00007fd355a71800 Uncommon trap: reason=class_check action=maybe_recompile pc=0x00000001148f5244 method=com.sun.javafx.event.CompositeEventHandler.dispatchCapturingEvent(Ljavafx/event/Event;)V @ 12
+Event: 15.241 Thread 0x00007fd355a71800 Uncommon trap: reason=class_check action=maybe_recompile pc=0x000000011432b980 method=javafx.scene.CssStyleHelper.createStyleHelper(Ljavafx/scene/Node;)Ljavafx/scene/CssStyleHelper; @ 151
+
+Classes redefined (0 events):
+No events
+
+Internal exceptions (10 events):
+Event: 0.103 Thread 0x00007fd35400d800 Exception <a 'java/lang/NoSuchMethodError': Method sun.misc.Unsafe.prefetchRead(Ljava/lang/Object;J)V name or signature does not match> (0x0000000795587fc8) thrown at [/System/Volumes/Data/jenkins/workspace/8-2-build-macosx-x64-sans-NAS/jdk8u381/237/hotsp
+Event: 0.298 Thread 0x00007fd35400d800 Exception <a 'java/lang/NoSuchFieldError': method resolution failed> (0x00000007957adb68) thrown at [/System/Volumes/Data/jenkins/workspace/8-2-build-macosx-x64-sans-NAS/jdk8u381/237/hotspot/src/share/vm/prims/methodHandles.cpp, line 1188]
+Event: 0.308 Thread 0x00007fd35400d800 Exception <a 'java/lang/NoSuchFieldError': method resolution failed> (0x00000007957baee8) thrown at [/System/Volumes/Data/jenkins/workspace/8-2-build-macosx-x64-sans-NAS/jdk8u381/237/hotspot/src/share/vm/prims/methodHandles.cpp, line 1188]
+Event: 0.362 Thread 0x00007fd35400d800 Exception <a 'java/security/PrivilegedActionException'> (0x000000079584b418) thrown at [/System/Volumes/Data/jenkins/workspace/8-2-build-macosx-x64-sans-NAS/jdk8u381/237/hotspot/src/share/vm/prims/jvm.cpp, line 1513]
+Event: 0.362 Thread 0x00007fd35400d800 Exception <a 'java/security/PrivilegedActionException'> (0x000000079584b628) thrown at [/System/Volumes/Data/jenkins/workspace/8-2-build-macosx-x64-sans-NAS/jdk8u381/237/hotspot/src/share/vm/prims/jvm.cpp, line 1513]
+Event: 0.362 Thread 0x00007fd35400d800 Exception <a 'java/lang/NullPointerException'> (0x000000079584da48) thrown at [/System/Volumes/Data/jenkins/workspace/8-2-build-macosx-x64-sans-NAS/jdk8u381/237/hotspot/src/share/vm/interpreter/linkResolver.cpp, line 1185]
+Event: 0.978 Thread 0x00007fd355a71800 Exception <a 'java/lang/NullPointerException'> (0x00000007963584f8) thrown at [/System/Volumes/Data/jenkins/workspace/8-2-build-macosx-x64-sans-NAS/jdk8u381/237/hotspot/src/share/vm/interpreter/linkResolver.cpp, line 1185]
+Event: 0.978 Thread 0x00007fd355a71800 Exception <a 'java/lang/NullPointerException'> (0x00000007963584f8) thrown at [/System/Volumes/Data/jenkins/workspace/8-2-build-macosx-x64-sans-NAS/jdk8u381/237/hotspot/src/share/vm/prims/jvm.cpp, line 1517]
+Event: 1.583 Thread 0x00007fd355a71800 Implicit null exception at 0x0000000113ef0935 to 0x0000000113ef0b71
+Event: 1.703 Thread 0x00007fd355a71800 Exception <a 'java/io/FileNotFoundException'> (0x0000000797149d48) thrown at [/System/Volumes/Data/jenkins/workspace/8-2-build-macosx-x64-sans-NAS/jdk8u381/237/hotspot/src/share/vm/prims/jni.cpp, line 710]
+
+Events (10 events):
+Event: 15.239 loading class javafx/scene/layout/GridPane$StyleableProperties$3 done
+Event: 15.239 loading class javafx/scene/layout/GridPane$StyleableProperties$4
+Event: 15.239 loading class javafx/scene/layout/GridPane$StyleableProperties$4 done
+Event: 15.241 Thread 0x00007fd355a71800 Uncommon trap: trap_request=0xffffffde fr.pc=0x000000011432b980
+Event: 15.241 Thread 0x00007fd355a71800 DEOPT PACKING pc=0x000000011432b980 sp=0x000000030cfc3a50
+Event: 15.241 Thread 0x00007fd355a71800 DEOPT UNPACKING pc=0x0000000113c4c7ba sp=0x000000030cfc3a28 mode 2
+Event: 15.242 loading class javafx/scene/layout/Priority
+Event: 15.242 loading class javafx/scene/layout/Priority done
+Event: 15.242 loading class javafx/scene/layout/GridPane$CompositeSize
+Event: 15.242 loading class javafx/scene/layout/GridPane$CompositeSize done
+
+
+Dynamic libraries:
+0x00007ff81c722000 	/System/Library/Frameworks/Cocoa.framework/Versions/A/Cocoa
+0x00007ff807313000 	/System/Library/Frameworks/AppKit.framework/Versions/C/AppKit
+0x00007ff809fc1000 	/System/Library/Frameworks/CoreData.framework/Versions/A/CoreData
+0x00007ff805028000 	/System/Library/Frameworks/Foundation.framework/Versions/C/Foundation
+0x00007ff810323000 	/usr/lib/libSystem.B.dylib
+0x00007ff808318000 	/System/Library/PrivateFrameworks/UIFoundation.framework/Versions/A/UIFoundation
+0x00007ffa23265000 	/System/Library/PrivateFrameworks/CollectionViewCore.framework/Versions/A/CollectionViewCore
+0x00007ff816736000 	/System/Library/PrivateFrameworks/RemoteViewServices.framework/Versions/A/RemoteViewServices
+0x00007ff80e3f8000 	/System/Library/PrivateFrameworks/XCTTargetBootstrap.framework/Versions/A/XCTTargetBootstrap
+0x00007ff812250000 	/System/Library/PrivateFrameworks/InternationalSupport.framework/Versions/A/InternationalSupport
+0x00007ff8122d9000 	/System/Library/PrivateFrameworks/UserActivity.framework/Versions/A/UserActivity
+0x00007ffb1905a000 	/System/Library/PrivateFrameworks/WindowManagement.framework/Versions/A/WindowManagement
+0x00007ff804d14000 	/System/Library/Frameworks/SystemConfiguration.framework/Versions/A/SystemConfiguration
+0x00007ff81164e000 	/usr/lib/libspindump.dylib
+0x00007ff8084e5000 	/System/Library/Frameworks/UniformTypeIdentifiers.framework/Versions/A/UniformTypeIdentifiers
+0x00007ff80c8ef000 	/usr/lib/libapp_launch_measurement.dylib
+0x00007ff80b567000 	/System/Library/PrivateFrameworks/CoreAnalytics.framework/Versions/A/CoreAnalytics
+0x00007ff80c8f2000 	/System/Library/PrivateFrameworks/CoreAutoLayout.framework/Versions/A/CoreAutoLayout
+0x00007ff80dc7f000 	/System/Library/Frameworks/Metal.framework/Versions/A/Metal
+0x00007ff80ebb7000 	/usr/lib/liblangid.dylib
+0x00007ff80e3fd000 	/System/Library/PrivateFrameworks/CoreSVG.framework/Versions/A/CoreSVG
+0x00007ff808e19000 	/System/Library/PrivateFrameworks/SkyLight.framework/Versions/A/SkyLight
+0x00007ff809202000 	/System/Library/Frameworks/CoreGraphics.framework/Versions/A/CoreGraphics
+0x00007ff816e10000 	/System/Library/Frameworks/Accelerate.framework/Versions/A/Accelerate
+0x00007ff8110c3000 	/System/Library/PrivateFrameworks/IconServices.framework/Versions/A/IconServices
+0x00007ff80dc62000 	/System/Library/Frameworks/IOSurface.framework/Versions/A/IOSurface
+0x00007ff80b590000 	/usr/lib/libDiagnosticMessagesClient.dylib
+0x00007ff810239000 	/usr/lib/libz.1.dylib
+0x00007ff81a34f000 	/System/Library/Frameworks/ApplicationServices.framework/Versions/A/ApplicationServices
+0x00007ff80e3e4000 	/System/Library/PrivateFrameworks/DFRFoundation.framework/Versions/A/DFRFoundation
+0x00007ff806bdf000 	/usr/lib/libicucore.A.dylib
+0x00007ff8130f0000 	/System/Library/Frameworks/AudioToolbox.framework/Versions/A/AudioToolbox
+0x00007ff81225b000 	/System/Library/PrivateFrameworks/DataDetectorsCore.framework/Versions/A/DataDetectorsCore
+0x00007ff90ba4e000 	/System/Library/PrivateFrameworks/TextInput.framework/Versions/A/TextInput
+0x00007ff808d8e000 	/usr/lib/libMobileGestalt.dylib
+0x00007ff80e0ec000 	/System/Library/Frameworks/Carbon.framework/Versions/A/Frameworks/HIToolbox.framework/Versions/A/HIToolbox
+0x00007ff80c293000 	/System/Library/Frameworks/QuartzCore.framework/Versions/A/QuartzCore
+0x00007ff80685f000 	/System/Library/Frameworks/Security.framework/Versions/A/Security
+0x00007ff81676e000 	/System/Library/Frameworks/Carbon.framework/Versions/A/Frameworks/SpeechRecognition.framework/Versions/A/SpeechRecognition
+0x00007ff80c62f000 	/System/Library/PrivateFrameworks/CoreUI.framework/Versions/A/CoreUI
+0x00007ff806164000 	/System/Library/Frameworks/CoreAudio.framework/Versions/A/CoreAudio
+0x00007ff80b66a000 	/System/Library/Frameworks/DiskArbitration.framework/Versions/A/DiskArbitration
+0x00007ff811a6b000 	/System/Library/PrivateFrameworks/MultitouchSupport.framework/Versions/A/MultitouchSupport
+0x00007ff808d8d000 	/usr/lib/libenergytrace.dylib
+0x00007ff8071f5000 	/System/Library/Frameworks/IOKit.framework/Versions/A/IOKit
+0x00007ff816b67000 	/System/Library/Frameworks/CoreServices.framework/Versions/A/CoreServices
+0x00007ff80c887000 	/System/Library/PrivateFrameworks/PerformanceAnalysis.framework/Versions/A/PerformanceAnalysis
+0x00007ffa1925b000 	/System/Library/Frameworks/OpenGL.framework/Versions/A/OpenGL
+0x00007ff80c93a000 	/usr/lib/libxml2.2.dylib
+0x00007ff80f7ba000 	/System/Library/PrivateFrameworks/MobileKeyBag.framework/Versions/A/MobileKeyBag
+0x00007ff803ea8000 	/usr/lib/libobjc.A.dylib
+0x00007ff80416c000 	/usr/lib/libc++.1.dylib
+0x00007ff809a23000 	/System/Library/Frameworks/ColorSync.framework/Versions/A/ColorSync
+0x00007ff804277000 	/System/Library/Frameworks/CoreFoundation.framework/Versions/A/CoreFoundation
+0x00007ff80e799000 	/System/Library/Frameworks/CoreImage.framework/Versions/A/CoreImage
+0x00007ff805f75000 	/System/Library/Frameworks/CoreText.framework/Versions/A/CoreText
+0x00007ff80e438000 	/System/Library/Frameworks/ImageIO.framework/Versions/A/ImageIO
+0x00007ff810329000 	/System/Library/PrivateFrameworks/SoftLinking.framework/Versions/A/SoftLinking
+0x00007ff8105a8000 	/usr/lib/libcompression.dylib
+0x00007ff812182000 	/System/Library/PrivateFrameworks/TextureIO.framework/Versions/A/TextureIO
+0x00007ff810cf2000 	/usr/lib/libate.dylib
+0x00007ff81031e000 	/usr/lib/system/libcache.dylib
+0x00007ff8102d9000 	/usr/lib/system/libcommonCrypto.dylib
+0x00007ff810302000 	/usr/lib/system/libcompiler_rt.dylib
+0x00007ff8102f8000 	/usr/lib/system/libcopyfile.dylib
+0x00007ff803fd7000 	/usr/lib/system/libcorecrypto.dylib
+0x00007ff804099000 	/usr/lib/system/libdispatch.dylib
+0x00007ff804221000 	/usr/lib/system/libdyld.dylib
+0x00007ff810314000 	/usr/lib/system/libkeymgr.dylib
+0x00007ff8102b8000 	/usr/lib/system/libmacho.dylib
+0x00007ff80f8a6000 	/usr/lib/system/libquarantine.dylib
+0x00007ff810312000 	/usr/lib/system/libremovefile.dylib
+0x00007ff808de7000 	/usr/lib/system/libsystem_asl.dylib
+0x00007ff803f79000 	/usr/lib/system/libsystem_blocks.dylib
+0x00007ff8040e3000 	/usr/lib/system/libsystem_c.dylib
+0x00007ff81030a000 	/usr/lib/system/libsystem_collections.dylib
+0x00007ff80eba8000 	/usr/lib/system/libsystem_configuration.dylib
+0x00007ff80dc33000 	/usr/lib/system/libsystem_containermanager.dylib
+0x00007ff80ff83000 	/usr/lib/system/libsystem_coreservices.dylib
+0x00007ff806e73000 	/usr/lib/system/libsystem_darwin.dylib
+0x00007ff810315000 	/usr/lib/system/libsystem_dnssd.dylib
+0x00007ff8040e0000 	/usr/lib/system/libsystem_featureflags.dylib
+0x00007ff80424c000 	/usr/lib/system/libsystem_info.dylib
+0x00007ff81024c000 	/usr/lib/system/libsystem_m.dylib
+0x00007ff80406c000 	/usr/lib/system/libsystem_malloc.dylib
+0x00007ff808d76000 	/usr/lib/system/libsystem_networkextension.dylib
+0x00007ff8072b4000 	/usr/lib/system/libsystem_notify.dylib
+0x00007ff80ebac000 	/usr/lib/system/libsystem_sandbox.dylib
+0x00007ff81030f000 	/usr/lib/system/libsystem_secinit.dylib
+0x00007ff8041db000 	/usr/lib/system/libsystem_kernel.dylib
+0x00007ff804242000 	/usr/lib/system/libsystem_platform.dylib
+0x00007ff804215000 	/usr/lib/system/libsystem_pthread.dylib
+0x00007ff80a830000 	/usr/lib/system/libsystem_symptoms.dylib
+0x00007ff803fbd000 	/usr/lib/system/libsystem_trace.dylib
+0x00007ff8102e5000 	/usr/lib/system/libunwind.dylib
+0x00007ff803f7d000 	/usr/lib/system/libxpc.dylib
+0x00007ff8041c5000 	/usr/lib/libc++abi.dylib
+0x00007ff8102f0000 	/usr/lib/liboah.dylib
+0x00007ff810a83000 	/usr/lib/liblzma.5.dylib
+0x00007ff810325000 	/usr/lib/libfakelink.dylib
+0x00007ff8089d1000 	/System/Library/Frameworks/CFNetwork.framework/Versions/A/CFNetwork
+0x00007ff810462000 	/usr/lib/libarchive.2.dylib
+0x00007ff814a1f000 	/System/Library/Frameworks/Combine.framework/Versions/A/Combine
+0x00007ff812b68000 	/usr/lib/swift/libswiftCore.dylib
+0x00007ff908ac8000 	/usr/lib/swift/libswiftCoreFoundation.dylib
+0x00007ff906aca000 	/usr/lib/swift/libswiftDarwin.dylib
+0x00007ff81838a000 	/usr/lib/swift/libswiftDispatch.dylib
+0x00007ff908ae4000 	/usr/lib/swift/libswiftIOKit.dylib
+0x00007ff81a778000 	/usr/lib/swift/libswiftObjectiveC.dylib
+0x00007ff908ad9000 	/usr/lib/swift/libswiftXPC.dylib
+0x00007ffb1f8d6000 	/usr/lib/swift/libswift_Concurrency.dylib
+0x00007ffb1fa15000 	/usr/lib/swift/libswift_StringProcessing.dylib
+0x00007ff81a77c000 	/usr/lib/swift/libswiftos.dylib
+0x00007ff80717a000 	/System/Library/PrivateFrameworks/CoreServicesInternal.framework/Versions/A/CoreServicesInternal
+0x00007ff80f8cd000 	/usr/lib/libbsm.0.dylib
+0x00007ff8102bd000 	/usr/lib/system/libkxld.dylib
+0x00007ff80c8bb000 	/System/Library/Frameworks/CoreServices.framework/Versions/A/Frameworks/FSEvents.framework/Versions/A/FSEvents
+0x00007ff806e7e000 	/System/Library/Frameworks/CoreServices.framework/Versions/A/Frameworks/CarbonCore.framework/Versions/A/CarbonCore
+0x00007ff80b5d3000 	/System/Library/Frameworks/CoreServices.framework/Versions/A/Frameworks/Metadata.framework/Versions/A/Metadata
+0x00007ff80ff89000 	/System/Library/Frameworks/CoreServices.framework/Versions/A/Frameworks/OSServices.framework/Versions/A/OSServices
+0x00007ff8104ea000 	/System/Library/Frameworks/CoreServices.framework/Versions/A/Frameworks/SearchKit.framework/Versions/A/SearchKit
+0x00007ff80a7b7000 	/System/Library/Frameworks/CoreServices.framework/Versions/A/Frameworks/AE.framework/Versions/A/AE
+0x00007ff80470f000 	/System/Library/Frameworks/CoreServices.framework/Versions/A/Frameworks/LaunchServices.framework/Versions/A/LaunchServices
+0x00007ff810a34000 	/System/Library/Frameworks/CoreServices.framework/Versions/A/Frameworks/DictionaryServices.framework/Versions/A/DictionaryServices
+0x00007ff80c8c8000 	/System/Library/Frameworks/CoreServices.framework/Versions/A/Frameworks/SharedFileList.framework/Versions/A/SharedFileList
+0x00007ff810576000 	/usr/lib/libapple_nghttp2.dylib
+0x00007ff8089cd000 	/usr/lib/libnetwork.dylib
+0x00007ff80a437000 	/usr/lib/libsqlite3.dylib
+0x00007ff80a838000 	/System/Library/Frameworks/Network.framework/Versions/A/Network
+0x00007ffb1e902000 	/usr/lib/libCoreEntitlements.dylib
+0x00007ffb0c657000 	/System/Library/PrivateFrameworks/MessageSecurity.framework/Versions/A/MessageSecurity
+0x00007ff80a41e000 	/System/Library/PrivateFrameworks/ProtocolBuffer.framework/Versions/A/ProtocolBuffer
+0x00007ff80ff63000 	/System/Library/PrivateFrameworks/AppleFSCompression.framework/Versions/A/AppleFSCompression
+0x00007ff80f8b5000 	/usr/lib/libcoretls.dylib
+0x00007ff810a9d000 	/usr/lib/libcoretls_cfhelpers.dylib
+0x00007ff8105a3000 	/usr/lib/libpam.2.dylib
+0x00007ff810b0a000 	/usr/lib/libxar.1.dylib
+0x00007ff81109f000 	/usr/lib/libheimdal-asn1.dylib
+0x00007ff81032a000 	/usr/lib/libpcap.A.dylib
+0x00007ff80a827000 	/usr/lib/libdns_services.dylib
+0x00007ff80ebb3000 	/System/Library/PrivateFrameworks/AppleSystemInfo.framework/Versions/A/AppleSystemInfo
+0x00007ff80f5c4000 	/System/Library/PrivateFrameworks/IOMobileFramebuffer.framework/Versions/A/IOMobileFramebuffer
+0x00007ff80ff73000 	/usr/lib/libbz2.1.0.dylib
+0x00007ff80f8a9000 	/usr/lib/libCheckFix.dylib
+0x00007ff808dfe000 	/System/Library/PrivateFrameworks/TCC.framework/Versions/A/TCC
+0x00007ff80ebb9000 	/System/Library/PrivateFrameworks/CoreNLP.framework/Versions/A/CoreNLP
+0x00007ff80b592000 	/System/Library/PrivateFrameworks/MetadataUtilities.framework/Versions/A/MetadataUtilities
+0x00007ff80f8dd000 	/usr/lib/libmecab.dylib
+0x00007ff804d93000 	/usr/lib/libCRFSuite.dylib
+0x00007ff80f937000 	/usr/lib/libgermantok.dylib
+0x00007ff810551000 	/usr/lib/libThaiTokenizer.dylib
+0x00007ff80b672000 	/System/Library/Frameworks/Accelerate.framework/Versions/A/Frameworks/vImage.framework/Versions/A/vImage
+0x00007ff816b3a000 	/System/Library/Frameworks/Accelerate.framework/Versions/A/Frameworks/vecLib.framework/Versions/A/vecLib
+0x00007ff810b4c000 	/System/Library/Frameworks/Accelerate.framework/Versions/A/Frameworks/vecLib.framework/Versions/A/libvMisc.dylib
+0x00007ff80f3bf000 	/System/Library/Frameworks/Accelerate.framework/Versions/A/Frameworks/vecLib.framework/Versions/A/libvDSP.dylib
+0x00007ff804ac9000 	/System/Library/Frameworks/Accelerate.framework/Versions/A/Frameworks/vecLib.framework/Versions/A/libBLAS.dylib
+0x00007ff810687000 	/System/Library/Frameworks/Accelerate.framework/Versions/A/Frameworks/vecLib.framework/Versions/A/libLAPACK.dylib
+0x00007ff80f93a000 	/System/Library/Frameworks/Accelerate.framework/Versions/A/Frameworks/vecLib.framework/Versions/A/libLinearAlgebra.dylib
+0x00007ff81058e000 	/System/Library/Frameworks/Accelerate.framework/Versions/A/Frameworks/vecLib.framework/Versions/A/libSparseBLAS.dylib
+0x00007ff810681000 	/System/Library/Frameworks/Accelerate.framework/Versions/A/Frameworks/vecLib.framework/Versions/A/libQuadrature.dylib
+0x00007ff80eca6000 	/System/Library/Frameworks/Accelerate.framework/Versions/A/Frameworks/vecLib.framework/Versions/A/libBNNS.dylib
+0x00007ff804c9d000 	/System/Library/Frameworks/Accelerate.framework/Versions/A/Frameworks/vecLib.framework/Versions/A/libSparse.dylib
+0x00007ffb0b994000 	/System/Library/PrivateFrameworks/MIL.framework/Versions/A/MIL
+0x00007ff81035f000 	/usr/lib/libiconv.2.dylib
+0x00007ff8102b7000 	/usr/lib/libcharset.1.dylib
+0x00007ff80c89f000 	/System/Library/Frameworks/OpenDirectory.framework/Versions/A/Frameworks/CFOpenDirectory.framework/Versions/A/CFOpenDirectory
+0x00007ff80c893000 	/System/Library/Frameworks/OpenDirectory.framework/Versions/A/OpenDirectory
+0x00007ff810a9f000 	/System/Library/PrivateFrameworks/APFS.framework/Versions/A/APFS
+0x00007ff80f7ed000 	/System/Library/Frameworks/SecurityFoundation.framework/Versions/A/SecurityFoundation
+0x00007ff810b18000 	/usr/lib/libutil.dylib
+0x00007ffb0ab9a000 	/System/Library/PrivateFrameworks/InstalledContentLibrary.framework/Versions/A/InstalledContentLibrary
+0x00007ff8071b9000 	/System/Library/PrivateFrameworks/CoreServicesStore.framework/Versions/A/CoreServicesStore
+0x00007ffa21dd2000 	/System/Library/PrivateFrameworks/AppleMobileFileIntegrity.framework/Versions/A/AppleMobileFileIntegrity
+0x00007ff908aa8000 	/usr/lib/libmis.dylib
+0x00007ff916f72000 	/System/Library/PrivateFrameworks/MobileSystemServices.framework/Versions/A/MobileSystemServices
+0x00007ffa10d0d000 	/System/Library/PrivateFrameworks/ConfigProfileHelper.framework/Versions/A/ConfigProfileHelper
+0x00007ff810553000 	/System/Library/PrivateFrameworks/AppleSauce.framework/Versions/A/AppleSauce
+0x00007ff805a3a000 	/System/Library/PrivateFrameworks/LanguageModeling.framework/Versions/A/LanguageModeling
+0x00007ff810b1c000 	/usr/lib/libxslt.1.dylib
+0x00007ff810451000 	/usr/lib/libcmph.dylib
+0x00007ff80f5b2000 	/System/Library/PrivateFrameworks/CoreEmoji.framework/Versions/A/CoreEmoji
+0x00007ff80eca0000 	/System/Library/PrivateFrameworks/LinguisticData.framework/Versions/A/LinguisticData
+0x00007ff804c53000 	/System/Library/PrivateFrameworks/Lexicon.framework/Versions/A/Lexicon
+0x00007ff80f87b000 	/System/Library/PrivateFrameworks/BackgroundTaskManagement.framework/Versions/A/BackgroundTaskManagement
+0x00007ffb1ea38000 	/usr/lib/libTLE.dylib
+0x00007ffb1f95a000 	/usr/lib/swift/libswift_RegexParser.dylib
+0x00007ff811935000 	/System/Library/PrivateFrameworks/AppleJPEG.framework/Versions/A/AppleJPEG
+0x00007ff811084000 	/usr/lib/libexpat.1.dylib
+0x00007ff811fdf000 	/System/Library/Frameworks/ImageIO.framework/Versions/A/Resources/libPng.dylib
+0x00007ff81200c000 	/System/Library/Frameworks/ImageIO.framework/Versions/A/Resources/libTIFF.dylib
+0x00007ff8120fc000 	/System/Library/Frameworks/ImageIO.framework/Versions/A/Resources/libGIF.dylib
+0x00007ff811980000 	/System/Library/Frameworks/ImageIO.framework/Versions/A/Resources/libJP2.dylib
+0x00007ff81209c000 	/System/Library/Frameworks/ImageIO.framework/Versions/A/Resources/libJPEG.dylib
+0x00007ff812093000 	/System/Library/Frameworks/ImageIO.framework/Versions/A/Resources/libRadiance.dylib
+0x00007ff80df82000 	/System/Library/PrivateFrameworks/FontServices.framework/libFontParser.dylib
+0x00007ff80a75d000 	/System/Library/PrivateFrameworks/RunningBoardServices.framework/Versions/A/RunningBoardServices
+0x00007ff81cd58000 	/System/Library/PrivateFrameworks/IOSurfaceAccelerator.framework/Versions/A/IOSurfaceAccelerator
+0x00007ff811a67000 	/System/Library/PrivateFrameworks/WatchdogClient.framework/Versions/A/WatchdogClient
+0x00007ff805b9c000 	/System/Library/Frameworks/CoreDisplay.framework/Versions/A/CoreDisplay
+0x00007ff80de72000 	/System/Library/Frameworks/CoreMedia.framework/Versions/A/CoreMedia
+0x00007ff80dc76000 	/System/Library/PrivateFrameworks/IOAccelerator.framework/Versions/A/IOAccelerator
+0x00007ff80ca19000 	/System/Library/Frameworks/CoreVideo.framework/Versions/A/CoreVideo
+0x00007ff8105a1000 	/System/Library/Frameworks/MetalPerformanceShaders.framework/Versions/A/MetalPerformanceShaders
+0x00007ff811aa4000 	/System/Library/Frameworks/VideoToolbox.framework/Versions/A/VideoToolbox
+0x00007ff80a6a2000 	/System/Library/PrivateFrameworks/BaseBoard.framework/Versions/A/BaseBoard
+0x00007ff81208c000 	/System/Library/PrivateFrameworks/GPUWrangler.framework/Versions/A/GPUWrangler
+0x00007ff812070000 	/System/Library/PrivateFrameworks/IOPresentment.framework/Versions/A/IOPresentment
+0x00007ff812096000 	/System/Library/PrivateFrameworks/DSExternalDisplay.framework/Versions/A/DSExternalDisplay
+0x00007ffb072b3000 	/System/Library/PrivateFrameworks/GPUCompiler.framework/Versions/31001/Libraries/libllvm-flatbuffers.dylib
+0x00007ffa1924f000 	/System/Library/Frameworks/OpenGL.framework/Versions/A/Libraries/libCoreFSCache.dylib
+0x00007ffb072af000 	/System/Library/PrivateFrameworks/GPUCompiler.framework/Versions/31001/Libraries/libGPUCompilerUtils.dylib
+0x00007ff812102000 	/System/Library/PrivateFrameworks/CMCaptureCore.framework/Versions/A/CMCaptureCore
+0x00007ffa1c43b000 	/System/Library/Frameworks/ExtensionFoundation.framework/Versions/A/ExtensionFoundation
+0x00007ff818b03000 	/System/Library/PrivateFrameworks/CoreTime.framework/Versions/A/CoreTime
+0x00007ff811638000 	/System/Library/PrivateFrameworks/AppServerSupport.framework/Versions/A/AppServerSupport
+0x00007ff8139b5000 	/System/Library/PrivateFrameworks/perfdata.framework/Versions/A/perfdata
+0x00007ff805cc8000 	/System/Library/PrivateFrameworks/AudioToolboxCore.framework/Versions/A/AudioToolboxCore
+0x00007ff80de4c000 	/System/Library/PrivateFrameworks/caulk.framework/Versions/A/caulk
+0x00007ff813287000 	/usr/lib/libAudioStatistics.dylib
+0x00007ff907f4d000 	/System/Library/PrivateFrameworks/SystemPolicy.framework/Versions/A/SystemPolicy
+0x00007ff813520000 	/usr/lib/libSMC.dylib
+0x00007ff81c5c7000 	/System/Library/Frameworks/CoreMIDI.framework/Versions/A/CoreMIDI
+0x00007ff811fad000 	/usr/lib/libAudioToolboxUtility.dylib
+0x00007ff821a8e000 	/System/Library/PrivateFrameworks/OSAServicesClient.framework/Versions/A/OSAServicesClient
+0x00007ff8139c2000 	/usr/lib/libperfcheck.dylib
+0x00007ff810f68000 	/System/Library/PrivateFrameworks/PlugInKit.framework/Versions/A/PlugInKit
+0x00007ff80f7e0000 	/System/Library/PrivateFrameworks/AssertionServices.framework/Versions/A/AssertionServices
+0x00007ffa192aa000 	/System/Library/Frameworks/OpenGL.framework/Versions/A/Libraries/libGLU.dylib
+0x00007ffa1926e000 	/System/Library/Frameworks/OpenGL.framework/Versions/A/Libraries/libGFXShared.dylib
+0x00007ffa19477000 	/System/Library/Frameworks/OpenGL.framework/Versions/A/Libraries/libGL.dylib
+0x00007ffa19277000 	/System/Library/Frameworks/OpenGL.framework/Versions/A/Libraries/libGLImage.dylib
+0x00007ffa1926b000 	/System/Library/Frameworks/OpenGL.framework/Versions/A/Libraries/libCVMSPluginSupport.dylib
+0x00007ffb1ea17000 	/usr/lib/libRosetta.dylib
+0x00007ffa19256000 	/System/Library/Frameworks/OpenGL.framework/Versions/A/Libraries/libCoreVMClient.dylib
+0x00007ff80eb31000 	/System/Library/Frameworks/MetalPerformanceShaders.framework/Versions/A/Frameworks/MPSCore.framework/Versions/A/MPSCore
+0x00007ff80fecd000 	/System/Library/Frameworks/MetalPerformanceShaders.framework/Versions/A/Frameworks/MPSImage.framework/Versions/A/MPSImage
+0x00007ff80f950000 	/System/Library/Frameworks/MetalPerformanceShaders.framework/Versions/A/Frameworks/MPSNeuralNetwork.framework/Versions/A/MPSNeuralNetwork
+0x00007ff80fdc3000 	/System/Library/Frameworks/MetalPerformanceShaders.framework/Versions/A/Frameworks/MPSMatrix.framework/Versions/A/MPSMatrix
+0x00007ff80fb7e000 	/System/Library/Frameworks/MetalPerformanceShaders.framework/Versions/A/Frameworks/MPSRayIntersector.framework/Versions/A/MPSRayIntersector
+0x00007ff80fdfe000 	/System/Library/Frameworks/MetalPerformanceShaders.framework/Versions/A/Frameworks/MPSNDArray.framework/Versions/A/MPSNDArray
+0x00007ffa1d78c000 	/System/Library/Frameworks/MetalPerformanceShaders.framework/Versions/A/Frameworks/MPSFunctions.framework/Versions/A/MPSFunctions
+0x00007ff80498a000 	/System/Library/PrivateFrameworks/MetalTools.framework/Versions/A/MetalTools
+0x00007ff80ebb2000 	/System/Library/PrivateFrameworks/AggregateDictionary.framework/Versions/A/AggregateDictionary
+0x00007ff810e22000 	/usr/lib/libIOReport.dylib
+0x00007ffa19f3e000 	/System/Library/Frameworks/OpenCL.framework/Versions/A/OpenCL
+0x00007ff8111ca000 	/System/Library/PrivateFrameworks/GraphVisualizer.framework/Versions/A/GraphVisualizer
+0x00007ffb071b4000 	/System/Library/PrivateFrameworks/FontServices.framework/Versions/A/FontServices
+0x00007ff8115f3000 	/System/Library/PrivateFrameworks/OTSVG.framework/Versions/A/OTSVG
+0x00007ff80c5e3000 	/System/Library/Frameworks/ApplicationServices.framework/Versions/A/Frameworks/ATS.framework/Versions/A/Resources/libFontRegistry.dylib
+0x00007ff811642000 	/System/Library/PrivateFrameworks/FontServices.framework/libhvf.dylib
+0x00007ffb071b5000 	/System/Library/PrivateFrameworks/FontServices.framework/libXTFontStaticRegistryData.dylib
+0x00007ffb18036000 	/System/Library/PrivateFrameworks/VideoToolboxParavirtualizationSupport.framework/Versions/A/VideoToolboxParavirtualizationSupport
+0x00007ff811034000 	/System/Library/PrivateFrameworks/AppleVA.framework/Versions/A/AppleVA
+0x00007ff8132c3000 	/System/Library/Frameworks/ApplicationServices.framework/Versions/A/Frameworks/ATS.framework/Versions/A/ATS
+0x00007ff809b13000 	/System/Library/Frameworks/ApplicationServices.framework/Versions/A/Frameworks/HIServices.framework/Versions/A/HIServices
+0x00007ff81210e000 	/System/Library/Frameworks/ApplicationServices.framework/Versions/A/Frameworks/PrintCore.framework/Versions/A/PrintCore
+0x00007ff813675000 	/System/Library/Frameworks/ApplicationServices.framework/Versions/A/Frameworks/QD.framework/Versions/A/QD
+0x00007ff81366d000 	/System/Library/Frameworks/ApplicationServices.framework/Versions/A/Frameworks/ColorSyncLegacy.framework/Versions/A/ColorSyncLegacy
+0x00007ff81329b000 	/System/Library/Frameworks/ApplicationServices.framework/Versions/A/Frameworks/SpeechSynthesis.framework/Versions/A/SpeechSynthesis
+0x00007ff8120cc000 	/System/Library/Frameworks/ApplicationServices.framework/Versions/A/Frameworks/ATSUI.framework/Versions/A/ATSUI
+0x00007ff813600000 	/usr/lib/libcups.2.dylib
+0x00007ff8139d1000 	/System/Library/Frameworks/Kerberos.framework/Versions/A/Kerberos
+0x00007ff8139e0000 	/System/Library/Frameworks/GSS.framework/Versions/A/GSS
+0x00007ff813331000 	/usr/lib/libresolv.9.dylib
+0x00007ff811653000 	/System/Library/PrivateFrameworks/Heimdal.framework/Versions/A/Heimdal
+0x00007ff81a6fc000 	/System/Library/Frameworks/Kerberos.framework/Versions/A/Libraries/libHeimdalProxy.dylib
+0x00007ff813a2b000 	/System/Library/PrivateFrameworks/CommonAuth.framework/Versions/A/CommonAuth
+0x00007ffa1b71b000 	/System/Library/Frameworks/AVFAudio.framework/Versions/A/AVFAudio
+0x00007ff821ad7000 	/System/Library/PrivateFrameworks/AXCoreUtilities.framework/Versions/A/AXCoreUtilities
+0x00007ff813217000 	/System/Library/PrivateFrameworks/AudioSession.framework/Versions/A/AudioSession
+0x00007ff8147f8000 	/System/Library/Frameworks/IOBluetooth.framework/Versions/A/IOBluetooth
+0x00007ff81113a000 	/System/Library/PrivateFrameworks/MediaExperience.framework/Versions/A/MediaExperience
+0x00007ff8130bf000 	/System/Library/PrivateFrameworks/AudioSession.framework/libSessionUtility.dylib
+0x00007ff813681000 	/System/Library/PrivateFrameworks/AudioResourceArbitration.framework/Versions/A/AudioResourceArbitration
+0x00007ff817747000 	/System/Library/PrivateFrameworks/PowerLog.framework/Versions/A/PowerLog
+0x00007ff817689000 	/System/Library/Frameworks/CoreBluetooth.framework/Versions/A/CoreBluetooth
+0x00007ff81a6fd000 	/System/Library/Frameworks/AudioUnit.framework/Versions/A/AudioUnit
+0x00007ff80f64b000 	/System/Library/PrivateFrameworks/CoreUtils.framework/Versions/A/CoreUtils
+0x00007ffb05d89000 	/System/Library/PrivateFrameworks/CoreUtilsExtras.framework/Versions/A/CoreUtilsExtras
+0x00007ffb0aa31000 	/System/Library/PrivateFrameworks/IO80211.framework/Versions/A/IO80211
+0x00007ff8110a8000 	/System/Library/PrivateFrameworks/IconFoundation.framework/Versions/A/IconFoundation
+0x00007ff81675e000 	/System/Library/PrivateFrameworks/SpeechRecognitionCore.framework/Versions/A/SpeechRecognitionCore
+0x0000000111dea000 	/Library/Internet Plug-Ins/JavaAppletPlugin.plugin/Contents/Home/lib/server/libjvm.dylib
+0x000000010cb9a000 	/Library/Internet Plug-Ins/JavaAppletPlugin.plugin/Contents/Home/lib/libverify.dylib
+0x000000010cbf2000 	/Library/Internet Plug-Ins/JavaAppletPlugin.plugin/Contents/Home/lib/libjava.dylib
+0x000000010cbbf000 	/Library/Internet Plug-Ins/JavaAppletPlugin.plugin/Contents/Home/lib/libzip.dylib
+0x000000012934d000 	/Library/Internet Plug-Ins/JavaAppletPlugin.plugin/Contents/Home/lib/libprism_es2.dylib
+0x00007ffa19482000 	/System/Library/Frameworks/OpenGL.framework/Versions/A/Resources/GLEngine.bundle/GLEngine
+0x00007ffa192e8000 	/System/Library/Frameworks/OpenGL.framework/Versions/A/Libraries/libGLProgrammability.dylib
+0x0000000129596000 	/System/Library/Extensions/AppleMetalOpenGLRenderer.bundle/Contents/MacOS/AppleMetalOpenGLRenderer
+0x00007ffa1960c000 	/System/Library/Frameworks/OpenGL.framework/Versions/A/Resources/GLRendererFloat.bundle/GLRendererFloat
+0x00007ffa1a570000 	/System/Library/Extensions/AGXMetal13_3.bundle/Contents/MacOS/AGXMetal13_3
+0x00007ff908abb000 	/System/Library/PrivateFrameworks/GPURawCounter.framework/Versions/A/GPURawCounter
+0x00007ff820b82000 	/System/Library/PrivateFrameworks/IOGPU.framework/Versions/A/IOGPU
+0x00000001298cd000 	/Library/Internet Plug-Ins/JavaAppletPlugin.plugin/Contents/Home/lib/libglass.dylib
+0x00007ff817d39000 	/System/Library/Frameworks/FileProvider.framework/Versions/A/FileProvider
+0x00007ff80a60d000 	/System/Library/Frameworks/Accounts.framework/Versions/A/Accounts
+0x00007ff80caa8000 	/System/Library/PrivateFrameworks/UserManagement.framework/Versions/A/UserManagement
+0x00007ff817ec2000 	/System/Library/PrivateFrameworks/GenerationalStorage.framework/Versions/A/GenerationalStorage
+0x00007ff818a32000 	/System/Library/PrivateFrameworks/CoreSymbolication.framework/Versions/A/CoreSymbolication
+0x00007ff81773c000 	/System/Library/PrivateFrameworks/SymptomDiagnosticReporter.framework/Versions/A/SymptomDiagnosticReporter
+0x00007ff8084fb000 	/System/Library/PrivateFrameworks/DesktopServicesPriv.framework/Versions/A/DesktopServicesPriv
+0x00007ff8072c3000 	/usr/lib/libsandbox.1.dylib
+0x00007ff8189f7000 	/System/Library/PrivateFrameworks/DebugSymbols.framework/Versions/A/DebugSymbols
+0x00007ff813662000 	/System/Library/PrivateFrameworks/NetAuth.framework/Versions/A/NetAuth
+0x00007ff81467c000 	/System/Library/PrivateFrameworks/Sharing.framework/Versions/A/Sharing
+0x00007ff80ca6e000 	/System/Library/PrivateFrameworks/login.framework/Versions/A/Frameworks/loginsupport.framework/Versions/A/loginsupport
+0x00007ff819c2d000 	/System/Library/PrivateFrameworks/Apple80211.framework/Versions/A/Apple80211
+0x00007ff80ffb6000 	/System/Library/PrivateFrameworks/AuthKit.framework/Versions/A/AuthKit
+0x00007ff80f5d1000 	/System/Library/Frameworks/CoreWLAN.framework/Versions/A/CoreWLAN
+0x00007ff819c31000 	/System/Library/PrivateFrameworks/CoreWiFi.framework/Versions/A/CoreWiFi
+0x00007ffa0ae88000 	/System/Library/PrivateFrameworks/WiFiPeerToPeer.framework/Versions/A/WiFiPeerToPeer
+0x00007ff8185a4000 	/System/Library/PrivateFrameworks/FrontBoardServices.framework/Versions/A/FrontBoardServices
+0x00007ff81863b000 	/System/Library/PrivateFrameworks/BoardServices.framework/Versions/A/BoardServices
+0x00007ff819d8f000 	/System/Library/PrivateFrameworks/BackBoardServices.framework/Versions/A/BackBoardServices
+0x00007ff81011c000 	/System/Library/Frameworks/UserNotifications.framework/Versions/A/UserNotifications
+0x00007ff813b1f000 	/System/Library/PrivateFrameworks/CorePhoneNumbers.framework/Versions/A/CorePhoneNumbers
+0x00007ff81335e000 	/System/Library/PrivateFrameworks/MultiverseSupport.framework/Versions/A/MultiverseSupport
+0x00007ff81a00a000 	/System/Library/PrivateFrameworks/RemoteServiceDiscovery.framework/Versions/A/RemoteServiceDiscovery
+0x00007ff81785a000 	/System/Library/PrivateFrameworks/DiskManagement.framework/Versions/A/DiskManagement
+0x00007ff81776e000 	/System/Library/PrivateFrameworks/AppleIDAuthSupport.framework/Versions/A/AppleIDAuthSupport
+0x00007ffa2022c000 	/System/Library/PrivateFrameworks/AAAFoundation.framework/Versions/A/AAAFoundation
+0x00007ff813af8000 	/System/Library/PrivateFrameworks/KeychainCircle.framework/Versions/A/KeychainCircle
+0x00007ff81a01a000 	/System/Library/PrivateFrameworks/RemoteXPC.framework/Versions/A/RemoteXPC
+0x00007ff817826000 	/System/Library/PrivateFrameworks/MediaKit.framework/Versions/A/MediaKit
+0x00007ff81777a000 	/System/Library/Frameworks/DiscRecording.framework/Versions/A/DiscRecording
+0x00007ff810fac000 	/usr/lib/libCoreStorage.dylib
+0x00007ff81a085000 	/usr/lib/libcsfde.dylib
+0x00007ff8148c9000 	/System/Library/PrivateFrameworks/ProtectedCloudStorage.framework/Versions/A/ProtectedCloudStorage
+0x00007ff81a081000 	/System/Library/PrivateFrameworks/EFILogin.framework/Versions/A/EFILogin
+0x00007ff817ee8000 	/System/Library/PrivateFrameworks/OctagonTrust.framework/Versions/A/OctagonTrust
+0x00007ff810fa4000 	/usr/lib/libMatch.1.dylib
+0x00007ff90d688000 	/System/Library/Frameworks/Accelerate.framework/Versions/A/Frameworks/vImage.framework/Versions/A/Libraries/libCGInterfaces.dylib
+0x000000012b7d2000 	/usr/lib/libobjc-trampolines.dylib
+0x00007ffb1e7d3000 	/usr/lib/libAccessibilityBaseImplementations.dylib
+0x00007ff80c787000 	/System/Library/PrivateFrameworks/ViewBridge.framework/Versions/A/ViewBridge
+0x000000012d0e8000 	/Library/Internet Plug-Ins/JavaAppletPlugin.plugin/Contents/Home/lib/libjavafx_font.dylib
+0x00007ff81170a000 	/System/Library/PrivateFrameworks/login.framework/Versions/A/login
+0x0000000130e19000 	/Library/Internet Plug-Ins/JavaAppletPlugin.plugin/Contents/Home/lib/libprism_common.dylib
+0x00007ffa20a99000 	/System/Library/PrivateFrameworks/AccessibilityBundles.framework/Versions/A/AccessibilityBundles
+0x00007ff821af6000 	/usr/lib/libAccessibility.dylib
+0x00007ff816e58000 	/System/Library/Frameworks/MediaAccessibility.framework/Versions/A/MediaAccessibility
+0x00007ff816e8c000 	/System/Library/PrivateFrameworks/SystemAdministration.framework/Versions/A/SystemAdministration
+0x00007ff812345000 	/System/Library/Frameworks/MediaToolbox.framework/Versions/A/MediaToolbox
+0x00007ff81672a000 	/System/Library/Frameworks/DirectoryService.framework/Versions/A/DirectoryService
+0x00007ff819f22000 	/System/Library/PrivateFrameworks/DiskImages.framework/Versions/A/DiskImages
+0x00007ff80f89c000 	/System/Library/Frameworks/ServiceManagement.framework/Versions/A/ServiceManagement
+0x00007ff81a102000 	/System/Library/PrivateFrameworks/LoginUIKit.framework/Versions/A/Frameworks/LoginUICore.framework/Versions/A/LoginUICore
+0x00007ff8118c5000 	/usr/lib/libodfde.dylib
+0x00007ff817d09000 	/System/Library/PrivateFrameworks/CoreAVCHD.framework/Versions/A/CoreAVCHD
+0x00007ff817d05000 	/System/Library/PrivateFrameworks/Mangrove.framework/Versions/A/Mangrove
+0x00007ffa228b8000 	/System/Library/PrivateFrameworks/CMPhoto.framework/Versions/A/CMPhoto
+0x00007ff8188cb000 	/System/Library/PrivateFrameworks/AppleVPA.framework/Versions/A/AppleVPA
+0x00007ff81794a000 	/System/Library/PrivateFrameworks/CoreAUC.framework/Versions/A/CoreAUC
+0x00007ff81a091000 	/usr/lib/libcurl.4.dylib
+0x00007ffb1eeb3000 	/usr/lib/libcrypto.46.dylib
+0x00007ffb1f522000 	/usr/lib/libssl.48.dylib
+0x00007ff819db0000 	/System/Library/Frameworks/LDAP.framework/Versions/A/LDAP
+0x00007ff819dec000 	/System/Library/PrivateFrameworks/TrustEvaluationAgent.framework/Versions/A/TrustEvaluationAgent
+0x00007ff81334a000 	/usr/lib/libsasl2.2.dylib
+
+VM Arguments:
+java_command: application.Main
+java_class_path (initial): /var/folders/88/m87s645s7n9081t7tyt8296h0000gn/T/cp_by6od70p9imdpt6ud6izzu2yg.jar
+Launcher Type: SUN_STANDARD
+
+Environment Variables:
+JAVA_HOME=/Library/Internet Plug-Ins/JavaAppletPlugin.plugin/Contents/Home
+PATH=/Users/kantarion/opt/anaconda3/bin:/Library/Frameworks/Python.framework/Versions/3.9/bin:/Library/Frameworks/Python.framework/Versions/3.11/bin:/usr/local/bin:/System/Cryptexes/App/usr/bin:/usr/bin:/bin:/usr/sbin:/sbin:/Applications/VMware Fusion.app/Contents/Public:/opt/X11/bin:~/.dotnet/tools:/Library/Apple/usr/bin:/Library/Frameworks/Mono.framework/Versions/Current/Commands:/Users/kantarion/opt/anaconda3/bin:/Library/Frameworks/Python.framework/Versions/3.9/bin:/Library/Frameworks/Python.framework/Versions/3.11/bin
+SHELL=/bin/zsh
+DISPLAY=/private/tmp/com.apple.launchd.xX1zVn5imb/org.xquartz:0
+
+Signal Handlers:
+SIGSEGV: [libjvm.dylib+0x5a3a29], sa_mask[0]=11111111111111111111111111111111, sa_flags=SA_ONSTACK|SA_RESTART|SA_SIGINFO
+SIGBUS: [libjvm.dylib+0x5a3a29], sa_mask[0]=11111111111111111111111111111111, sa_flags=SA_RESTART|SA_SIGINFO
+SIGFPE: [libjvm.dylib+0x5a3a29], sa_mask[0]=11111111111111111111111111111111, sa_flags=SA_RESTART|SA_SIGINFO
+SIGPIPE: [libjvm.dylib+0x4970a2], sa_mask[0]=11111111111111111111111111111111, sa_flags=SA_RESTART|SA_SIGINFO
+SIGXFSZ: [libjvm.dylib+0x4970a2], sa_mask[0]=11111111111111111111111111111111, sa_flags=SA_RESTART|SA_SIGINFO
+SIGILL: [libjvm.dylib+0x5a3a29], sa_mask[0]=11111111111111111111111111111111, sa_flags=SA_RESTART|SA_SIGINFO
+SIGUSR1: SIG_DFL, sa_mask[0]=00000000000000000000000000000000, sa_flags=SA_RESTART
+SIGUSR2: [libjvm.dylib+0x4976c6], sa_mask[0]=00000000000000000000000000000000, sa_flags=SA_RESTART|SA_SIGINFO
+SIGHUP: [libjvm.dylib+0x49585f], sa_mask[0]=11111111111111111111111111111111, sa_flags=SA_RESTART|SA_SIGINFO
+SIGINT: [libjvm.dylib+0x49585f], sa_mask[0]=11111111111111111111111111111111, sa_flags=SA_RESTART|SA_SIGINFO
+SIGTERM: [libjvm.dylib+0x49585f], sa_mask[0]=11111111111111111111111111111111, sa_flags=SA_RESTART|SA_SIGINFO
+SIGQUIT: [libjvm.dylib+0x49585f], sa_mask[0]=11111111111111111111111111111111, sa_flags=SA_RESTART|SA_SIGINFO
+
+
+---------------  S Y S T E M  ---------------
+
+OS:Bsduname:Darwin 22.1.0 Darwin Kernel Version 22.1.0: Sun Oct  9 20:14:30 PDT 2022; root:xnu-8792.41.9~2/RELEASE_ARM64_T8103 x86_64
+rlimit: STACK 8176k, CORE 0k, NPROC 1333, NOFILE 10240, AS infinity
+load average:1.33 1.53 1.57
+
+CPU:total 8 (initial active 8) (1 cores per cpu, 1 threads per core) family 6 model 44 stepping 0, cmov, cx8, fxsr, mmx, sse, sse2, sse3, ssse3, sse4.1, sse4.2, popcnt, aes, clmul, tsc, tscinvbit, tscinv
+
+Memory: 4k page, physical 8388608k(12160k free)
+
+/proc/meminfo:
+
+
+vm_info: Java HotSpot(TM) 64-Bit Server VM (25.381-b09) for bsd-amd64 JRE (1.8.0_381-b09), built on Jun 14 2023 14:46:03 by "java_re" with gcc 4.2.1 Compatible Apple LLVM 11.0.0 (clang-1100.0.33.17)
+
+time: Wed Aug 16 20:12:07 2023
+timezone: CEST
+elapsed time: 15.320663 seconds (0d 0h 0m 15s)
+

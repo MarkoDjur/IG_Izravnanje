@@ -1,5 +1,6 @@
 package application;
 
+import javafx.beans.value.ChangeListener;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.scene.control.*;
@@ -18,6 +19,7 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 import izravnanje1D.KlasicanNacin1D;
 import izravnanje1D.MinimalniTrag1D;
@@ -212,6 +214,11 @@ public class MainController {
 	@FXML
 	private TextField txt_nivoZnacajnosti_2d;
 
+	public String style = " -fx-border-color: red;\n" + //
+			"    -fx-border-width: 1px;\n" + //
+			"    -fx-border-radius:\n" +
+			"     5px;";
+
 	public void initialize() {
 		OD.setCellValueFactory(new PropertyValueFactory<>("Od"));
 		DO.setCellValueFactory(new PropertyValueFactory<>("Do"));
@@ -298,6 +305,10 @@ public class MainController {
 		addTextFieldChangeListener(txt_stepen_u, "cijeliBr", 360);
 		addTextFieldChangeListener(txt_minut_u, "cijeliBr", 60);
 		addTextFieldChangeListener(txt_sekund_u, "decimalniBr", 60);
+		Ugao u = new Ugao("aaa-bbb-ccc", "111", "22", "33", "123.456");
+		data_uglovi.add(u);
+		tabela_u.setItems(data_uglovi);
+		tabela_u.refresh();
 
 		// Dodavanje fields u listu Duzina
 		listaTxtDuzina.add(txt_od_d);
@@ -365,6 +376,106 @@ public class MainController {
 				}
 			}
 		});
+	}
+
+	private TextField createTextField(String initialValue) {
+		TextField textField = new TextField();
+		textField.setText(initialValue);
+		return textField;
+	}
+
+	private TextField createAlphanumericTextField(String initialValue) {
+		TextField textField = createTextField(initialValue);
+		textField.textProperty().addListener((observable, oldValue, newValue) -> {
+			if (!newValue.matches("[a-zA-Z0-9\\.\\-]*")) {
+				textField.setText(newValue.replaceAll("[^a-zA-Z0-9\\.\\-]", ""));
+			}
+		});
+		return textField;
+	}
+
+	private TextField createIntegerTextField(String initialValue) {
+		TextField textField = createTextField(initialValue);
+		textField.textProperty().addListener((observable, oldValue, newValue) -> {
+			if (!newValue.matches("\\d*")) {
+				textField.setText(newValue.replaceAll("[^\\d]", ""));
+			}
+		});
+		return textField;
+	}
+
+	private TextField createDecimalTextField(String initialValue) {
+		TextField textField = createTextField(initialValue);
+		textField.textProperty().addListener((observable, oldValue, newValue) -> {
+			if (!newValue.matches("\\d*\\.?\\d*")) {
+				textField.setText(newValue.replaceAll("[^\\d\\.]", ""));
+			}
+		});
+		return textField;
+	}
+
+	private void initializeRadioButtons(RadioButton radioButtonP, RadioButton radioButtonN, Pravac odabraniPravac) {
+		if (odabraniPravac.getSelektovanoPoznata()) {
+			radioButtonP.setSelected(true);
+			radioButtonN.setSelected(false);
+		} else if (odabraniPravac.getSelektovanoNepoznata()) {
+			radioButtonP.setSelected(false);
+			radioButtonN.setSelected(true);
+		}
+	}
+
+	private void initializeRadioButtons(RadioButton radioButtonDa, RadioButton radioButtonNe, Visina odabranaVisina) {
+		if (odabranaVisina.definiseDatum()) {
+			radioButtonDa.setSelected(true);
+			radioButtonNe.setSelected(false);
+		} else {
+			radioButtonDa.setSelected(false);
+			radioButtonNe.setSelected(true);
+		}
+
+	}
+
+	private boolean validateTextField(TextField textField, String regexPattern) {
+		if (!textField.getText().matches(regexPattern)) {
+			textField.setStyle(style);
+			return false;
+		} else {
+			textField.setStyle(null);
+			return true;
+		}
+
+	}
+
+	private boolean validateIntegerTextField(TextField textField, int minValue, int maxValue) {
+		try {
+			int value = Integer.parseInt(textField.getText());
+			if (value < minValue || value >= maxValue) {
+				textField.setStyle(style);
+				return false;
+			} else {
+				textField.setStyle(null);
+				return true;
+			}
+		} catch (NumberFormatException e) {
+			textField.setStyle(style);
+			return false;
+		}
+	}
+
+	private boolean validateDecimalTextField(TextField textField, double minValue, double maxValue) {
+		try {
+			double value = Double.parseDouble(textField.getText());
+			if (value < minValue || value >= maxValue) {
+				textField.setStyle(style);
+				return false;
+			} else {
+				textField.setStyle(null);
+				return true;
+			}
+		} catch (NumberFormatException e) {
+			textField.setStyle(style);
+			return false;
+		}
 	}
 
 	// Postavljanje tooltip-a za dugme
@@ -450,7 +561,7 @@ public class MainController {
 					Ugao rowData = row.getItem();
 					otvoriDijalogZaUredivanjeUgao(rowData);
 				}
-				redVR = row.getIndex() + 1;
+				redU = row.getIndex() + 1;
 			});
 			return row;
 		});
@@ -483,67 +594,6 @@ public class MainController {
 		} else {
 			System.out.println("Niste izabrali datoteku.");
 		}
-
-		// File proba1 = new File("IG_Izravnanje/src/application/matA.txt");
-		// OD.setCellValueFactory(new PropertyValueFactory<>("Od"));
-		// DO.setCellValueFactory(new PropertyValueFactory<>("Do"));
-		// VISINSKA_RAZLIKA.setCellValueFactory(new
-		// PropertyValueFactory<>("visinskaRaz"));
-		// DUZINA_NIVELMANSKE_STRANE.setCellValueFactory(new
-		// PropertyValueFactory<>("duzinaStrane"));
-		// BROJ_STANICA.setCellValueFactory(new PropertyValueFactory<>("brojStanica"));
-
-		// try {
-		// FileReader fr = new FileReader(proba1);
-		// BufferedReader br = new BufferedReader(fr);
-		// String line;
-		// while ((line = br.readLine()) != null) {
-		// String[] odada = line.split(",");
-		// String OD = odada[0];
-		// String DO = odada[1];
-		// String VR = odada[2];
-		// String D = odada[3];
-		// String bs = odada[4];
-		// VisinskaRazlika VS = new VisinskaRazlika(OD, DO, VR, D, bs);
-		// data_vr.add(VS);
-		// }
-
-		// } catch (Exception e) {
-		// // TODO: handle exception
-		// }
-		// tabela_vr.setItems(data_vr);
-		// tabela_vr.refresh();
-
-		// OZNAKA.setCellValueFactory(new PropertyValueFactory<>("oznaka"));
-		// VISINA.setCellValueFactory(new PropertyValueFactory<>("visina"));
-		// File proba2 = new File("IG_Izravnanje/src/application/Visine.txt");
-
-		// try {
-		// FileReader fr = new FileReader(proba2);
-		// BufferedReader br = new BufferedReader(fr);
-		// String line;
-		// while ((line = br.readLine()) != null) {
-		// String[] odada = line.split(",");
-		// String Oznaka = odada[0];
-		// String Visine = odada[1];
-		// String datum = odada[2];
-		// if (datum.equals("da")) {
-		// Visina V = new Visina(Oznaka, Visine, true);
-		// data_v.add(V);
-		// } else {
-		// Visina V = new Visina(Oznaka, Visine, false);
-		// data_v.add(V);
-		// }
-		// }
-
-		// } catch (Exception e) {
-		// // TODO: handle exception
-		// }
-
-		// // radio_minimalanTrag.setSelected(true);
-		// txt_s0.setText("0.8");
-		// tabela_v.setItems(data_v);
-		// tabela_v.refresh();
 
 		try (
 				BufferedReader br = new BufferedReader(new FileReader(selectedFile))) {
@@ -810,20 +860,11 @@ public class MainController {
 		dialog.setTitle("Uredi visinsku razliku: " + redV);
 
 		// Kreiramo polja za unos atributa
-		TextField OzField = new TextField();
-		OzField.setText(odabranaV.getOznaka());
-		TextField VField = new TextField();
-		VField.setText(odabranaV.getVisina());
+		TextField OzField = createAlphanumericTextField(odabranaV.getOznaka());
+		TextField VField = createDecimalTextField(odabranaV.getVisina());
 		RadioButton radioButtonDa = new RadioButton("Da");
 		RadioButton radioButtonNe = new RadioButton("Ne");
-
-		if (odabranaV.definiseDatum()) {
-			radioButtonDa.setSelected(true);
-			radioButtonNe.setSelected(false);
-		} else {
-			radioButtonDa.setSelected(false);
-			radioButtonNe.setSelected(true);
-		}
+		initializeRadioButtons(radioButtonDa, radioButtonNe, odabranaV);
 
 		// Kreiramo višeslojni raspored za elemente
 		GridPane gridPane = new GridPane();
@@ -849,16 +890,22 @@ public class MainController {
 		// Obrada potvrde dugmeta
 		dialog.setResultConverter(dialogButton -> {
 			if (dialogButton == potvrdiButton) {
-				odabranaV.setOznaka(OzField.getText());
-				odabranaV.setVisina(VField.getText());
-				Boolean datum;
-				if (radioButtonDa.isSelected()) {
-					datum = true;
+				boolean areFieldsValid = true;
+
+				// Validacija polja
+				areFieldsValid &= validateTextField(OzField, "[a-zA-Z0-9\\.]*");
+				areFieldsValid &= validateDecimalTextField(VField, 0, Double.MAX_VALUE);
+
+				if (!areFieldsValid) {
+					showAlert("Greška", "Unesene vrijednosti prelaze ograničenja.",
+							AlertType.ERROR);
+					return false; // Ne zatvaraj dijalog ako postoje greške
 				} else {
-					datum = false;
+					odabranaV.setOznaka(OzField.getText());
+					odabranaV.setVisina(VField.getText());
+					odabranaV.setDefinise_datum(radioButtonDa.isSelected());
+					return true;
 				}
-				odabranaV.setDefinise_datum(datum);
-				return true;
 			}
 			return false;
 		});
@@ -984,86 +1031,84 @@ public class MainController {
 
 	public void otvoriDijalogZaUredivanjePravca(Pravac odabraniPravac) {
 		Dialog<Boolean> dialog = new Dialog<>();
-		dialog.setTitle("Uredi pravac: " + redV);
+		dialog.setTitle("Uredi pravac: " + redP);
 
-		// Kreiramo polja za unos atributa
-		TextField OdField = new TextField();
-		OdField.setText(odabraniPravac.getOd());
-		TextField DoField = new TextField();
-		DoField.setText(odabraniPravac.getDo());
-		TextField StepenField = new TextField();
-		StepenField.setText(odabraniPravac.getStepen());
-		TextField MinutField = new TextField();
-		MinutField.setText(odabraniPravac.getMinut());
-		TextField SekundField = new TextField();
-		SekundField.setText(odabraniPravac.getSekund());
-		TextField TacnostField = new TextField();
-		TacnostField.setText(odabraniPravac.getTacnost());
+		TextField OdField = createAlphanumericTextField(odabraniPravac.getOd());
+		TextField DoField = createAlphanumericTextField(odabraniPravac.getDo());
+		TextField StepenField = createIntegerTextField(odabraniPravac.getStepen());
+		TextField MinutField = createIntegerTextField(odabraniPravac.getMinut());
+		TextField SekundField = createDecimalTextField(odabraniPravac.getSekund());
+		TextField TacnostField = createDecimalTextField(odabraniPravac.getTacnost());
 
 		RadioButton radioButtonP = new RadioButton("Poznata");
 		RadioButton radioButtonN = new RadioButton("Nepoznata");
+		initializeRadioButtons(radioButtonP, radioButtonN, odabraniPravac);
 
-		if (odabraniPravac.getSelektovanoPoznata()) {
-			radioButtonP.setSelected(true);
-			radioButtonN.setSelected(false);
-		} else if (odabraniPravac.getSelektovanoNepoznata()) {
-			radioButtonP.setSelected(false);
-			radioButtonN.setSelected(true);
-		}
-
-		// Kreiramo višeslojni raspored za elemente
 		GridPane gridPane = new GridPane();
 		gridPane.setHgap(10);
 		gridPane.setVgap(10);
 		gridPane.addRow(0, new Label("Od:"), OdField);
 		gridPane.addRow(1, new Label("Do:"), DoField);
-		gridPane.addRow(2, new Label("Stepen:"), StepenField);
-		gridPane.addRow(3, new Label("Minut:"), MinutField);
-		gridPane.addRow(4, new Label("Sekund:"), SekundField);
-		gridPane.addRow(5, new Label("Tacnost:"), TacnostField);
-		gridPane.addRow(6, new Label("Da li je poznata tacka:"));
-		gridPane.addRow(7, radioButtonP, radioButtonN);
-
+		gridPane.addRow(2, new Label("Tacnost:"), TacnostField);
+		Label ugaoLabel = new Label("Ugao:");
+		HBox ugaoHBox = new HBox(StepenField, new Label("\u00B0 "), MinutField, new Label("' "), SekundField,
+				new Label("\""));
+		gridPane.addRow(3, ugaoLabel, ugaoHBox);
+		gridPane.addRow(4, new Label("Da li je poznata tacka:"));
+		gridPane.addRow(5, radioButtonP, radioButtonN);
 		ToggleGroup radioGroup = new ToggleGroup();
 		radioButtonP.setToggleGroup(radioGroup);
 		radioButtonN.setToggleGroup(radioGroup);
 
-		// Dodajemo raspored u dijalog
 		VBox content = new VBox(gridPane);
 		dialog.getDialogPane().setContent(content);
 
-		// Dodajemo gumb "Potvrdi" u dijalog
 		ButtonType potvrdiButton = new ButtonType("Potvrdi", ButtonBar.ButtonData.OK_DONE);
 		dialog.getDialogPane().getButtonTypes().addAll(potvrdiButton, ButtonType.CANCEL);
 
-		// Obrada potvrde dugmeta
 		dialog.setResultConverter(dialogButton -> {
 			if (dialogButton == potvrdiButton) {
-				odabraniPravac.setOd(OdField.getText());
-				odabraniPravac.setDo(DoField.getText());
-				odabraniPravac.setTacnost(TacnostField.getText());
-				odabraniPravac.setStepen(StepenField.getText());
-				odabraniPravac.setMinut(MinutField.getText());
-				odabraniPravac.setSekund(SekundField.getText());
+				boolean areFieldsValid = true;
 
-				if (radioButtonP.isSelected()) {
-					odabraniPravac.setPoznata(true);
-					odabraniPravac.setNePoznata(false);
+				areFieldsValid &= validateTextField(OdField, "[a-zA-Z0-9\\.]*");
+				areFieldsValid &= validateTextField(DoField, "[a-zA-Z0-9\\.]*");
+				areFieldsValid &= validateTextField(TacnostField, "\\d*\\.?\\d*");
+				areFieldsValid &= validateIntegerTextField(StepenField, 0, 360);
+				areFieldsValid &= validateIntegerTextField(MinutField, 0, 60);
+				areFieldsValid &= validateDecimalTextField(SekundField, 0, 60);
+
+				if (!areFieldsValid) {
+					showAlert("Greška", "Unesene vrijednosti prelaze ograničenja ili nisu validno popunjena!",
+							AlertType.ERROR);
+					return false;
 				} else {
-					odabraniPravac.setPoznata(false);
-					odabraniPravac.setNePoznata(true);
+					// Setovanje atributa u odabraniPravac
+					odabraniPravac.setOd(OdField.getText());
+					odabraniPravac.setDo(DoField.getText());
+					odabraniPravac.setTacnost(TacnostField.getText());
+					odabraniPravac.setStepen(StepenField.getText());
+					odabraniPravac.setMinut(MinutField.getText());
+					odabraniPravac.setSekund(SekundField.getText());
+
+					if (radioButtonP.isSelected()) {
+						odabraniPravac.setPoznata(true);
+						odabraniPravac.setNePoznata(false);
+					} else {
+						odabraniPravac.setPoznata(false);
+						odabraniPravac.setNePoznata(true);
+					}
+					return true;
 				}
-				return true;
 			}
-			return false;
+			return true;
 		});
 
-		// Prikaži dijalog i obradi rezultat
-		dialog.showAndWait().ifPresent(result -> {
-			if (result) {
-				tabela_p.refresh(); // Osvježi prikaz tabele
-			}
-		});
+		Optional<Boolean> result = dialog.showAndWait();
+		while (result.isPresent() && !result.get()) {
+			result = dialog.showAndWait();
+		}
+
+		tabela_p.refresh();
 	}
 
 	public void popuniTabeluU(ActionEvent event) {
@@ -1158,36 +1203,27 @@ public class MainController {
 
 	public void otvoriDijalogZaUredivanjeUgao(Ugao odabraniUgao) {
 		Dialog<Boolean> dialog = new Dialog<>();
-		dialog.setTitle("Uredi visinsku razliku: " + redVR);
+		dialog.setTitle("Uredi ugao: " + redU);
 
 		// Kreirajte polja za unos atributa
-		TextField LField = new TextField();
-		LField.setText(odabraniUgao.getLijevo());
-		TextField SField = new TextField();
-		SField.setText(odabraniUgao.getSredina());
-		TextField DField = new TextField();
-		DField.setText(odabraniUgao.getDesno());
-		TextField tacField = new TextField();
-		tacField.setText(odabraniUgao.getTacnost());
-		TextField stepenField = new TextField();
-		stepenField.setText(odabraniUgao.getStepen());
-		TextField minutField = new TextField();
-		minutField.setText(odabraniUgao.getMinut());
-		TextField sekundField = new TextField();
-		sekundField.setText(odabraniUgao.getSekund());
-
-		addTextFieldChangeListener(minutField, "cijeliBr", 60);
+		TextField LField = createAlphanumericTextField(odabraniUgao.getLijevo());
+		TextField SField = createAlphanumericTextField(odabraniUgao.getSredina());
+		TextField DField = createAlphanumericTextField(odabraniUgao.getDesno());
+		TextField tacField = createDecimalTextField(odabraniUgao.getTacnost());
+		TextField stepenField = createIntegerTextField(odabraniUgao.getStepen());
+		TextField minutField = createIntegerTextField(odabraniUgao.getMinut());
+		TextField sekundField = createDecimalTextField(odabraniUgao.getSekund());
 
 		// Kreirajte višeslojni raspored za elemente
 		GridPane gridPane = new GridPane();
 		gridPane.setHgap(10);
 		gridPane.setVgap(10);
 		Label oznakaLabel = new Label("Oznaka:");
-		HBox oznakaHBox = new HBox(LField, new Label(" _ "), SField, new Label(" _ "), DField);
+		HBox oznakaHBox = new HBox(LField, new Label(" - "), SField, new Label(" - "), DField);
 		gridPane.addRow(0, oznakaLabel, oznakaHBox);
 		gridPane.addRow(1, new Label("Tacnost:"), tacField);
 		Label ugaoLabel = new Label("Ugao:");
-		HBox ugaoHBox = new HBox(stepenField, new Label("\u00B0   "), minutField, new Label("'  "), sekundField,
+		HBox ugaoHBox = new HBox(stepenField, new Label("\u00B0 "), minutField, new Label("' "), sekundField,
 				new Label("\""));
 		gridPane.addRow(2, ugaoLabel, ugaoHBox);
 
@@ -1196,58 +1232,51 @@ public class MainController {
 		dialog.getDialogPane().setContent(content);
 
 		// Dodajte gumb "Potvrdi" u dijalog
-		ButtonType potvrdiButton = new ButtonType("Potvrdi", ButtonBar.ButtonData.OK_DONE);
-		dialog.getDialogPane().getButtonTypes().addAll(potvrdiButton, ButtonType.CANCEL);
+		ButtonType potvrdiButton = new ButtonType("Potvrdi",
+				ButtonBar.ButtonData.OK_DONE);
+		dialog.getDialogPane().getButtonTypes().addAll(potvrdiButton,
+				ButtonType.CANCEL);
 
-		// // Obrada potvrde gumba
-		// dialog.setResultConverter(dialogButton -> {
-		// 	if (dialogButton == potvrdiButton) {
-		// 		String oznaka = LField.getText() + "-" + SField.getText() + "-" + DField.getText();
-
-		// 		odabraniUgao.setOznaka(oznaka);
-		// 		odabraniUgao.setTacnost(tacField.getText());
-		// 		odabraniUgao.setStepen(stepenField.getText());
-		// 		odabraniUgao.setMinut(minutField.getText());
-		// 		odabraniUgao.setSekund(sekundField.getText());
-
-		// 		return true;
-		// 	}
-		// 	return false;
-		// });
-
-		// Obrada potvrde gumba
 		dialog.setResultConverter(dialogButton -> {
 			if (dialogButton == potvrdiButton) {
+				boolean areFieldsValid = true;
 
-				int stepen = Integer.parseInt(stepenField.getText());
-				int minut = Integer.parseInt(minutField.getText());
-				int sekund = Integer.parseInt(sekundField.getText());
+				// Validacija polja
+				areFieldsValid &= validateTextField(LField, "[a-zA-Z0-9\\.]*");
+				areFieldsValid &= validateTextField(SField, "[a-zA-Z0-9\\.]*");
+				areFieldsValid &= validateTextField(DField, "[a-zA-Z0-9\\.]*");
+				areFieldsValid &= validateIntegerTextField(stepenField, 0, 360);
+				areFieldsValid &= validateIntegerTextField(minutField, 0, 60);
+				areFieldsValid &= validateDecimalTextField(sekundField, 0, 60);
 
-				if (stepen >= 360 || minut >= 60 || sekund >= 60) {
+				if (!areFieldsValid) {
 					showAlert("Greška", "Unesene vrijednosti prelaze ograničenja.",
 							AlertType.ERROR);
-					return false; // Zaustavi ažuriranje
+					return false; // Ne zatvaraj dijalog ako postoje greške
+				} else {
+					String oznaka = LField.getText() + "-" + SField.getText() + "-" +
+							DField.getText();
+
+					odabraniUgao.setOznaka(oznaka);
+					odabraniUgao.setTacnost(tacField.getText());
+					odabraniUgao.setStepen(stepenField.getText());
+					odabraniUgao.setMinut(minutField.getText());
+					odabraniUgao.setSekund(sekundField.getText());
+
+					return true;
 				}
-
-				String oznaka = LField.getText() + "-" + SField.getText() + "-" + DField.getText();
-
-				odabraniUgao.setOznaka(oznaka);
-				odabraniUgao.setTacnost(tacField.getText());
-				odabraniUgao.setStepen(stepenField.getText());
-				odabraniUgao.setMinut(minutField.getText());
-				odabraniUgao.setSekund(sekundField.getText());
-
-				return true;
 			}
-			return false;
+			return true;
 		});
 
 		// Prikaži dijalog i obradi rezultat
-		dialog.showAndWait().ifPresent(result -> {
-			if (result) {
-				tabela_u.refresh(); // Osvježi prikaz tablice
-			}
-		});
+		Optional<Boolean> result = dialog.showAndWait();
+		while (result.isPresent() && !result.get()) {
+			// Ponovo prikaži dijalog dok se ne unesu ispravne vrijednosti
+			result = dialog.showAndWait();
+		}
+
+		tabela_u.refresh(); // Osvježi prikaz tablice
 	}
 
 	public void pupuniTabeluD(ActionEvent event) {
